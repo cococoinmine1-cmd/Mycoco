@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Mining App</title>
+    <style>
+        body { background-color: #1a1a1a; color: white; text-align: center; font-family: Arial, sans-serif; }
+        .balance { font-size: 40px; margin-top: 50px; color: #f39c12; }
+        .coin-btn { width: 200px; height: 200px; border-radius: 50%; border: none; background: radial-gradient(#f1c40f, #e67e22); cursor: pointer; margin-top: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .coin-btn:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+
+    <div class="balance">$ <span id="balance">0</span></div>
+    
+    <button class="coin-btn" onclick="mine()"></button>
+    <p>Tap the coin to mine!</p>
+
+    <script>
+        let score = 0;
+        function mine() {
+            score += 1; // එක ක්ලික් එකකට එක බැගින් වැඩිවේ
+            document.getElementById("balance").innerText = score;
+        }
+    </script>
+</body>
+</html>
