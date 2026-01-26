@@ -5,97 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cococoin Boss Edition</title>
     <style>
-        body { background-color: #0d0d0d; color: white; text-align: center; font-family: 'Poppins', sans-serif; margin: 0; padding: 15px; overflow: hidden; }
-        .balance-container { font-size: 55px; font-weight: bold; color: #f1c40f; margin-top: 30px; text-shadow: 0 0 20px rgba(241, 196, 15, 0.3); }
-        .rate { color: #2ecc71; font-size: 15px; margin-bottom: 5px; font-weight: bold; }
-        .coin-wrapper { position: relative; display: inline-block; margin-top: 20px; }
-        
-        /* BOSS COCO IMAGE FIX */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+        body { 
+            background-color: #0d0d0d; 
+            color: white; 
+            text-align: center; 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; 
+            padding: 15px; 
+            overflow: hidden; 
+            user-select: none;
+        }
+
+        /* Balance Section */
+        .balance-container { 
+            font-size: 60px; 
+            font-weight: bold; 
+            color: #f1c40f; 
+            margin-top: 35px; 
+            text-shadow: 0 0 25px rgba(241, 196, 15, 0.4); 
+        }
+        .rate { color: #2ecc71; font-size: 16px; margin-bottom: 5px; font-weight: bold; }
+
+        /* The Boss Button - Using your Base64 Image */
+        .coin-wrapper { position: relative; display: inline-block; margin-top: 25px; }
         .coin-btn { 
-            width: 280px; 
-            height: 280px; 
+            width: 290px; 
+            height: 290px; 
             border-radius: 50%; 
-            border: none;
-            background: url('https://i.postimg.cc/85M6X8YV/Gemini-Generated-Image-wi69y8wi69y8wi69.png') no-repeat center center;
-            background-size: cover; /* මෙතන cover දැම්මා රූපය ලස්සනට පේන්න */
-            cursor: pointer;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-            transition: transform 0.05s;
-            box-shadow: 0 0 30px rgba(241, 196, 15, 0.1);
-        }
-        .coin-btn:active { transform: scale(0.95); }
-
-        .level-box { background: #222; width: 85%; height: 10px; border-radius: 10px; margin: 20px auto; overflow: hidden; border: 1px solid #333; }
-        .level-progress { background: linear-gradient(90deg, #f1c40f, #e67e22); height: 100%; width: 0%; transition: 0.5s; }
-        #levelLabel { font-size: 14px; color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
-        .tab-container { display: flex; justify-content: space-around; background: rgba(26, 26, 26, 0.95); padding: 15px; border-radius: 25px 25px 0 0; position: fixed; bottom: 0; left: 0; right: 0; border-top: 1px solid #333; backdrop-filter: blur(10px); }
-        .tab-item { cursor: pointer; font-size: 12px; color: #666; display: flex; flex-direction: column; align-items: center; gap: 5px; }
-        .tab-item.active { color: #f1c40f; font-weight: bold; }
-        .page { display: none; height: 100vh; padding-top: 20px; }
-        .page.active { display: block; }
-    </style>
-</head>
-<body>
-
-    <div id="miningPage" class="page active">
-        <div class="balance-container"><span id="balance">0</span> ¢</div>
-        <div class="rate">Estimated: 1¢ = $0.005</div>
-        <div class="coin-wrapper">
-            <button class="coin-btn" id="coinBtn"></button>
-        </div>
-        <div id="levelLabel" style="margin-top:10px;">BOSS LEVEL 1</div>
-        <div class="level-box"><div class="level-progress" id="progress"></div></div>
-        <div style="color: #555; font-size: 12px;">Listing: April 2027</div>
-    </div>
-
-    <div class="tab-container">
-        <div class="tab-item active" onclick="location.reload()"><span>⛏️</span>Mining</div>
-        <div class="tab-item"><span>📋</span>Tasks</div>
-        <div class="tab-item"><span>💰</span>Withdraw</div>
-    </div>
-
-    <script>
-        let score = localStorage.getItem("coco_balance") ? parseInt(localStorage.getItem("coco_balance")) : 0;
-        function updateUI() {
-            document.getElementById("balance").innerText = score.toLocaleString();
-            let prog = (score % 1000) / 10;
-            document.getElementById("progress").style.width = prog + "%";
-        }
-        document.getElementById("coinBtn").addEventListener("click", () => {
-            score += 1;
-            updateUI();
-            localStorage.setItem("coco_balance", score);
-            if (navigator.vibrate) navigator.vibrate(15);
-        });
-        updateUI();
-    </script>
-</body>
-</html>
-            if (navigator.vibrate) navigator.vibrate(15);
-        });
-
-        function showPage(pageId, el) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            el.classList.add('active');
-        }
-
-        function doTask(btn, url) {
-            window.open(url, '_blank');
-            btn.innerText = "Check...";
-            setTimeout(() => {
-                score += 100;
-                updateUI();
-                localStorage.setItem("coco_balance", score);
-                btn.innerText = "Done";
-                btn.disabled = true;
-                btn.style.background = "#2ecc71";
-            }, 7000);
-        }
-
-        updateUI();
-    </script>
-</body>
-</html>
+            border: 6px solid #1a1a1a;
+            /* මෙතන ඔයා එවපු ලොකු කෝඩ් එක මම ලස්සනට සෙට් කළා */
+            background: url('data:image/jpeg;base64,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
