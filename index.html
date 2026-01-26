@@ -6,103 +6,144 @@
     <title>Coco Coin Pro - Boss Edition</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-        body { background: #000; color: #fff; font-family: 'Poppins', sans-serif; text-align: center; margin: 0; padding: 15px; overflow: hidden; user-select: none; }
+        body { background: #000; color: white; text-align: center; font-family: 'Poppins', sans-serif; margin: 0; padding: 0; overflow: hidden; user-select: none; }
         
-        /* Progress Bar Style */
-        .progress-container { width: 85%; height: 12px; background: #222; border-radius: 10px; margin: 20px auto; overflow: hidden; border: 1px solid #333; }
-        .progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #f1c40f, #e67e22); transition: width 0.3s; }
+        /* Header UI */
+        .header { margin-top: 25px; }
+        .title { font-size: 16px; color: #f1c40f; letter-spacing: 3px; font-weight: bold; }
+        .balance { font-size: 50px; font-weight: 700; color: #fff; margin: 5px 0; }
+        .rate { color: #2ecc71; font-size: 14px; margin-bottom: 10px; }
 
-        .balance-container { font-size: 55px; font-weight: bold; color: #fff; margin-top: 20px; }
-        .rate { color: #2ecc71; font-size: 14px; margin-bottom: 5px; }
-
-        /* Coconut Button Design */
-        .coin-wrapper { position: relative; display: inline-block; margin-top: 10px; }
+        /* Real Coconut Button Design */
+        .coin-wrapper { position: relative; display: inline-block; margin: 10px auto; }
         .coin-btn {
-            width: 260px; height: 260px; border-radius: 50%; border: 8px solid #1a1a1a;
-            background: #222 url('https://img.icons8.com/plasticine/400/coconut.png') no-repeat center;
-            background-size: 80%; cursor: pointer; transition: transform 0.1s;
-            box-shadow: 0 0 40px rgba(241, 196, 15, 0.2);
+            width: 250px; height: 250px; border-radius: 50%; border: 10px solid #2c1a0a;
+            background: #4a2c10; cursor: pointer; position: relative; overflow: hidden;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5), inset 0 0 60px rgba(0,0,0,0.8);
+            transition: transform 0.05s ease; -webkit-tap-highlight-color: transparent;
+            display: flex; align-items: center; justify-content: center;
         }
-        .coin-btn:active { transform: scale(0.95); }
+        .coin-btn::after { content: ''; width: 190px; height: 190px; background: #fff; border-radius: 50%; box-shadow: inset 0 0 20px rgba(0,0,0,0.2); }
+        .coin-btn::before { content: '🥥'; font-size: 120px; position: absolute; z-index: 1; }
+        .coin-btn:active { transform: scale(0.92); }
 
-        /* Screen Styles */
+        .level-badge { background: linear-gradient(145deg, #222, #111); padding: 6px 25px; border-radius: 20px; color: #f1c40f; font-weight: bold; border: 1px solid #333; display: inline-block; margin-top: 15px; }
+
+        /* Screens */
         .screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 90vh; background: #000; z-index: 100; padding: 20px; box-sizing: border-box; overflow-y: auto; padding-bottom: 100px; }
-        .task-group-title { text-align: left; color: #f1c40f; font-size: 14px; margin: 20px 0 10px 5px; font-weight: bold; }
-        .task-card { background: #111; border: 1px solid #222; padding: 15px; border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .task-group-title { text-align: left; color: #f1c40f; font-size: 13px; margin: 15px 0 8px 5px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        .task-card { background: #111; border: 1px solid #222; padding: 12px; border-radius: 15px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
         .task-info { text-align: left; }
-        .task-info b { font-size: 14px; display: block; }
-        .task-info span { color: #f1c40f; font-size: 12px; }
-        .go-btn { background: #f1c40f; color: #000; border: none; padding: 8px 18px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .task-info b { font-size: 13px; display: block; }
+        .task-info span { color: #f1c40f; font-size: 11px; }
+
+        .go-btn { background: #f1c40f; color: #000; border: none; padding: 6px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
+
+        /* Daily Popup */
+        #daily-popup { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#1a1a1a; padding:30px; border-radius:25px; border:2px solid #f1c40f; z-index:1000; width:80%; text-align:center; box-shadow: 0 0 50px rgba(0,0,0,1); }
 
         /* Navigation */
-        .nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-around; background: #080808; padding: 15px 0; border-top: 1px solid #222; z-index: 200; }
-        .nav-item { color: #555; font-size: 12px; cursor: pointer; text-align: center; }
+        .nav { position: fixed; bottom: 0; width: 100%; display: flex; background: #080808; padding: 15px 0; border-top: 1px solid #222; z-index: 200; }
+        .nav-item { flex: 1; color: #555; font-size: 11px; cursor: pointer; }
         .nav-item.active { color: #f1c40f; }
 
         /* Animation */
-        .plus { position: absolute; color: #f1c40f; font-weight: bold; font-size: 30px; pointer-events: none; animation: up 0.7s forwards; }
-        @keyframes up { 0% { opacity:1; } 100% { opacity:0; transform: translateY(-100px); } }
+        .plus { position: absolute; color: #f1c40f; font-weight: bold; font-size: 30px; pointer-events: none; animation: floatUp 0.7s forwards; z-index: 150; }
+        @keyframes floatUp { 0% { opacity:1; } 100% { opacity:0; transform: translateY(-120px); } }
     </style>
 </head>
 <body>
 
+    <div id="daily-popup">
+        <h2 style="color:#f1c40f">Daily Reward!</h2>
+        <p>දිනපතා පැමිණීම ගැන ස්තූතියි!<br>ඔබට <b>¢500</b> ලැබුණා.</p>
+        <button class="go-btn" style="width:100%" onclick="claimDaily()">CLAIM</button>
+    </div>
+
     <div id="mine-page">
-        <div class="balance-container" id="balance">0 ¢</div>
-        <div class="rate">1¢ = $0.005</div>
-
+        <div class="header">
+            <div class="title">COCO COIN</div>
+            <div class="balance" id="balance">0</div>
+            <div class="rate">1¢ = $0.005</div>
+        </div>
         <div class="coin-wrapper">
-            <div class="coin-btn" onclick="mine(event)"></div>
+            <div class="coin-btn" id="tap-btn"></div>
         </div>
-
-        <div style="margin-top:15px; font-weight:bold; color:#f1c40f;" id="level-txt">LEVEL 1</div>
-        <div class="progress-container">
-            <div class="progress-bar" id="p-bar"></div>
-        </div>
-        <div style="color: #444; font-size: 11px;">Listing: April 2027</div>
+        <div class="level-badge" id="level-display">LEVEL 1</div>
+        <p style="font-size: 11px; color: #666; margin-top: 15px; font-weight:bold;">Listing: April 2027 🚀</p>
+        <p style="font-size: 10px; color: #444;">Warning: Withdrawal Eligibility requires daily mining.</p>
     </div>
 
     <div id="task-screen" class="screen">
-        <h2 style="color:#f1c40f">OFFICIAL TASKS</h2>
+        <h2 style="color:#f1c40f; margin-bottom: 20px;">MISSION CENTER</h2>
         
-        <div class="task-group-title">SOCIAL MEDIA</div>
-        <div class="task-card"><div class="task-info"><b>YouTube Subscribe</b><span>+500 ¢</span></div><button class="go-btn" onclick="runTask(this, 'https://youtube.com/@cococoin-i9m?si=LQ-WTjpo1SCsgpQn', 500)">GO</button></div>
-        <div class="task-card"><div class="task-info"><b>TikTok Follow</b><span>+500 ¢</span></div><button class="go-btn" onclick="runTask(this, 'https://www.tiktok.com/@coco.coin0?_r=1&_t=ZS-93N9riatjyD', 500)">GO</button></div>
-        <div class="task-card"><div class="task-info"><b>Facebook Like</b><span>+500 ¢</span></div><button class="go-btn" onclick="runTask(this, 'https://www.facebook.com/share/1D3h6b2HQU/', 500)">GO</button></div>
-        <div class="task-card"><div class="task-info"><b>Join News Channel</b><span>+500 ¢</span></div><button class="go-btn" onclick="runTask(this, 'https://t.me/+5yPR6-ct7VYyMGVl', 500)">GO</button></div>
+        <div id="task-list">
+            <div class="task-group-title">YouTube Missions</div>
+            <div class="task-card"><div class="task-info"><b>YT - Watch & Like</b><span>+100 ¢</span></div><button class="go-btn" onclick="startTask(this, 'https://youtube.com/@cococoin-i9m?si=LQ-WTjpo1SCsgpQn', 100)">GO</button></div>
+            <div class="task-card"><div class="task-info"><b>YT - Subscribe</b><span>+100 ¢</span></div><button class="go-btn" onclick="startTask(this, 'https://youtube.com/@cococoin-i9m?si=LQ-WTjpo1SCsgpQn', 100)">GO</button></div>
+            <div class="task-card"><div class="task-info"><b>YT - Comment</b><span>+100 ¢</span></div><button class="go-btn" onclick="startTask(this, 'https://youtube.com/@cococoin-i9m?si=LQ-WTjpo1SCsgpQn', 100)">GO</button></div>
+
+            <div class="task-group-title">TikTok Missions</div>
+            <div class="task-card"><div class="task-info"><b>TikTok - Follow</b><span>+100 ¢</span></div><button class="go-btn" onclick="startTask(this, 'https://www.tiktok.com/@coco.coin0?_r=1&_t=ZS-93N9riatjyD', 100)">GO</button></div>
+            <div class="task-card"><div class="task-info"><b>TikTok - Like Video</b><span>+100 ¢</span></div><button class="go-btn" onclick="startTask(this, 'https://www.tiktok.com/@coco.coin0?_r=1&_t=ZS-93N9riatjyD', 100)">GO</button></div>
+
+            <div class="task-group-title">Facebook Missions</div>
+            <div class="task-card"><div class="task-info"><b>FB - Like Page</b><span>+100 ¢</span></div><button class="go-btn" onclick="startTask(this, 'https://www.facebook.com/share/1D3h6b2HQU/', 100)">GO</button></div>
+            <div class="task-card"><div class="task-info"><b>FB - Follow Profile</b><span>+100 ¢</span></div><button class="go-btn" onclick="startTask(this, 'https://www.facebook.com/share/1D3h6b2HQU/', 100)">GO</button></div>
+
+            <div class="task-group-title">Community</div>
+            <div class="task-card"><div class="task-info"><b>Join Official Telegram</b><span>+500 ¢</span></div><button class="go-btn" onclick="startTask(this, 'https://t.me/+5yPR6-ct7VYyMGVl', 500)">GO</button></div>
+        </div>
     </div>
 
-    <div class="nav-bar">
-        <div class="nav-item active" id="n-mine" onclick="nav('mine')">⛏️<br>Mining</div>
-        <div class="nav-item" id="n-task" onclick="nav('task')">📋<br>Tasks</div>
-        <div class="nav-item" onclick="alert('Launch Date: April 2027')">💰<br>Withdraw</div>
+    <div class="nav">
+        <div class="nav-item active" id="n-mine" onclick="changeTab('mine')">⛏️<br>Mining</div>
+        <div class="nav-item" id="n-task" onclick="changeTab('task')">📋<br>Tasks</div>
+        <div class="nav-item" onclick="showWith()">💰<br>Withdraw</div>
     </div>
 
     <script>
-        let balance = parseInt(localStorage.getItem('coco_bal')) || 740;
+        let bal = parseInt(localStorage.getItem('coco_bal')) || 740;
+        let lastVisit = localStorage.getItem('coco_visit');
 
-        function updateUI() {
-            document.getElementById('balance').innerText = balance.toLocaleString() + " ¢";
-            // Progress Bar & Level Logic
-            let lvl = Math.floor(balance / 5000) + 1;
-            document.getElementById('level-txt').innerText = "LEVEL " + (lvl > 10 ? 10 : lvl);
-            let progress = (balance % 5000) / 50; 
-            document.getElementById('p-bar').style.width = progress + "%";
-            localStorage.setItem('coco_bal', balance);
+        function refresh() {
+            document.getElementById('balance').innerText = bal.toLocaleString() + " ¢";
+            let lvl = Math.floor(bal / 5000) + 1;
+            document.getElementById('level-display').innerText = "LEVEL " + (lvl > 10 ? 10 : lvl);
+            localStorage.setItem('coco_bal', bal);
         }
 
-        function mine(e) {
-            balance += 1;
-            updateUI();
+        window.onload = function() {
+            let today = new Date().toDateString();
+            if (lastVisit !== today) {
+                document.getElementById('daily-popup').style.display = 'block';
+                localStorage.setItem('coco_visit', today);
+            }
+            refresh();
+        };
+
+        function claimDaily() {
+            bal += 500;
+            refresh();
+            document.getElementById('daily-popup').style.display = 'none';
+        }
+
+        const tapBtn = document.getElementById('tap-btn');
+        tapBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            bal += 1;
+            refresh();
+            const t = e.touches[0];
             const p = document.createElement('div');
             p.className = 'plus'; p.innerText = '+1';
-            p.style.left = e.clientX + 'px'; p.style.top = e.clientY + 'px';
+            p.style.left = t.clientX + 'px'; p.style.top = t.clientY + 'px';
             document.body.appendChild(p);
             setTimeout(() => p.remove(), 700);
-            if(navigator.vibrate) navigator.vibrate(40);
-        }
+            if(navigator.vibrate) navigator.vibrate(35);
+        });
 
-        function nav(p) {
-            if(p == 'mine') {
+        function changeTab(t) {
+            if(t == 'mine') {
                 document.getElementById('mine-page').style.display='block';
                 document.getElementById('task-screen').style.display='none';
                 document.getElementById('n-mine').classList.add('active');
@@ -115,19 +156,21 @@
             }
         }
 
-        function runTask(btn, url, reward) {
+        function startTask(b, url, r) {
             window.open(url, '_blank');
-            btn.innerText = "...";
+            b.innerText = "...";
             setTimeout(() => {
-                balance += reward;
-                updateUI();
-                btn.innerText = "DONE";
-                btn.disabled = true;
-                btn.parentElement.style.opacity = "0.5";
+                bal += r;
+                refresh();
+                b.innerText = "DONE";
+                b.disabled = true;
+                b.parentElement.style.opacity = '0.5';
             }, 6000);
         }
 
-        updateUI();
+        function showWith() {
+            alert("🔒 WITHDRAWAL LOCKED\n\nLaunch: April 2027\nCondition: Daily Mining Required.");
+        }
     </script>
 </body>
 </html>
