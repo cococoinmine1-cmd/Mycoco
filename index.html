@@ -2,125 +2,116 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cococoin Boss Edition</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-        body { 
-            background-color: #0d0d0d; 
-            color: white; 
-            text-align: center; 
-            font-family: 'Poppins', sans-serif; 
-            margin: 0; 
-            padding: 15px; 
-            overflow: hidden; 
+        body {
+            background-color: #0d0d0d;
+            color: white;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 15px;
+            overflow: hidden;
             user-select: none;
         }
 
-        /* Balance Section */
-        .balance-container { 
-            font-size: 60px; 
-            font-weight: bold; 
-            color: #f1c40f; 
-            margin-top: 35px; 
-            text-shadow: 0 0 25px rgba(241, 196, 15, 0.4); 
+        .balance-container {
+            font-size: 60px;
+            font-weight: bold;
+            color: #f1c40f;
+            margin-top: 35px;
+            text-shadow: 0 0 25px rgba(241, 196, 15, 0.4);
         }
-        .rate { color: #2ecc71; font-size: 16px; margin-bottom: 5px; font-weight: bold; }
 
-        /* The Boss Button - Using your Base64 Image */
-        .coin-wrapper { position: relative; display: inline-block; margin-top: 25px; }
-        .coin-btn { 
-            width: 290px; 
-            height: 290px; 
-            border-radius: 50%; 
+        .rate { color: #2ecc71; font-size: 16px; margin-bottom: 5px; }
+
+        .coin-wrapper { position: relative; display: inline-block; margin-top: 20px; }
+        
+        /* රූපය පෙනෙන තැන හරි ගැස්සීම */
+        .coin-btn {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
             border: 6px solid #1a1a1a;
-            /* මෙතන ඔයා එවපු ලොකු කෝඩ් එක මම ලස්සනට සෙට් කළා */
-            background: url('data:image/jpeg;base64,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');
+            background-image: url('https://i.ibb.co/Lzd9vM7V/Gemini-Generated-Image-wi69y8wi69y8wi69.png');
             background-size: cover;
             background-position: center;
             cursor: pointer;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-            transition: transform 0.07s ease-out;
-            box-shadow: 0 0 40px rgba(241, 196, 15, 0.2);
+            transition: transform 0.1s;
+            box-shadow: 0 0 50px rgba(241, 196, 15, 0.2);
         }
-        .coin-btn:active { transform: scale(0.92); }
 
-        /* Progress Bar */
-        .level-label { font-size: 14px; color: #aaa; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
-        .level-box { background: #1a1a1a; width: 85%; height: 12px; border-radius: 10px; margin: 10px auto; overflow: hidden; border: 1px solid #333; }
-        .level-progress { background: linear-gradient(90deg, #f1c40f, #e67e22); height: 100%; width: 0%; transition: 0.3s; }
-        .listing-text { color: #555; font-size: 12px; margin-top: 10px; }
+        .coin-btn:active { transform: scale(0.95); }
 
-        /* Navigation */
-        .tab-container { 
-            display: flex; 
-            justify-content: space-around; 
-            background: rgba(20, 20, 20, 0.98); 
-            padding: 15px 0; 
-            position: fixed; 
-            bottom: 0; 
-            left: 0; 
-            right: 0; 
-            border-top: 1px solid #333; 
+        .boss-level { margin-top: 15px; font-weight: bold; color: #aaa; }
+
+        .progress-container {
+            width: 80%;
+            height: 12px;
+            background: #333;
+            border-radius: 10px;
+            margin: 20px auto;
+            overflow: hidden;
         }
-        .tab-item { color: #666; font-size: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
-        .tab-item.active { color: #f1c40f; font-weight: bold; }
-        .tab-item span { font-size: 22px; margin-bottom: 4px; }
+
+        .progress-bar { width: 65%; height: 100%; background: linear-gradient(90deg, #f39c12, #e67e22); }
+
+        /* පල්ලෙහා Buttons වැඩ කරන විදිය */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            background: #111;
+            padding: 15px 0;
+            border-top: 1px solid #222;
+        }
+
+        .nav-item { color: #888; text-decoration: none; font-size: 14px; cursor: pointer; }
+        .nav-item.active { color: #f1c40f; }
+        .nav-item i { display: block; font-size: 20px; margin-bottom: 5px; }
+
     </style>
 </head>
 <body>
 
-    <div id="balanceDisplay" class="balance-container">0</div>
+    <div class="balance-container" id="balance">740 ¢</div>
     <div class="rate">1¢ = $0.005</div>
 
     <div class="coin-wrapper">
-        <button class="coin-btn" id="coinBtn"></button>
+        <div class="coin-btn" onclick="mine()"></div>
     </div>
 
-    <div class="level-label" id="levelLabel">BOSS LEVEL 1</div>
-    <div class="level-box">
-        <div class="level-progress" id="progressBar"></div>
-    </div>
-    <div class="listing-text">Listing: April 2027</div>
+    <div class="boss-level">BOSS LEVEL 1</div>
 
-    <div class="tab-container">
-        <div class="tab-item active"><span>⛏️</span>Mining</div>
-        <div class="tab-item"><span>📋</span>Tasks</div>
-        <div class="tab-item"><span>💰</span>Withdraw</div>
+    <div class="progress-container">
+        <div class="progress-bar"></div>
+    </div>
+
+    <div style="color: #666; font-size: 12px;">Listing: April 2027</div>
+
+    <div class="nav-bar">
+        <div class="nav-item active" onclick="showSection('mining')">⛏️<br>Mining</div>
+        <div class="nav-item" onclick="alert('Tasks Coming Soon!')">📋<br>Tasks</div>
+        <div class="nav-item" onclick="alert('Withdrawal starts on April 2027')">💰<br>Withdraw</div>
     </div>
 
     <script>
-        // Load Score from LocalStorage
-        let score = localStorage.getItem("coco_balance") ? parseInt(localStorage.getItem("coco_balance")) : 0;
-
-        function updateDisplay() {
-            document.getElementById("balanceDisplay").innerText = score.toLocaleString();
-            
-            // Calculate Level and Progress
-            let level = Math.floor(score / 1000) + 1;
-            let progress = (score % 1000) / 10;
-            
-            document.getElementById("levelLabel").innerText = "BOSS LEVEL " + level;
-            document.getElementById("progressBar").style.width = progress + "%";
+        let balance = 740;
+        function mine() {
+            balance += 1;
+            document.getElementById('balance').innerText = balance + " ¢";
         }
-
-        // Click Event
-        document.getElementById("coinBtn").addEventListener("click", (e) => {
-            score += 1;
-            updateDisplay();
-            localStorage.setItem("coco_balance", score);
-
-            // Haptic Feedback (Vibration)
-            if (navigator.vibrate) {
-                navigator.vibrate(10);
-            }
-        });
-
-        // Initialize UI
-        updateDisplay();
+        function showSection(section) {
+            console.log("Switching to " + section);
+        }
     </script>
 
 </body>
+</html>
 </html>
