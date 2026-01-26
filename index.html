@@ -145,6 +145,153 @@
             // Update Balance
             balance += 1;
             balanceElement.innerText = balance + " ¢";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cococoin Boss Edition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+        body {
+            background-color: #0d0d0d;
+            color: white;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 15px;
+            overflow: hidden;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Balance Section */
+        .balance-container {
+            font-size: 60px;
+            font-weight: bold;
+            color: #f1c40f;
+            margin-top: 35px;
+            text-shadow: 0 0 25px rgba(241, 196, 15, 0.4);
+        }
+
+        .rate { color: #2ecc71; font-size: 16px; margin-bottom: 20px; }
+
+        /* The Boss Button */
+        .coin-wrapper { 
+            position: relative; 
+            display: inline-block; 
+            margin-top: 20px; 
+            touch-action: manipulation;
+        }
+
+        .coin-btn {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 6px solid #1a1a1a;
+            /* GitHub Direct Link used for stability */
+            background-image: url('https://raw.githubusercontent.com/cococoinmine1-cmd/Mycoco/main/Gemini_Generated_Image_wi69y8wi69y8wi69.png');
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            box-shadow: 0 0 50px rgba(241, 196, 15, 0.2);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Tap Animation */
+        .coin-btn:active { transform: scale(0.92); }
+
+        .boss-level { margin-top: 15px; font-weight: bold; color: #aaa; }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 80%;
+            height: 12px;
+            background: #333;
+            border-radius: 10px;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+
+        .progress-bar { 
+            width: 65%; 
+            height: 100%; 
+            background: linear-gradient(90deg, #f39c12, #e67e22); 
+        }
+
+        .listing-date { color: #666; font-size: 12px; margin-top: 10px; }
+
+        /* Navigation Bar */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            background: #111;
+            padding: 15px 0;
+            border-top: 1px solid #222;
+        }
+
+        .nav-item { color: #888; text-decoration: none; font-size: 14px; cursor: pointer; }
+        .nav-item.active { color: #f1c40f; }
+        .nav-item i { display: block; font-size: 20px; margin-bottom: 5px; }
+
+        /* Floating +1 Effect */
+        .plus-one {
+            position: absolute;
+            color: #f1c40f;
+            font-size: 24px;
+            font-weight: bold;
+            pointer-events: none;
+            animation: floatUp 0.8s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-100px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="balance-container" id="balance">740 ¢</div>
+    <div class="rate">1¢ = $0.005</div>
+
+    <div class="coin-wrapper" id="coin-wrapper">
+        <div class="coin-btn" id="coin-btn"></div>
+    </div>
+
+    <div class="boss-level">BOSS LEVEL 1</div>
+
+    <div class="progress-container">
+        <div class="progress-bar"></div>
+    </div>
+
+    <div class="listing-date">Listing: April 2027</div>
+
+    <div class="nav-bar">
+        <div class="nav-item active">⛏️<br>Mining</div>
+        <div class="nav-item" onclick="alert('Tasks Coming Soon!')">📋<br>Tasks</div>
+        <div class="nav-item" onclick="alert('Withdrawal starts on April 2027')">💰<br>Withdraw</div>
+    </div>
+
+    <script>
+        let balance = 740;
+        const balanceElement = document.getElementById('balance');
+        const coinBtn = document.getElementById('coin-btn');
+        const coinWrapper = document.getElementById('coin-wrapper');
+
+        function mine(event) {
+            // Update Balance
+            balance += 1;
+            balanceElement.innerText = balance + " ¢";
 
             // Vibration Effect
             if (navigator.vibrate) {
