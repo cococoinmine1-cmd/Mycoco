@@ -3,79 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cococoin Live</title>
+    <title>Coco Coin Miner</title>
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; margin: 0; padding: 0; }
-        .bal { font-size: 50px; color: #f1c40f; margin-top: 30px; font-weight: bold; }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
         
-        /* Mining Button - රූපය කෝඩ් එක ඇතුළෙමයි තියෙන්නේ */
-        .coin-btn {
-            width: 240px; height: 240px; border-radius: 50%; border: 6px solid #f1c40f;
-            margin: 30px auto; cursor: pointer;
-            background: #222 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🥥</text></svg>') no-repeat center;
-            background-size: 70%; transition: 0.1s;
+        body {
+            background-color: #000;
+            color: white;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            user-select: none;
         }
-        .coin-btn:active { transform: scale(0.9); }
 
-        /* Screens */
-        #task-screen { display: none; padding: 20px; }
-        .task-card { background: #111; padding: 15px; border-radius: 10px; margin: 10px; display: flex; justify-content: space-between; border: 1px solid #333; }
+        /* Header */
+        .header { margin-top: 30px; }
+        .title { font-size: 24px; font-weight: 600; color: #fff; letter-spacing: 1px; }
+        .balance { font-size: 55px; font-weight: bold; color: #f1c40f; margin: 5px 0; text-shadow: 0 0 20px rgba(241, 196, 15, 0.3); }
+        .rate { color: #2ecc71; font-size: 16px; margin-bottom: 20px; }
 
-        /* Nav Bar */
-        .nav { position: fixed; bottom: 0; width: 100%; display: flex; background: #111; padding: 15px 0; border-top: 2px solid #222; }
-        .nav-item { flex: 1; color: #888; cursor: pointer; }
-        .nav-item.active { color: #f1c40f; }
+        /* Main Tap Button */
+        #mining-screen { display: flex; flex-direction: column; align-items: center; }
+        
+        .coin-btn {
+            width: 280px; height: 280px;
+            border-radius: 50%;
+            border: 8px solid #1a1a1a;
+            background: #222 url('https://raw.githubusercontent.com/cococoinmine1-cmd/Mycoco/main/Gemini_Generated_Image_wi69y8wi69y8wi69.png') no-repeat center;
+            background-size: cover;
+            cursor: pointer;
+            box-shadow: 0 0 40px rgba(241, 196, 15, 0.1);
+            transition: transform 0.1s ease;
+            margin: 20px 0;
+        }
+        .coin-btn:active { transform: scale(0.94); }
+
+        /* Tasks Screen */
+        #tasks-screen {
+            display: none;
+            padding: 20px;
+            height: 70vh;
+            overflow-y: auto;
+        }
+        .task-card {
+            background: #111;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #222;
+        }
+        .task-text { text-align: left; }
+        .task-text b { display: block; font-size: 14px; }
+        .task-text span { color: #f1c40f; font-size: 13px; }
+        .go-btn {
+            background: #f1c40f; border: none; padding: 8px 15px;
+            border-radius: 8px; font-weight: bold; cursor: pointer;
+        }
+        .completed { opacity: 0.5; pointer-events: none; }
+
+        /* Navigation */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            background: #0d0d0d;
+            padding: 15px 0;
+            border-top: 1px solid #222;
+        }
+        .nav-item { flex: 1; color: #555; font-size: 12px; cursor: pointer; transition: 0.3s; }
+        .nav-item i { display: block; font-size: 22px; margin-bottom: 4px; }
+        .active { color: #f1c40f; }
+
+        /* Plus One Animation */
+        .plus {
+            position: absolute; color: #f1c40f; font-size: 26px; font-weight: bold;
+            animation: moveUp 0.7s ease-out forwards; pointer-events: none;
+        }
+        @keyframes moveUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-100px); }
+        }
     </style>
 </head>
 <body>
 
-    <div id="mine-screen">
-        <div class="bal" id="balance">740 ¢</div>
-        <div style="color:#2ecc71;">1¢ = $0.005</div>
-        <div class="coin-btn" onclick="tap()"></div>
-        <div style="font-weight:bold;">LEVEL 1 BOSS</div>
+    <div class="header">
+        <div class="title">COCO COIN</div>
+        <div class="balance" id="balance">740 ¢</div>
+        <div class="rate">1¢ = $0.005</div>
     </div>
 
-    <div id="task-screen">
-        <h2>TASKS</h2>
-        <div class="task-card">
-            <div style="text-align:left;"><b>Watch YouTube</b><br><span style="color:#f1c40f;">+500 ¢</span></div>
-            <button onclick="doTask('https://youtube.com', 500)" style="background:#f1c40f; border:none; padding:10px; border-radius:5px; font-weight:bold;">GO</button>
+    <div id="mining-screen">
+        <div class="coin-btn" id="tap-btn"></div>
+        <div style="color: #666; font-size: 14px; margin-top: 10px;">BOSS LEVEL 1</div>
+    </div>
+
+    <div id="tasks-screen">
+        <h3 id="task-header">Available Tasks</h3>
+        <div id="task-list">
+            <div class="task-card">
+                <div class="task-text"><b>YouTube - Watch & Like</b><span>+100 ¢</span></div>
+                <button class="go-btn" onclick="doTask(this, 'https://youtube.com', 100)">GO</button>
+            </div>
+            <div class="task-card">
+                <div class="task-text"><b>TikTok - Follow</b><span>+100 ¢</span></div>
+                <button class="go-btn" onclick="doTask(this, 'https://tiktok.com', 100)">GO</button>
+            </div>
+            <div class="task-card">
+                <div class="task-text"><b>Facebook - Share</b><span>+100 ¢</span></div>
+                <button class="go-btn" onclick="doTask(this, 'https://facebook.com', 100)">GO</button>
+            </div>
+            <div class="task-card">
+                <div class="task-text"><b>Telegram - Join Channel</b><span>+100 ¢</span></div>
+                <button class="go-btn" onclick="doTask(this, 'https://t.me', 100)">GO</button>
+            </div>
         </div>
+        <div id="no-tasks" style="display:none; color:#666; margin-top:50px;">TASKS COMING SOON...</div>
     </div>
 
-    <div class="nav">
-        <div class="nav-item active" id="n1" onclick="show('mine')">⛏️ Mining</div>
-        <div class="nav-item" id="n2" onclick="show('task')">📋 Tasks</div>
+    <div class="nav-bar">
+        <div class="nav-item active" id="nav-mine" onclick="showPage('mine')">⛏️<br>Mining</div>
+        <div class="nav-item" id="nav-task" onclick="showPage('task')">📋<br>Tasks</div>
+        <div class="nav-item" onclick="showWithdraw()">💰<br>Withdraw</div>
     </div>
 
     <script>
-        let balance = 740;
-        function tap() {
-            balance++;
-            document.getElementById('balance').innerText = balance + " ¢";
+        let count = 740;
+        let completedTasks = 0;
+        const totalTasks = 4;
+
+        // Tap Logic
+        const tapBtn = document.getElementById('tap-btn');
+        tapBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            count++;
+            document.getElementById('balance').innerText = count + " ¢";
+            createPlus(e.touches[0].clientX, e.touches[0].clientY);
             if(navigator.vibrate) navigator.vibrate(40);
+        });
+
+        function createPlus(x, y) {
+            const p = document.createElement('div');
+            p.innerText = '+1';
+            p.className = 'plus';
+            p.style.left = x + 'px';
+            p.style.top = y + 'px';
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 700);
         }
-        function show(p) {
-            if(p=='mine') {
-                document.getElementById('mine-screen').style.display='block';
-                document.getElementById('task-screen').style.display='none';
-                document.getElementById('n1').classList.add('active');
-                document.getElementById('n2').classList.remove('active');
+
+        // Navigation Logic
+        function showPage(page) {
+            if(page === 'mine') {
+                document.getElementById('mining-screen').style.display = 'flex';
+                document.getElementById('tasks-screen').style.display = 'none';
+                document.getElementById('nav-mine').classList.add('active');
+                document.getElementById('nav-task').classList.remove('active');
             } else {
-                document.getElementById('mine-screen').style.display='none';
-                document.getElementById('task-screen').style.display='block';
-                document.getElementById('n2').classList.add('active');
-                document.getElementById('n1').classList.remove('active');
+                document.getElementById('mining-screen').style.display = 'none';
+                document.getElementById('tasks-screen').style.display = 'block';
+                document.getElementById('nav-task').classList.add('active');
+                document.getElementById('nav-mine').classList.remove('active');
             }
         }
-        function doTask(url, r) {
+
+        // Task Logic
+        function doTask(btn, url, reward) {
             window.open(url, '_blank');
+            btn.innerText = "Verifying...";
             setTimeout(() => {
-                balance += r;
-                document.getElementById('balance').innerText = balance + " ¢";
-                alert("Bonus Added!");
-            }, 3000);
+                count += reward;
+                document.getElementById('balance').innerText = count + " ¢";
+                btn.parentElement.classList.add('completed');
+                btn.innerText = "✔️ Done";
+                completedTasks++;
+                if(completedTasks >= totalTasks) {
+                    document.getElementById('task-list').style.display = 'none';
+                    document.getElementById('no-tasks').style.display = 'block';
+                }
+            }, 4000);
+        }
+
+        // Withdraw Logic
+        function showWithdraw() {
+            alert("COCO COIN LAUNCH DATE: APRIL 2027\n\nWithdrawal feature is coming soon!");
         }
     </script>
 </body>
