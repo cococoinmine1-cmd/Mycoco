@@ -3,82 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cococoin Official</title>
+    <title>Cococoin Boss Edition</title>
     <style>
-        body { background-color: #0d0d0d; color: white; text-align: center; font-family: 'Poppins', sans-serif; margin: 0; padding: 15px; }
-        .balance-container { font-size: 50px; font-weight: bold; color: #f1c40f; margin-top: 20px; }
-        .rate { color: #2ecc71; font-size: 14px; margin-bottom: 10px; }
+        body { background-color: #0d0d0d; color: white; text-align: center; font-family: 'Poppins', sans-serif; margin: 0; padding: 15px; overflow: hidden; }
         
+        /* Balance Styling */
+        .balance-container { font-size: 55px; font-weight: bold; color: #f1c40f; margin-top: 30px; text-shadow: 0 0 20px rgba(241, 196, 15, 0.3); }
+        .rate { color: #2ecc71; font-size: 15px; margin-bottom: 5px; font-weight: bold; }
+        .listing-text { color: #888; font-size: 12px; margin-bottom: 15px; }
+
+        /* Boss Coco Button */
+        .coin-wrapper { position: relative; display: inline-block; margin-top: 20px; }
+        .coin-btn { 
+            width: 280px; 
+            height: 280px; 
+            border-radius: 50%; 
+            border: none;
+            /* Boss Coco ගේ රූපය මෙතනට දාලා තියෙන්නේ */
+            background: url('https://i.ibb.co/C5mHhV7/boss-coco.png') no-repeat center center;
+            background-size: contain;
+            cursor: pointer;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            transition: transform 0.05s;
+            filter: drop-shadow(0 0 20px rgba(241, 196, 15, 0.2));
+        }
+        .coin-btn:active { transform: scale(0.95); }
+
         /* Progress Bar */
-        .level-box { background: #222; width: 90%; height: 8px; border-radius: 5px; margin: 10px auto; overflow: hidden; }
-        .level-progress { background: #f1c40f; height: 100%; width: 0%; transition: 0.5s; }
+        .level-box { background: #222; width: 85%; height: 10px; border-radius: 10px; margin: 20px auto; overflow: hidden; border: 1px solid #333; }
+        .level-progress { background: linear-gradient(90deg, #f1c40f, #e67e22); height: 100%; width: 0%; transition: 0.5s; }
+        #levelLabel { font-size: 14px; color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Coin Button */
-        .coin-btn { width: 220px; height: 220px; border-radius: 50%; border: 6px solid #333; background: radial-gradient(#444, #111); cursor: pointer; margin: 25px 0; outline: none; -webkit-tap-highlight-color: transparent; font-size: 90px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(241, 196, 15, 0.1); }
-        .coin-btn:active { transform: scale(0.92); }
-
-        /* Tab System */
-        .tab-container { display: flex; justify-content: space-around; background: #1a1a1a; padding: 15px; border-radius: 20px; position: fixed; bottom: 10px; left: 10px; right: 10px; border: 1px solid #333; }
-        .tab-item { cursor: pointer; font-size: 12px; color: #888; display: flex; flex-direction: column; gap: 5px; }
+        /* Navigation Tab */
+        .tab-container { display: flex; justify-content: space-around; background: rgba(26, 26, 26, 0.95); padding: 15px; border-radius: 25px 25px 0 0; position: fixed; bottom: 0; left: 0; right: 0; border-top: 1px solid #333; backdrop-filter: blur(10px); }
+        .tab-item { cursor: pointer; font-size: 12px; color: #666; display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .tab-item.active { color: #f1c40f; font-weight: bold; }
+        .tab-item i { font-size: 20px; }
 
         /* Pages */
-        .page { display: none; padding-bottom: 100px; animation: fadeIn 0.3s; }
+        .page { display: none; height: 100vh; padding-top: 20px; animation: fadeIn 0.4s; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Task Cards */
-        .task-card { background: #1e1e1e; padding: 15px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; text-align: left; border: 1px solid #2a2a2a; }
-        .task-info b { display: block; font-size: 14px; color: #fff; }
-        .task-info span { font-size: 13px; color: #f1c40f; font-weight: bold; }
-        .claim-btn { background: #f1c40f; border: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; color: #000; transition: 0.2s; }
-        .claim-btn:disabled { background: #2ecc71; color: white; cursor: default; }
+        .task-card { background: #161616; padding: 18px; border-radius: 15px; margin: 10px 15px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #222; }
+        .task-info b { display: block; font-size: 14px; text-align: left; }
+        .task-info span { font-size: 13px; color: #f1c40f; display: block; text-align: left; }
+        .claim-btn { background: #f1c40f; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; color: #000; cursor: pointer; }
 
-        .withdraw-card { background: #111; padding: 50px 20px; border-radius: 25px; margin-top: 50px; border: 2px dashed #333; }
+        /* Withdraw */
+        .withdraw-box { margin: 50px 20px; padding: 40px 20px; border-radius: 30px; background: #111; border: 2px dashed #333; }
+        .coming-soon { background: #e74c3c; color: white; padding: 5px 15px; border-radius: 5px; font-size: 14px; display: inline-block; margin-top: 15px; }
     </style>
 </head>
 <body>
 
     <div id="miningPage" class="page active">
         <div class="balance-container"><span id="balance">0</span> ¢</div>
-        <div class="rate">Listing Price: 1¢ = $0.005</div>
-        <div id="levelLabel" style="font-weight: bold; color: #aaa;">Level 1</div>
-        <div class="level-box"><div class="level-progress" id="progress"></div></div>
+        <div class="rate">Estimated: 1¢ = $0.005</div>
         
-        <center><button class="coin-btn" id="coinBtn">🥥</button></center>
-        <p style="color: #666;">Tap the coconut to earn Cococoin!</p>
+        <div class="coin-wrapper">
+            <button class="coin-btn" id="coinBtn"></button>
+        </div>
+
+        <div id="levelLabel">Level 1</div>
+        <div class="level-box"><div class="level-progress" id="progress"></div></div>
+        <div class="listing-text">Listing: April 2027</div>
     </div>
 
     <div id="tasksPage" class="page">
-        <h2 style="color: #f1c40f;">Social Tasks</h2>
-        <p style="font-size: 14px; color: #aaa;">Complete these tasks to earn 100¢ for each!</p>
-        
+        <h2 style="color:#f1c40f">BOSS TASKS</h2>
         <div class="task-card">
             <div class="task-info"><b>Follow TikTok</b><span>+100 ¢</span></div>
-            <button class="claim-btn" onclick="doTask(this, 'https://www.tiktok.com/@coco.coin0?_r=1&_t=ZS-93N9riatjyD')">Go</button>
+            <button class="claim-btn" onclick="doTask(this, 'https://www.tiktok.com/@coco.coin0')">Go</button>
         </div>
         <div class="task-card">
             <div class="task-info"><b>Subscribe YouTube</b><span>+100 ¢</span></div>
-            <button class="claim-btn" onclick="doTask(this, 'https://youtube.com/@cococoin-i9m?si=LQ-WTjpo1SCsgpQn')">Go</button>
+            <button class="claim-btn" onclick="doTask(this, 'https://youtube.com/@cococoin-i9m')">Go</button>
         </div>
         <div class="task-card">
-            <div class="task-info"><b>Join Telegram News</b><span>+100 ¢</span></div>
+            <div class="task-info"><b>Telegram Channel</b><span>+100 ¢</span></div>
             <button class="claim-btn" onclick="doTask(this, 'https://t.me/+5yPR6-ct7VYyMGVl')">Go</button>
-        </div>
-        <div class="task-card">
-            <div class="task-info"><b>Follow Facebook</b><span>+100 ¢</span></div>
-            <button class="claim-btn" onclick="doTask(this, 'https://www.facebook.com/share/1D3h6b2HQU/')">Go</button>
         </div>
     </div>
 
     <div id="withdrawPage" class="page">
-        <div class="withdraw-card">
-            <h2 style="color: #e74c3c; letter-spacing: 2px;">WITHDRAW</h2>
-            <p style="color: #fff;">Minimum Withdrawal: 50,000 ¢</p>
-            <div style="background:#222; padding:15px; border-radius:12px; display:inline-block; margin-top:20px;">
-                <h3 style="margin:0; color:#f1c40f;">COMING SOON</h3>
-            </div>
-            <p style="font-size: 13px; color:#666; margin-top:30px; padding: 0 20px;">Withdrawals will be enabled once the Cococoin project lists on exchanges in April 2027.</p>
+        <div class="withdraw-box">
+            <h1 style="margin:0; color:#888;">WITHDRAW</h1>
+            <p>Min. Amount: 50,000 ¢</p>
+            <div class="coming-soon">COMING SOON</div>
+            <p style="font-size:12px; margin-top:30px; color:#555">Withdrawals will open after the official token launch.</p>
         </div>
     </div>
 
@@ -93,16 +108,17 @@
 
         function updateUI() {
             document.getElementById("balance").innerText = score.toLocaleString();
+            let level = Math.floor(score / 1000) + 1;
             let prog = (score % 1000) / 10;
             document.getElementById("progress").style.width = prog + "%";
-            document.getElementById("levelLabel").innerText = "Level " + (Math.floor(score/1000) + 1);
+            document.getElementById("levelLabel").innerText = "Boss Level " + level;
         }
 
-        document.getElementById("coinBtn").addEventListener("click", () => {
+        document.getElementById("coinBtn").addEventListener("click", (e) => {
             score += 1;
             updateUI();
             localStorage.setItem("coco_balance", score);
-            if (navigator.vibrate) navigator.vibrate(10);
+            if (navigator.vibrate) navigator.vibrate(15);
         });
 
         function showPage(pageId, el) {
@@ -114,18 +130,15 @@
 
         function doTask(btn, url) {
             window.open(url, '_blank');
-            btn.innerText = "Checking...";
-            btn.style.background = "#555";
-            
-            // තත්පර 8කින් කොයින් ටික ඔටෝ ඇඩ් වෙනවා
+            btn.innerText = "Check...";
             setTimeout(() => {
                 score += 100;
                 updateUI();
                 localStorage.setItem("coco_balance", score);
-                btn.innerText = "Claimed";
+                btn.innerText = "Done";
                 btn.disabled = true;
                 btn.style.background = "#2ecc71";
-            }, 8000);
+            }, 7000);
         }
 
         updateUI();
