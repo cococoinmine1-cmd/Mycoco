@@ -3,275 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cococoin Boss Edition</title>
+    <title>Cococoin Live</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-
-        body {
-            background-color: #0d0d0d;
-            color: white;
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 15px;
-            overflow: hidden;
-            user-select: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-        }
-
-        /* Balance Section */
-        .balance-container {
-            font-size: 60px;
-            font-weight: bold;
-            color: #f1c40f;
-            margin-top: 35px;
-            text-shadow: 0 0 25px rgba(241, 196, 15, 0.4);
-        }
-
-        .rate { color: #2ecc71; font-size: 16px; margin-bottom: 20px; }
-
-        /* The Boss Button */
-        .coin-wrapper { 
-            position: relative; 
-            display: inline-block; 
-            margin-top: 20px; 
-            touch-action: manipulation;
-        }
-
-        .coin-btn {
-            width: 280px;
-            height: 280px;
-            border-radius: 50%;
-            border: 6px solid #1a1a1a;
-            /* GitHub Direct Link used for stability */
-            background-image: url('https://raw.githubusercontent.com/cococoinmine1-cmd/Mycoco/main/Gemini_Generated_Image_wi69y8wi69y8wi69.png');
-            background-size: cover;
-            background-position: center;
-            cursor: pointer;
-            transition: transform 0.1s ease;
-            box-shadow: 0 0 50px rgba(241, 196, 15, 0.2);
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* Tap Animation */
-        .coin-btn:active { transform: scale(0.92); }
-
-        .boss-level { margin-top: 15px; font-weight: bold; color: #aaa; }
-
-        /* Progress Bar */
-        .progress-container {
-            width: 80%;
-            height: 12px;
-            background: #333;
-            border-radius: 10px;
-            margin: 20px auto;
-            overflow: hidden;
-        }
-
-        .progress-bar { 
-            width: 65%; 
-            height: 100%; 
-            background: linear-gradient(90deg, #f39c12, #e67e22); 
-        }
-
-        .listing-date { color: #666; font-size: 12px; margin-top: 10px; }
-
-        /* Navigation Bar */
-        .nav-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            background: #111;
-            padding: 15px 0;
-            border-top: 1px solid #222;
-        }
-
-        .nav-item { color: #888; text-decoration: none; font-size: 14px; cursor: pointer; }
-        .nav-item.active { color: #f1c40f; }
-        .nav-item i { display: block; font-size: 20px; margin-bottom: 5px; }
-
-        /* Floating +1 Effect */
-        .plus-one {
-            position: absolute;
-            color: #f1c40f;
-            font-size: 24px;
-            font-weight: bold;
-            pointer-events: none;
-            animation: floatUp 0.8s ease-out forwards;
-        }
-
-        @keyframes floatUp {
-            0% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-100px); }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="balance-container" id="balance">740 ¢</div>
-    <div class="rate">1¢ = $0.005</div>
-
-    <div class="coin-wrapper" id="coin-wrapper">
-        <div class="coin-btn" id="coin-btn"></div>
-    </div>
-
-    <div class="boss-level">BOSS LEVEL 1</div>
-
-    <div class="progress-container">
-        <div class="progress-bar"></div>
-    </div>
-
-    <div class="listing-date">Listing: April 2027</div>
-
-    <div class="nav-bar">
-        <div class="nav-item active">⛏️<br>Mining</div>
-        <div class="nav-item" onclick="alert('Tasks Coming Soon!')">📋<br>Tasks</div>
-        <div class="nav-item" onclick="alert('Withdrawal starts on April 2027')">💰<br>Withdraw</div>
-    </div>
-
-    <script>
-        let balance = 740;
-        const balanceElement = document.getElementById('balance');
-        const coinBtn = document.getElementById('coin-btn');
-        const coinWrapper = document.getElementById('coin-wrapper');
-
-        function mine(event) {
-            // Update Balance
-            balance += 1;
-            balanceElement.innerText = balance + " ¢";
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cococoin Boss Edition</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-
-        body {
-            background-color: #0d0d0d;
-            color: white;
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 15px;
-            overflow: hidden;
-            user-select: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-        }
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cococoin Miner</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-        body { background: #000; color: #fff; font-family: 'Poppins', sans-serif; text-align: center; margin: 0; padding: 0; user-select: none; }
+        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; margin: 0; padding: 0; }
+        .bal { font-size: 50px; color: #f1c40f; margin-top: 30px; font-weight: bold; }
         
-        /* Mining Screen */
-        #mining-screen { padding: 20px; }
-        .balance { font-size: 60px; font-weight: bold; color: #f1c40f; margin-top: 40px; }
-        
+        /* Mining Button - රූපය කෝඩ් එක ඇතුළෙමයි තියෙන්නේ */
         .coin-btn {
-            width: 260px; height: 260px; border-radius: 50%; border: 8px solid #1a1a1a;
-            margin: 40px auto; cursor: pointer;
-            background-image: url('https://img.icons8.com/emoji/256/coconut-emoji.png'); /* පොල් ගෙඩියක් දැම්මා මචං */
-            background-size: 80%; background-position: center; background-repeat: no-repeat;
-            background-color: #222; transition: transform 0.1s;
+            width: 240px; height: 240px; border-radius: 50%; border: 6px solid #f1c40f;
+            margin: 30px auto; cursor: pointer;
+            background: #222 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🥥</text></svg>') no-repeat center;
+            background-size: 70%; transition: 0.1s;
         }
         .coin-btn:active { transform: scale(0.9); }
 
-        /* Tasks Screen */
-        #tasks-screen { display: none; padding: 20px; padding-bottom: 100px; }
-        .task-card {
-            background: #111; border: 1px solid #222; padding: 15px;
-            border-radius: 15px; display: flex; align-items: center;
-            justify-content: space-between; margin-bottom: 15px;
-        }
-        .task-info { display: flex; align-items: center; text-align: left; }
-        .task-icon { width: 50px; height: 50px; margin-right: 15px; border-radius: 10px; }
-        .reward { color: #f1c40f; font-weight: bold; }
-        .go-btn { background: #f1c40f; color: #000; border: none; padding: 8px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        /* Screens */
+        #task-screen { display: none; padding: 20px; }
+        .task-card { background: #111; padding: 15px; border-radius: 10px; margin: 10px; display: flex; justify-content: space-between; border: 1px solid #333; }
 
-        /* Bottom Nav */
-        .nav-bar { position: fixed; bottom: 0; width: 100%; display: flex; background: #080808; padding: 15px 0; border-top: 1px solid #222; }
-        .nav-item { flex: 1; color: #666; cursor: pointer; font-size: 14px; }
+        /* Nav Bar */
+        .nav { position: fixed; bottom: 0; width: 100%; display: flex; background: #111; padding: 15px 0; border-top: 2px solid #222; }
+        .nav-item { flex: 1; color: #888; cursor: pointer; }
         .nav-item.active { color: #f1c40f; }
     </style>
 </head>
 <body>
 
-    <div id="mining-screen">
-        <div class="balance" id="balance">740 ¢</div>
-        <div style="color: #2ecc71;">1¢ = $0.005</div>
-        <div class="coin-btn" onclick="tapCoin()"></div>
-        <div style="font-weight:bold; color:#aaa;">BOSS LEVEL 1</div>
-        <div style="font-size:12px; margin-top:20px; color:#555;">Listing: April 2027</div>
+    <div id="mine-screen">
+        <div class="bal" id="balance">740 ¢</div>
+        <div style="color:#2ecc71;">1¢ = $0.005</div>
+        <div class="coin-btn" onclick="tap()"></div>
+        <div style="font-weight:bold;">LEVEL 1 BOSS</div>
     </div>
 
-    <div id="tasks-screen">
-        <h2 style="margin-top:40px;">TASKS</h2>
+    <div id="task-screen">
+        <h2>TASKS</h2>
         <div class="task-card">
-            <div class="task-info">
-                <img src="https://img.icons8.com/color/96/youtube-play.png" class="task-icon">
-                <div>
-                    <div>Watch Video 1</div>
-                    <div class="reward">+500 ¢</div>
-                </div>
-            </div>
-            <button class="go-btn" onclick="completeTask(500, 'https://youtube.com')">GO</button>
+            <div style="text-align:left;"><b>Watch YouTube</b><br><span style="color:#f1c40f;">+500 ¢</span></div>
+            <button onclick="doTask('https://youtube.com', 500)" style="background:#f1c40f; border:none; padding:10px; border-radius:5px; font-weight:bold;">GO</button>
         </div>
     </div>
 
-    <div class="nav-bar">
-        <div class="nav-item active" id="nav-mining" onclick="showPage('mining')">⛏️<br>Mining</div>
-        <div class="nav-item" id="nav-tasks" onclick="showPage('tasks')">📋<br>Tasks</div>
-        <div class="nav-item" onclick="alert('Withdrawals open April 2027')">💰<br>Withdraw</div>
+    <div class="nav">
+        <div class="nav-item active" id="n1" onclick="show('mine')">⛏️ Mining</div>
+        <div class="nav-item" id="n2" onclick="show('task')">📋 Tasks</div>
     </div>
 
     <script>
         let balance = 740;
-
-        function tapCoin() {
-            balance += 1;
+        function tap() {
+            balance++;
             document.getElementById('balance').innerText = balance + " ¢";
-            if (navigator.vibrate) navigator.vibrate(50);
+            if(navigator.vibrate) navigator.vibrate(40);
         }
-
-        function showPage(page) {
-            if (page === 'mining') {
-                document.getElementById('mining-screen').style.display = 'block';
-                document.getElementById('tasks-screen').style.display = 'none';
-                document.getElementById('nav-mining').classList.add('active');
-                document.getElementById('nav-tasks').classList.remove('active');
+        function show(p) {
+            if(p=='mine') {
+                document.getElementById('mine-screen').style.display='block';
+                document.getElementById('task-screen').style.display='none';
+                document.getElementById('n1').classList.add('active');
+                document.getElementById('n2').classList.remove('active');
             } else {
-                document.getElementById('mining-screen').style.display = 'none';
-                document.getElementById('tasks-screen').style.display = 'block';
-                document.getElementById('nav-tasks').classList.add('active');
-                document.getElementById('nav-mining').classList.remove('active');
+                document.getElementById('mine-screen').style.display='none';
+                document.getElementById('task-screen').style.display='block';
+                document.getElementById('n2').classList.add('active');
+                document.getElementById('n1').classList.remove('active');
             }
         }
-
-        function completeTask(reward, url) {
+        function doTask(url, r) {
             window.open(url, '_blank');
             setTimeout(() => {
-                balance += reward;
+                balance += r;
                 document.getElementById('balance').innerText = balance + " ¢";
-                alert("Task Success! " + reward + " ¢ added to your balance.");
+                alert("Bonus Added!");
             }, 3000);
         }
     </script>
-
 </body>
 </html>
