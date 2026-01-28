@@ -151,7 +151,7 @@
     <script>
     // --- 1. Fake Mining Logic (Global Counter) ---
     let totalMined = 269536;
-    let todayMined = 1000;
+    let todayMined = 4803;
     
     function updateMining() {
         totalMined += 2;
@@ -159,7 +159,7 @@
         document.getElementById('global-counter').innerText = totalMined.toLocaleString();
         document.getElementById('today-stats').innerText = "Today: +" + todayMined.toLocaleString();
     }
-    setInterval(updateMining, 1000);
+    setInterval(updateMining, 4803);
 
     // --- 2. Real-Time Balance Sync (මෙන්න මේකයි වැදගත්ම කොටස) ---
     function syncBalance() {
@@ -185,10 +185,10 @@
 
     // --- 3. Leaderboard Simulation ---
     const players = [
-        { name: "Commander Alpha", coins: "1.5M" },
-        { name: "SwissMiner_96", coins: "920K" },
-        { name: "CocoMaster", coins: "450K" },
-        { name: "User_7721", coins: "120K" }
+        { name: "Commander Alpha", coins: "90K" },
+        { name: "SwissMiner_96", coins: "46K" },
+        { name: "CocoMaster", coins: "43K" },
+        { name: "User_7721", coins: "21K" }
     ];
 
     function loadRanks() {
