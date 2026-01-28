@@ -161,27 +161,39 @@
     }
     setInterval(updateMining, 4803);
 
-    // --- 2. Real-Time Balance Sync (මෙන්න මේකයි වැදගත්ම කොටස) ---
-    function syncBalance() {
-    // Bot එකේ බැලන්ස් එක සේව් වෙලා තියෙන්නේ 'coco_bal' කියන නමින්
-    let botBalance = localStorage.getItem('coco_bal');
-    
-    if (botBalance) {
-        // බැලන්ස් එක වෙබ් එකේ balance එකට ඇඩ් කරනවා
-        // මෙතන comma දාලා ලස්සනට පෙන්වන්න toLocaleString පාවිච්චි කරනවා
-        document.getElementById('user-coins').innerText = parseInt(botBalance).toLocaleString();
-    } else {
-        document.getElementById('user-coins').innerText = "0";
-    }
-}
+   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+<script>
+  // Firebase Configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDE9SYe-4rS5jMeXStqg9pc_IuBsiySdaU",
+    authDomain: "cococoin-mine-c7b27.firebaseapp.com",
+    projectId: "cococoin-mine-c7b27",
+    databaseURL: "https://cococoin-mine-c7b27-default-rtdb.asia-southeast1.firebasedatabase.app", // මම මේක ඇඩ් කළා
+    storageBucket: "cococoin-mine-c7b27.firebasestorage.app",
+    messagingSenderId: "546963919107",
+    appId: "1:546963919107:web:acbb4d1eac94686d3f1936"
+  };
 
-// හැම තත්පරේම චෙක් කරනවා බැලන්ස් එක වෙනස් වෙලාද කියලා
-setInterval(syncBalance, 1000);
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
 
-// Tab එක මාරු වුණත් ඔටෝ අප්ඩේට් වෙන්න
-window.addEventListener('storage', () => {
-    syncBalance();
-});
+  // යූසර්ව හඳුනාගන්න ID එකක් (දැනට testing වලට device ID එක වගේ එකක් ගමු)
+  const userId = "test_user_1"; 
+
+  function syncBalance() {
+    // Firebase එකෙන් Live balance එක ගන්නවා
+    database.ref('users/' + userId + '/balance').on('value', (snapshot) => {
+      const data = snapshot.val();
+      if (data !== null) {
+        document.getElementById('user-coins').innerText = parseInt(data).toLocaleString();
+      }
+    });
+  }
+
+  // අර Fake Mining Counter එක මෙතනට දාන්න...
+  // (කලින් දුන්න Mining logic එක මෙතනම තියෙන්න දෙන්න)
 
     // --- 3. Leaderboard Simulation ---
     const players = [
