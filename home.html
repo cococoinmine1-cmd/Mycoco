@@ -163,25 +163,25 @@
 
     // --- 2. Real-Time Balance Sync (මෙන්න මේකයි වැදගත්ම කොටස) ---
     function syncBalance() {
-        // Game එකේදී සේව් කරන 'cocoClanSave' හෝ 'cocoClanUser' කියන key එක පාවිච්චි කරන්න
-        let savedData = JSON.parse(localStorage.getItem('cocoClanSave'));
-        
-        if(savedData && savedData.res) {
-            // Game එකේ gold ප්‍රමාණය අරගෙන Web එකේ Balance එකට දානවා
-            let currentCoins = Math.floor(savedData.res.gold);
-            document.getElementById('user-coins').innerText = currentCoins.toLocaleString();
-        }
+    // Bot එකේ බැලන්ස් එක සේව් වෙලා තියෙන්නේ 'coco_bal' කියන නමින්
+    let botBalance = localStorage.getItem('coco_bal');
+    
+    if (botBalance) {
+        // බැලන්ස් එක වෙබ් එකේ balance එකට ඇඩ් කරනවා
+        // මෙතන comma දාලා ලස්සනට පෙන්වන්න toLocaleString පාවිච්චි කරනවා
+        document.getElementById('user-coins').innerText = parseInt(botBalance).toLocaleString();
+    } else {
+        document.getElementById('user-coins').innerText = "0";
     }
+}
 
-    // හැම මිලි තත්පර 500කට වතාවක්ම Balance එක අලුත්ද කියලා බලනවා
-    setInterval(syncBalance, 500);
+// හැම තත්පරේම චෙක් කරනවා බැලන්ස් එක වෙනස් වෙලාද කියලා
+setInterval(syncBalance, 1000);
 
-    // අනිත් Tab එකක ඩේටා මාරු වුණොත් වහාම හඳුනාගැනීම
-    window.addEventListener('storage', (event) => {
-        if (event.key === 'cocoClanSave') {
-            syncBalance();
-        }
-    });
+// Tab එක මාරු වුණත් ඔටෝ අප්ඩේට් වෙන්න
+window.addEventListener('storage', () => {
+    syncBalance();
+});
 
     // --- 3. Leaderboard Simulation ---
     const players = [
