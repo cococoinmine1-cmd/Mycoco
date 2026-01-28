@@ -1,6 +1,8 @@
                 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coco Coin - Official Super Edition</title>
@@ -129,7 +131,22 @@
             }
             refresh();
         };
+           const firebaseConfig = {
+        apiKey: "AIzaSyDE9SYe-4rS5jMeXStqg9pc_IuBsiySdaU",
+        authDomain: "cococoin-mine-c7b27.firebaseapp.com",
+        projectId: "cococoin-mine-c7b27",
+        databaseURL: "https://cococoin-mine-c7b27-default-rtdb.firebaseio.com/", 
+        storageBucket: "cococoin-mine-c7b27.firebasestorage.app",
+        messagingSenderId: "546963919107",
+        appId: "1:546963919107:web:acbb4d1eac94686d3f1936"
+     };
 
+         // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+         // වැදගත්: මේ userId එකම තමයි Web එකේ (home.html) එකෙත් තියෙන්න ඕනේ
+     const userId = "global_user"; 
         function claimDaily() {
             let reward = 5 + (bonusDay * 5);
             bal += reward;
@@ -175,15 +192,18 @@
             }, 5000);
         }
 
-        function shareApp(btn) {
-            const shareText = "Join Coco Coin and start mining now! 🥥🚀";
-            const shareUrl = "https://t.me/your_bot_user_name"; // මෙතනට ඔයාගේ බොට් ලින්ක් එක දාන්න
-            window.open(`https://t.me/share/url?url=${shareUrl}&text=${shareText}`, '_blank');
-            setTimeout(() => {
-                bal += 50; refresh();
-                btn.innerText = "DONE"; btn.disabled = true;
-            }, 3000);
-        }
+        function refresh() {
+    document.getElementById('balance').innerText = bal.toLocaleString() + " ¢";
+    
+    // 1. Local storage එකට සේව් කරනවා (පරණ විදිහ)
+    localStorage.setItem('coco_bal', bal);
+    
+    // 2. Firebase එකට Live යවනවා (අලුත් විදිහ)
+    // මෙතන 'users/global_user/balance' කියන තැනට තමයි සේව් වෙන්නේ
+    database.ref('users/' + userId).set({
+        balance: bal
+    });
+}
 
         function showWith() {
             alert("🔒 WITHDRAWAL LOCKED\n\nLaunch: April 2027\nCondition: Daily Mining Required.\nKeep gathering Coco Coins!");
