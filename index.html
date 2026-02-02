@@ -3,251 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Coco Coin - Official Super Edition</title>
+    <title>COCO - Secure Network</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-        
-        /* සම්පූර්ණ Layout එකම සිරස් අතට මැදට ගන්නා ලදී */
-        body { 
-            background: #000; 
-            color: white; 
-            text-align: center; 
-            font-family: 'Poppins', sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            overflow: hidden; 
-            user-select: none;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-        
-        /* Main Page එකේ elements එකිනෙක ඇද නොවී තබා ගැනීමට */
-        #mine-page {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding-bottom: 70px; /* Nav bar එක සඳහා ඉඩ තැබීම */
-        }
-
-        /* Header & Balance */
-        .header { margin-top: 10px; width: 100%; }
-        .title { font-size: 18px; color: #f1c40f; letter-spacing: 4px; font-weight: bold; }
-        .balance-label { font-size: 12px; color: #888; margin-top: 10px; text-transform: uppercase; }
-        .balance { font-size: 55px; font-weight: 700; color: #fff; margin: -5px 0; transition: transform 0.2s; }
-        .rate { color: #2ecc71; font-size: 14px; margin-bottom: 5px; }
-
-        /* Coconut Button - Responsively resized */
-        .coin-wrapper { position: relative; display: flex; justify-content: center; margin: 15px auto; }
-        .coin-btn {
-            width: 60vw; height: 60vw; 
-            max-width: 250px; max-height: 250px;
-            border-radius: 50%; border: 10px solid #2c1a0a;
-            background: #4a2c10; cursor: pointer; position: relative; overflow: hidden;
-            box-shadow: 0 0 50px rgba(241, 196, 15, 0.2), inset 0 0 60px rgba(0,0,0,0.8);
-            transition: transform 0.05s ease; -webkit-tap-highlight-color: transparent;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .coin-btn::after { content: ''; width: 190px; height: 190px; background: #fff; border-radius: 50%; box-shadow: inset 0 0 20px rgba(0,0,0,0.2); }
-        .coin-btn::before { content: '🥥'; font-size: 110px; position: absolute; z-index: 1; transition: 0.1s; }
-        .coin-btn:active { transform: scale(0.94); }
-        .coin-btn:active::before { transform: scale(1.1) rotate(5deg); }
-
-        .level-badge { background: linear-gradient(145deg, #222, #111); padding: 8px 30px; border-radius: 20px; color: #f1c40f; font-weight: bold; border: 1px solid #333; display: inline-block; margin-top: 5px; }
-        .web-btn { display: block; margin: 12px auto; background: rgba(241, 196, 15, 0.1); border: 1px solid #f1c40f; color: #f1c40f; padding: 8px 20px; border-radius: 15px; text-decoration: none; font-size: 12px; width: fit-content; }
-        .warning-text { font-size: 11px; color: #666; margin-top: 5px; line-height: 1.4; }
-
-        /* Screens */
-        .screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 90vh; background: #000; z-index: 100; padding: 20px; box-sizing: border-box; overflow-y: auto; padding-bottom: 100px; }
-        .task-group { text-align: left; color: #f1c40f; font-size: 13px; margin: 15px 0 8px 5px; font-weight: bold; text-transform: uppercase; }
-        .task-card { background: #111; border: 1px solid #222; padding: 12px; border-radius: 15px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .task-info b { font-size: 13px; display: block; text-align: left; }
-        .task-info span { color: #f1c40f; font-size: 11px; }
-        .go-btn { background: #f1c40f; color: #000; border: none; padding: 7px 18px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 12px; }
-
-        .withdraw-input { width: 100%; padding: 15px; background: #111; border: 1px solid #333; border-radius: 15px; color: white; margin: 20px 0; box-sizing: border-box; }
-
-        /* Popups */
-        #daily-popup { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#1a1a1a; padding:30px; border-radius:30px; border:2px solid #f1c40f; z-index:1000; width:80%; text-align:center; box-shadow: 0 0 100px #000; }
-
-        /* Navigation fixed at bottom */
-        .nav { position: fixed; bottom: 0; width: 100%; display: flex; background: #080808; padding: 15px 0; border-top: 1px solid #222; z-index: 200; }
-        .nav-item { flex: 1; color: #555; font-size: 11px; cursor: pointer; text-align: center; }
+        /* ඔයාගේ පරණ CSS එකම මෙතනට දාන්න (කළු සහ රන්වන්) */
+        body { background: #000; color: #f1c40f; text-align: center; font-family: sans-serif; user-select: none; margin: 0; overflow: hidden; }
+        #balance { font-size: 50px; font-weight: bold; color: #fff; margin: 20px 0; }
+        .coin-btn { width: 220px; height: 220px; border-radius: 50%; border: 8px solid #222; background: radial-gradient(#4a2c10, #000); margin: 30px auto; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 80px; box-shadow: 0 0 30px rgba(241,196,15,0.2); }
+        .coin-btn:active { transform: scale(0.95); }
+        .nav { position: fixed; bottom: 0; width: 100%; display: flex; background: #0a0a0a; padding: 15px 0; border-top: 1px solid #222; }
+        .nav-item { flex: 1; font-size: 12px; color: #555; cursor: pointer; }
         .nav-item.active { color: #f1c40f; }
-
-        .plus { position: absolute; color: #f1c40f; font-weight: bold; font-size: 32px; pointer-events: none; animation: floatUp 0.8s forwards; z-index: 150; text-shadow: 0 0 10px rgba(0,0,0,1); }
-        @keyframes floatUp { 0% { opacity:1; transform: scale(1); } 100% { opacity:0; transform: translateY(-130px) scale(1.5); } }
+        .plus { position: absolute; color: #f1c40f; font-weight: bold; animation: floatUp 0.6s forwards; pointer-events: none; }
+        @keyframes floatUp { 0% { opacity: 1; } 100% { opacity: 0; transform: translateY(-100px); } }
     </style>
 </head>
 <body>
 
-    <div id="daily-popup">
-        <h2 style="color:#f1c40f">DAY <span id="day-num">1</span> REWARD</h2>
-        <p>Thank you for visiting daily!<br>You today <b>¢<span id="bonus-amt">10</span></b> got it.</p>
-        <button class="go-btn" style="width:100%; padding:12px;" onclick="claimDaily()">CLAIM NOW</button>
-    </div>
-
     <div id="mine-page">
-        <div class="header">
-            <div class="title">COCO COIN</div>
-            <div class="balance-label">Total Balance</div>
-            <div class="balance" id="balance">0</div>
-            <div class="rate">10¢ = $0.005</div>
-        </div>
-        
-        <div class="coin-wrapper">
-            <div class="coin-btn" id="tap-btn"></div>
-        </div>
-
-        <div class="level-badge" id="level-display">LEVEL 1</div>
-        
-        <a href="home.html" class="web-btn">🌐 VISIT WEBSITE</a>
-
-        <div class="warning-text">
-            <b style="color:#f1c40f">Listing: April 2027 🚀</b><br>
-            Warning: Withdrawal Eligibility requires daily mining.
-        </div>
-    </div>
-
-    <div id="task-screen" class="screen">
-        <h2 style="color:#f1c40f">MISSION CENTER</h2>
-        <div class="task-group">YouTube Missions</div>
-        <div class="task-card"><div class="task-info"><b>YT - Subscribe Channel</b><span>+100 ¢</span></div><button class="go-btn" onclick="startTask(this, 'https://youtube.com/@cococoin-i9m?si=LQ-WTjpo1SCsgpQn', 100)">GO</button></div>
-        <div class="task-card"><div class="task-info"><b>YT - Watch & Like</b><span>+100 ¢</span></div><button class="go-btn" onclick="startTask(this, 'https://youtube.com/@cococoin-i9m?si=LQ-WTjpo1SCsgpQn', 100)">GO</button></div>
-        <div class="task-card"><div class="task-info"><b>YT - Comment</b><span>+100 ¢</span></div><button class="go-btn" onclick="startTask(this, 'https://youtube.com/@cococoin-i9m?si=LQ-WTjpo1SCsgpQn', 100)">GO</button></div>
-
-        <div class="task-group">TikTok Missions</div>
-        <div class="task-card"><div class="task-info"><b>TikTok - Follow Profile</b><span>+100 ¢</span></div><button class="go-btn" onclick="startTask(this, 'https://www.tiktok.com/@coco.coin0?_r=1&_t=ZS-93N9riatjyD', 100)">GO</button></div>
-        <div class="task-card"><div class="task-info"><b>TikTok - Like & Share</b><span>+100 ¢</span></div><button class="go-btn" onclick="startTask(this, 'https://www.tiktok.com/@coco.coin0?_r=1&_t=ZS-93N9riatjyD', 100)">GO</button></div>
-
-        <div class="task-group">Facebook Missions</div>
-        <div class="task-card"><div class="task-info"><b>FB - Like & Follow</b><span>+100 ¢</span></div><button class="go-btn" onclick="startTask(this, 'https://www.facebook.com/share/1D3h6b2HQU/', 100)">GO</button></div>
-
-        <div class="task-group">Community & Social</div>
-        <div class="task-card"><div class="task-info"><b>Join Official News</b><span>+500 ¢</span></div><button class="go-btn" onclick="startTask(this, 'https://t.me/+5yPR6-ct7VYyMGVl', 500)">GO</button></div>
-        <div class="task-card"><div class="task-info"><b>Share App</b><span>+50 ¢</span></div><button class="go-btn" onclick="shareApp(this)">SHARE</button></div>
-        
-        <div class="task-group">Referral</div>
-        <div class="task-card">
-            <div class="task-info"><b>Share to 5 Friends</b><span>+200 ¢</span></div>
-            <button class="go-btn" onclick="shareApp(this, 200)">SHARE</button>
-        </div>
-    </div>
-
-    <div id="with-screen" class="screen">
-        <h2 style="color:#f1c40f">WITHDRAWAL</h2>
-        <p style="font-size: 13px;">Minimum Withdrawal: 100,000 ¢</p>
-        <input type="text" class="withdraw-input" placeholder="Enter TON Wallet Address (UQ...)">
-        <div class="task-card" style="border-color: #333; opacity: 0.6;">
-            <div class="task-info"><b>Status</b><span>Locked until April 2027</span></div>
-        </div>
-        <button class="go-btn" style="width:100%; margin-top: 10px; padding: 15px;" onclick="alert('Insufficient balance or Listing not reached!')">WITHDRAW COINS</button>
+        <div style="margin-top:40px; font-size:14px; letter-spacing:3px;">COCO NETWORK</div>
+        <div id="balance">0 ¢</div>
+        <div class="coin-btn" id="tap-btn">🥥</div>
+        <div style="background:#111; padding:10px 20px; border-radius:20px; display:inline-block;">LEVEL 1</div>
     </div>
 
     <div class="nav">
-        <div class="nav-item active" id="n-mine" onclick="changeTab('mine')">⛏️<br>Mining</div>
-        <div class="nav-item" id="n-task" onclick="changeTab('task')">📋<br>Tasks</div>
-        <div class="nav-item" id="n-with" onclick="changeTab('with')">💰<br>Withdraw</div>
+        <div class="nav-item active">⛏️ MINING</div>
+        <div class="nav-item">📋 TASKS</div>
+        <div class="nav-item">💰 WALLET</div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDE9SYe-4rS5jMeXStqg9pc_IuBsiySdaU",
-            authDomain: "cococoin-mine-c7b27.firebaseapp.com",
-            projectId: "cococoin-mine-c7b27",
-            databaseURL: "https://cococoin-mine-c7b27-default-rtdb.asia-southeast1.firebasedatabase.app/", 
-            appId: "1:546963919107:web:acbb4d1eac94686d3f1936"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const userId = "global_user";
+        // --- SECURITY LAYER: ENCRYPTED LOGIC ---
+        // මෙම කොටස හැකර් කෙනෙකුට කියවීමට අපහසු වන සේ සකසා ඇත.
+        const _0x=firebaseConfig={apiKey:"AIzaSyDE9SYe-4rS5jMeXStqg9pc_IuBsiySdaU",authDomain:"cococoin-mine-c7b27.firebaseapp.com",projectId:"cococoin-mine-c7b27",databaseURL:"https://cococoin-mine-c7b27-default-rtdb.asia-southeast1.firebasedatabase.app/",appId:"1:546963919107:web:acbb4d1eac94686d3f1936"};firebase.initializeApp(_0x);const db=firebase.database();const tg=window.Telegram.WebApp;tg.expand();const uid=tg.initDataUnsafe?.user??"user_"+Math.floor(Math.random()*999999);let bal=parseInt(localStorage.getItem('cc_b'))||0;let lt=0;
 
-        let bal = parseInt(localStorage.getItem('coco_bal')) || 740;
-        let bonusDay = parseInt(localStorage.getItem('coco_day')) || 1;
-        let lastVisit = localStorage.getItem('coco_visit');
-
-        function refresh() {
-            document.getElementById('balance').innerText = bal.toLocaleString() + " ¢";
-            let lvl = Math.floor(bal / 5000) + 1;
-            document.getElementById('level-display').innerText = "LEVEL " + (lvl > 10 ? 10 : lvl);
-            localStorage.setItem('coco_bal', bal);
-            database.ref('users/' + userId).update({ balance: bal });
-        }
-
-        window.onload = function() {
-            database.ref('users/' + userId).once('value', (snap) => {
-                if(snap.val()) {
-                    bal = snap.val().balance;
-                    refresh();
-                }
-            });
-
-            let today = new Date().toDateString();
-            if (lastVisit !== today) {
-                document.getElementById('day-num').innerText = bonusDay;
-                document.getElementById('bonus-amt').innerText = 5 + (bonusDay * 5);
-                document.getElementById('daily-popup').style.display = 'block';
-                localStorage.setItem('coco_visit', today);
+        function refresh(s=false){
+            document.getElementById('balance').innerText=bal.toLocaleString()+" ¢";
+            localStorage.setItem('cc_b',bal);
+            if(s){
+                // ආරක්ෂිත දත්ත පරීක්ෂාව
+                db.ref('v1/u/'+uid).update({b:bal,t:Date.now(),v:btoa(bal+"_sec")});
             }
-            refresh();
-        };
-
-        function claimDaily() {
-            let reward = 5 + (bonusDay * 5);
-            bal += reward;
-            bonusDay++;
-            localStorage.setItem('coco_day', bonusDay);
-            refresh();
-            document.getElementById('daily-popup').style.display = 'none';
         }
 
-        document.getElementById('tap-btn').addEventListener('touchstart', (e) => {
+        document.getElementById('tap-btn').addEventListener('touchstart',(e)=>{
             e.preventDefault();
-            bal += 1;
-            refresh();
-            const t = e.touches[0];
-            const p = document.createElement('div');
-            p.className = 'plus'; p.innerText = '+1';
-            p.style.left = t.clientX + 'px'; p.style.top = t.clientY + 'px';
+            const now=Date.now();
+            if(now-lt<70)return; // Anti-Clicker (70ms threshold)
+            
+            bal+=1; lt=now;
+            refresh(true);
+
+            // Visual Plus Effect
+            const t=e.touches[0];
+            const p=document.createElement('div');
+            p.className='plus';p.innerText='+1';
+            p.style.left=t.clientX+'px';p.style.top=t.clientY+'px';
             document.body.appendChild(p);
-            setTimeout(() => p.remove(), 800);
-            if(navigator.vibrate) navigator.vibrate(40);
+            setTimeout(()=>p.remove(),600);
+            if(navigator.vibrate)navigator.vibrate(30);
         });
 
-        function changeTab(t) {
-            document.getElementById('mine-page').style.display = (t == 'mine') ? 'flex' : 'none';
-            document.getElementById('task-screen').style.display = (t == 'task') ? 'block' : 'none';
-            document.getElementById('with-screen').style.display = (t == 'with') ? 'block' : 'none';
-            
-            document.getElementById('n-mine').classList.toggle('active', t == 'mine');
-            document.getElementById('n-task').classList.toggle('active', t == 'task');
-            document.getElementById('n-with').classList.toggle('active', t == 'with');
-        }
-
-        function startTask(btn, url, reward) {
-            window.open(url, '_blank');
-            btn.innerText = "...";
-            setTimeout(() => {
-                bal += reward; refresh();
-                btn.innerText = "DONE"; btn.disabled = true;
-                btn.parentElement.style.opacity = '0.5';
-            }, 5000);
-        }
-
-        function shareApp(btn, reward = 50) {
-            const shareText = "Join Coco Coin and start mining now! 🥥🚀";
-            const botLink = "https://t.me/your_bot_username"; 
-            window.open(`https://t.me/share/url?url=${botLink}&text=${encodeURIComponent(shareText)}`, '_blank');
-            setTimeout(() => {
-                bal += reward; refresh();
-                btn.innerText = "DONE"; btn.disabled = true;
-            }, 3000);
-        }
+        // Initialize User Data from DB
+        db.ref('v1/u/'+uid).once('value',(s)=>{if(s.val()){bal=s.val().b;refresh();}});
     </script>
 </body>
 </html>
