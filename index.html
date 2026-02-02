@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>COCO PROTOCOL | GLOBAL</title>
+    <title>COCO PROTOCOL | OFFICIAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;500;800&display=swap" rel="stylesheet">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -16,26 +16,20 @@
         .page.active { display: block; animation: slideUp 0.3s ease; }
         @keyframes slideUp { from { transform: translateY(15px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* MINE PAGE UI */
+        /* MINE PAGE */
         #balance { font-family: 'Orbitron', sans-serif; font-size: 50px; font-weight: 800; color: #fff; text-shadow: 0 0 20px rgba(241,196,15,0.4); margin-bottom: 5px; }
         .sub-text { color: var(--gold); font-size: 12px; letter-spacing: 3px; font-weight: 600; text-transform: uppercase; margin-bottom: 20px; display: block; }
         
-        .coin-btn { width: 230px; height: 230px; border-radius: 50%; background: radial-gradient(circle, #3d2b1f 0%, #000 100%); border: 10px solid var(--border); margin: 20px auto; display: flex; align-items: center; justify-content: center; font-size: 90px; cursor: pointer; transition: 0.1s; box-shadow: 0 15px 40px rgba(0,0,0,0.8); }
+        .coin-btn { width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, #3d2b1f 0%, #000 100%); border: 10px solid var(--border); margin: 20px auto; display: flex; align-items: center; justify-content: center; font-size: 85px; cursor: pointer; transition: 0.1s; box-shadow: 0 15px 40px rgba(0,0,0,0.8); }
         .coin-btn:active { transform: scale(0.92); border-color: var(--gold); }
 
-        /* CARDS & MISSIONS */
+        /* CARDS & ACTIONS */
         .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; text-align: left; }
         .card-info h3 { margin: 0; font-size: 14px; color: #fff; }
-        .card-info p { margin: 4px 0 0 0; font-size: 12px; color: var(--gold); font-weight: bold; }
-        
+        .card-info p { margin: 4px 0 0 0; font-size: 11px; color: var(--gold); font-weight: bold; }
         .action-btn { background: var(--gold); color: #000; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 11px; text-transform: uppercase; }
-        .action-btn:disabled { background: #333; color: #666; }
-
-        /* ROADMAP */
-        .roadmap-box { border-left: 2px solid var(--gold); padding-left: 15px; margin: 15px 0; text-align: left; }
-        .roadmap-step { margin-bottom: 15px; }
-
-        /* NAVIGATION */
+        
+        /* NAV BAR */
         .nav { position: fixed; bottom: 0; width: 100%; max-width: 500px; left: 50%; transform: translateX(-50%); display: flex; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); border-top: 1px solid var(--border); padding: 15px 0; z-index: 1000; }
         .nav-item { flex: 1; font-size: 9px; color: #555; cursor: pointer; font-weight: 800; display: flex; flex-direction: column; align-items: center; }
         .nav-item.active { color: var(--gold); }
@@ -57,54 +51,53 @@
             </div>
         </div>
 
-        <div id="missions" class="page">
-            <h2 class="sub-text">AVAILABLE MISSIONS</h2>
+        <div id="friends" class="page">
+            <h2 class="sub-text">REFER & EARN</h2>
+            <div class="card" style="display:block; text-align:center;">
+                <h3 style="margin-bottom:10px;">Your Invitation Link</h3>
+                <p id="ref-link" style="background:#000; padding:10px; border-radius:10px; font-size:10px; border:1px dashed #444; word-break:break-all;">Loading...</p>
+                <button class="action-btn" style="width:100%; margin-top:15px;" onclick="copyLink()">COPY INVITE LINK</button>
+            </div>
             <div class="card">
-                <div class="card-info"><h3>Subscribe YouTube</h3><p>+10,000 ¢</p></div>
+                <div class="card-info"><h3>Friends Invited</h3><p id="ref-count">0 Players</p></div>
+                <div style="font-size:12px; color:#888;">+5,000 PER REF</div>
+            </div>
+        </div>
+
+        <div id="missions" class="page">
+            <h2 class="sub-text">SOCIAL MISSIONS</h2>
+            <div class="card">
+                <div class="card-info"><h3>YouTube</h3><p>+10,000 ¢</p></div>
                 <button class="action-btn" onclick="doTask('yt', 'https://youtube.com/@cococoin-i9m', 10000)">GO</button>
             </div>
             <div class="card">
-                <div class="card-info"><h3>Follow TikTok</h3><p>+10,000 ¢</p></div>
+                <div class="card-info"><h3>TikTok</h3><p>+10,000 ¢</p></div>
                 <button class="action-btn" onclick="doTask('tk', 'https://www.tiktok.com/@coco.coin0', 10000)">GO</button>
             </div>
             <div class="card">
-                <div class="card-info"><h3>Join Telegram</h3><p>+15,000 ¢</p></div>
+                <div class="card-info"><h3>Telegram</h3><p>+15,000 ¢</p></div>
                 <button class="action-btn" onclick="doTask('tg', 'https://t.me/+5yPR6-ct7VYyMGVl', 15000)">GO</button>
             </div>
         </div>
 
         <div id="boost" class="page">
-            <h2 class="sub-text">MINING BOOSTERS</h2>
+            <h2 class="sub-text">BOOST & WALLET</h2>
             <div class="card">
                 <div class="card-info"><h3>Multitap</h3><p>Cost: 2,000 ¢</p></div>
                 <button class="action-btn" onclick="buyUpgrade('multi', 2000)">UPGRADE</button>
             </div>
-            <div class="card">
-                <div class="card-info"><h3>Energy Limit</h3><p>Cost: 5,000 ¢</p></div>
-                <button class="action-btn" onclick="buyUpgrade('energy', 5000)">UPGRADE</button>
-            </div>
-        </div>
-
-        <div id="wallet" class="page">
-            <h2 class="sub-text">WALLET & ROADMAP</h2>
             <div class="card" style="display:block;">
-                <h3>Withdrawal</h3>
-                <input type="text" id="wallet-addr" placeholder="Wallet Address" style="width:100%; padding:12px; background:#000; border:1px solid #333; color:white; border-radius:10px; margin: 10px 0;">
-                <button class="action-btn" style="width:100%" onclick="reqWithdraw()">REQUEST WITHDRAW</button>
-            </div>
-            <div class="roadmap-box">
-                <div class="roadmap-step"><b style="color:var(--gold)">PHASE 1</b><br><small>Community Launch & Tapping</small></div>
-                <div class="roadmap-step"><b style="color:var(--gold)">PHASE 2</b><br><small>NFT Upgrades & Wallet Integration</small></div>
-                <div class="roadmap-step"><b style="color:var(--gold)">PHASE 3</b><br><small>Listing on DEX (2027)</small></div>
+                <input type="text" id="wallet-addr" placeholder="TON Wallet Address" style="width:100%; padding:12px; background:#000; border:1px solid #333; color:white; border-radius:10px; margin-bottom:10px;">
+                <button class="action-btn" style="width:100%" onclick="reqWithdraw()">WITHDRAW ASSETS</button>
             </div>
         </div>
     </div>
 
     <nav class="nav">
         <div class="nav-item active" onclick="showPage('mine', this)"><span class="nav-icon">⛏️</span>MINE</div>
-        <div class="nav-item" onclick="showPage('missions', this)"><span class="nav-icon">📋</span>MISSIONS</div>
+        <div class="nav-item" onclick="showPage('friends', this)"><span class="nav-icon">👥</span>FRIENDS</div>
+        <div class="nav-item" onclick="showPage('missions', this)"><span class="nav-icon">📋</span>TASKS</div>
         <div class="nav-item" onclick="showPage('boost', this)"><span class="nav-icon">🚀</span>BOOST</div>
-        <div class="nav-item" onclick="showPage('wallet', this)"><span class="nav-icon">💰</span>WALLET</div>
     </nav>
 
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
@@ -121,7 +114,11 @@
         const tg = window.Telegram.WebApp;
 
         let userId = tg.initDataUnsafe?.user?.id || localStorage.getItem('guest_id') || "GUEST_"+Math.floor(Math.random()*9999);
-        let balance = 0, energy = 1000, maxEnergy = 1000, multi = 1, tasks = {};
+        let balance = 0, energy = 1000, maxEnergy = 1000, multi = 1, refCount = 0, tasks = {};
+        
+        const botUser = "COCO_COIN_BOT"; // ඔබේ බොට්ගේ නම මෙතනට දමන්න
+        const inviteLink = `https://t.me/Cococoin_mining_bot=@Cococoin_mining_bot`;
+        document.getElementById('ref-link').innerText = inviteLink;
 
         db.ref('users/' + userId).on('value', (snap) => {
             const data = snap.val();
@@ -129,6 +126,7 @@
                 balance = data.balance || 0;
                 multi = data.multi || 1;
                 maxEnergy = data.maxEnergy || 1000;
+                refCount = data.refCount || 0;
                 tasks = data.tasks || {};
                 updateUI();
             }
@@ -138,6 +136,7 @@
             document.getElementById('balance').innerText = balance.toLocaleString();
             document.getElementById('energy').innerText = energy;
             document.getElementById('max-energy').innerText = maxEnergy;
+            document.getElementById('ref-count').innerText = refCount + " Players";
             
             Object.keys(tasks).forEach(tid => {
                 const btn = document.querySelector(`button[onclick*="'${tid}'"]`);
@@ -159,24 +158,26 @@
             if(navigator.vibrate) navigator.vibrate(25);
         });
 
+        function copyLink() {
+            navigator.clipboard.writeText(inviteLink);
+            alert("Invite link copied!");
+        }
+
         function doTask(id, url, reward) {
             window.open(url, '_blank');
             setTimeout(() => {
                 if(!tasks[id]) {
                     balance += reward; tasks[id] = true;
                     db.ref('users/' + userId).update({ balance, tasks });
-                    alert("Reward Added!");
                 }
             }, 8000);
         }
 
         function buyUpgrade(type, cost) {
-            if(balance < cost) return alert("Not enough coins!");
+            if(balance < cost) return alert("Low balance!");
             balance -= cost;
             if(type === 'multi') multi++;
-            if(type === 'energy') maxEnergy += 500;
-            db.ref('users/' + userId).update({ balance, multi, maxEnergy });
-            alert("Upgrade Successful!");
+            db.ref('users/' + userId).update({ balance, multi });
         }
 
         function showPage(id, el) {
@@ -188,9 +189,9 @@
 
         function reqWithdraw() {
             const addr = document.getElementById('wallet-addr').value;
-            if(balance < 1000000) return alert("Min 1M required!");
-            db.ref('withdrawals').push({ userId, amount: balance, address: addr, time: Date.now() });
-            alert("Request Sent!");
+            if(balance < 1000000) return alert("Min 1M required");
+            db.ref('withdrawals').push({ userId, amount: balance, address: addr });
+            alert("Request sent!");
         }
 
         setInterval(() => { if(energy < maxEnergy) { energy += 2; updateUI(); } }, 1500);
