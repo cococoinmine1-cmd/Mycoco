@@ -3,207 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>COCO PREMIUM NETWORK</title>
+    <title>COCO PREMIUM V2</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root { --gold: #f1c40f; --dark: #0a0a0a; }
-        body { background: var(--dark); color: white; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; margin: 0; overflow: hidden; }
+        :root { --gold: #f1c40f; --dark: #0a0a0a; --gray: #222; }
+        body { background: var(--dark); color: white; text-align: center; font-family: sans-serif; user-select: none; margin: 0; padding-bottom: 80px; }
         
-        /* Top Bar */
-        .top-info { display: flex; justify-content: space-between; padding: 20px; font-size: 12px; color: #888; letter-spacing: 1px; }
+        .page { display: none; padding: 20px; animation: fadeIn 0.3s; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        #balance { font-size: 50px; font-weight: bold; color: white; text-shadow: 0 0 15px var(--gold); margin: 10px 0; }
+        .coin-btn { width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(#5d4037, #000); border: 8px solid var(--gray); margin: 30px auto; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 80px; transition: 0.1s; }
+        .coin-btn:active { transform: scale(0.9); border-color: var(--gold); }
+
+        .stat-card { background: #111; padding: 15px; border-radius: 15px; margin: 10px; border: 1px solid #333; }
+        .btn-action { background: var(--gold); color: black; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
         
-        /* Balance Section */
-        #balance-container { margin-top: 20px; }
-        #balance { font-size: 55px; font-weight: 800; text-shadow: 0 0 20px rgba(241,196,15,0.5); }
-        .currency { font-size: 20px; color: var(--gold); }
+        .nav { position: fixed; bottom: 0; width: 100%; display: flex; background: #0a0a0a; border-top: 1px solid #222; padding: 10px 0; }
+        .nav-item { flex: 1; font-size: 11px; color: #555; cursor: pointer; }
+        .nav-item.active { color: var(--gold); }
 
-        /* Coin Animation */
-        .coin-wrapper { position: relative; margin: 40px auto; width: 250px; height: 250px; }
-        .coin-btn { 
-            width: 100%; height: 100%; border-radius: 50%; 
-            background: radial-gradient(circle, #5d4037 0%, #000 100%);
-            border: 10px solid #222; position: relative; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; font-size: 100px;
-            box-shadow: 0 0 50px rgba(0,0,0,1), inset 0 0 20px rgba(241,196,15,0.1);
-            transition: transform 0.1s ease;
-        }
-        .coin-btn:active { transform: scale(0.92); border-color: var(--gold); }
-        
-        /* Energy Bar */
-        .energy-container { width: 80%; height: 12px; background: #222; margin: 20px auto; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
-        #energy-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #f1c40f, #e67e22); transition: width 0.2s; }
-
-        /* Floating +1 Effect */
-        .floating-text { position: absolute; color: var(--gold); font-size: 24px; font-weight: bold; pointer-events: none; animation: moveUp 0.7s ease-out forwards; z-index: 10; }
-        @keyframes moveUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-120px); } }
-
-        /* Navigation */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; display: flex; background: #111; padding: 15px 0; border-top: 1px solid #222; }
-        .nav-tab { flex: 1; color: #555; font-size: 12px; font-weight: bold; }
-        .nav-tab.active { color: var(--gold); }
-
-        /* Daily Modal */
-        #daily-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #1a1a1a; padding: 30px; border-radius: 20px; border: 2px solid var(--gold); z-index: 100; display: none; }
+        .floating-text { position: absolute; color: var(--gold); font-weight: bold; animation: moveUp 0.6s forwards; pointer-events: none; }
+        @keyframes moveUp { to { opacity: 0; transform: translateY(-100px); } }
     </style>
 </head>
 <body>
 
-    <div class="top-info">
-        <span>📶 COCO SECURE</span>
-        <span id="user-display">PLAYER: LOADING...</span>
-    </div>
-
-    <div id="balance-container">
+    <div id="mine" class="page active">
+        <div style="font-size: 12px; letter-spacing: 2px;">MINING STATUS</div>
         <div id="balance">0</div>
-        <div class="currency">COCO COINS</div>
-    </div>
-
-    <div class="coin-wrapper">
         <div class="coin-btn" id="tap-btn">🥥</div>
+        <div class="stat-card">⚡ ENERGY: <span id="energy">1000</span> / 1000</div>
     </div>
 
-    <div style="font-size: 14px; color: #888;">⚡ ENERGY</div>
-    <div class="energy-container">
-        <div id="energy-fill"></div>
+    <div id="tasks" class="page">
+        <h2>EARN MORE</h2>
+        <div class="stat-card">
+            <p>Join Telegram Channel</p>
+            <button class="btn-action" onclick="doTask('tg', 5000)">+ 5,000 ¢</button>
+        </div>
+        <div class="stat-card">
+            <p>Follow on Twitter/X</p>
+            <button class="btn-action" onclick="doTask('tw', 3000)">+ 3,000 ¢</button>
+        </div>
     </div>
 
-    <div id="daily-modal">
-        <h2 style="color:var(--gold)">DAILY BONUS!</h2>
-        <p>ඔබ අද පැමිණි නිසා කොයින් 500ක් ලැබුණා!</p>
-        <button onclick="closeModal()" style="background:var(--gold); border:none; padding:10px 20px; border-radius:10px; font-weight:bold;">ලබාගන්න</button>
+    <div id="withdraw" class="page">
+        <h2>WITHDRAWAL</h2>
+        <div class="stat-card">
+            <p>Minimum: 1,000,000 ¢</p>
+            <input type="text" id="wallet-addr" placeholder="Enter Wallet/Phone" style="width:90%; padding:10px; border-radius:5px; border:none; margin-bottom:10px;">
+            <button class="btn-action" onclick="requestWithdraw()">SEND REQUEST</button>
+        </div>
     </div>
 
-    <div class="bottom-nav">
-        <div class="nav-tab active">⛏️ MINE</div>
-        <div class="nav-tab">🏆 FRIENDS</div>
-        <div class="nav-tab">💰 EARN</div>
+    <div class="nav">
+        <div class="nav-item active" onclick="showPage('mine', this)">⛏️ MINE</div>
+        <div class="nav-item" onclick="showPage('tasks', this)">📋 TASKS</div>
+        <div class="nav-item" onclick="showPage('withdraw', this)">💰 WITHDRAW</div>
     </div>
-
-    <audio id="tap-sound" src="tap-sound.mp3"></audio>
 
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
 
     <script>
-        // --- CONFIGURATION ---
         const firebaseConfig = {
             apiKey: "AIzaSyDE9SYe-4rS5jMeXStqg9pc_IuBsiySdaU",
-            authDomain: "cococoin-mine-c7b27.firebaseapp.com",
-            projectId: "cococoin-mine-c7b27",
             databaseURL: "https://cococoin-mine-c7b27-default-rtdb.asia-southeast1.firebasedatabase.app/",
-            appId: "1:546963919107:web:acbb4d1eac94686d3f1936"
+            projectId: "cococoin-mine-c7b27"
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-
-        // --- USER SYSTEM ---
         const tg = window.Telegram.WebApp;
-        let userId, userName;
 
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            userId = tg.initDataUnsafe.user.id;
-            userName = tg.initDataUnsafe.user.first_name;
-        } else {
-            // ටෙලිග්‍රෑම් නැතිනම් පාවිච්චි වන ID එක
-            userId = localStorage.getItem('guest_id') || "guest_" + Math.floor(Math.random()*1000000);
-            localStorage.setItem('guest_id', userId);
-            userName = "GUEST PLAYER";
-        }
-        document.getElementById('user-display').innerText = "PLAYER: " + userName.toUpperCase();
+        let userId = tg.initDataUnsafe?.user?.id || localStorage.getItem('guest_id') || "GUEST_"+Math.floor(Math.random()*999);
+        if(!localStorage.getItem('guest_id')) localStorage.setItem('guest_id', userId);
 
-        // --- APP STATE ---
         let balance = 0;
         let energy = 1000;
-        let lastSyncTime = 0;
+        let isLoaded = false;
 
-        // Load Data from Firebase
-        db.ref('users/' + userId).on('value', (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
+        // --- පරණ දත්ත මුලින්ම ලෝඩ් කිරීම ---
+        db.ref('users/' + userId).on('value', (snap) => {
+            const data = snap.val();
+            if(data) {
                 balance = data.balance || 0;
-                updateDisplay();
-                checkDailyBonus(data.lastLogin);
+                // මුල් වරට ලෝඩ් වෙද්දී පමණක් Display එක Update කරන්න
+                if(!isLoaded) {
+                    updateUI();
+                    isLoaded = true;
+                }
             } else {
-                // New User
-                saveToDB();
+                saveToDB(); // අලුත් යූසර් කෙනෙක් නම් සේව් කරන්න
             }
         });
 
-        function updateDisplay() {
+        function updateUI() {
             document.getElementById('balance').innerText = balance.toLocaleString();
-            document.getElementById('energy-fill').style.width = (energy / 10) + "%";
+            document.getElementById('energy').innerText = energy;
         }
 
         function saveToDB() {
             db.ref('users/' + userId).update({
                 balance: balance,
-                username: userName,
                 lastUpdate: Date.now()
             });
         }
 
-        // --- TAP LOGIC ---
-        const tapBtn = document.getElementById('tap-btn');
-        const tapSound = document.getElementById('tap-sound');
-
-        tapBtn.addEventListener('touchstart', (e) => {
+        // --- TAPPING LOGIC ---
+        document.getElementById('tap-btn').addEventListener('touchstart', (e) => {
             e.preventDefault();
-            if (energy <= 0) return;
+            if(energy <= 0) return;
 
-            // Update State
             balance += 1;
             energy -= 1;
-            updateDisplay();
-
-            // Vibration & Sound
-            if (navigator.vibrate) navigator.vibrate(20);
-            tapSound.currentTime = 0;
-            tapSound.play().catch(() => {});
-
+            updateUI();
+            
             // Animation
-            const touch = e.touches[0];
-            createFloatingText(touch.clientX, touch.clientY);
-
-            // Sync with DB every 2 seconds to avoid lag
-            if (Date.now() - lastSyncTime > 2000) {
-                saveToDB();
-                lastSyncTime = Date.now();
-            }
+            const t = e.touches[0];
+            const p = document.createElement('div');
+            p.className = 'floating-text'; p.innerText = '+1';
+            p.style.left = t.clientX+'px'; p.style.top = t.clientY+'px';
+            document.body.appendChild(p);
+            setTimeout(() => { p.remove(); saveToDB(); }, 600);
         });
 
-        function createFloatingText(x, y) {
-            const el = document.createElement('div');
-            el.className = 'floating-text';
-            el.innerText = "+1";
-            el.style.left = x + 'px';
-            el.style.top = y + 'px';
-            document.body.appendChild(el);
-            setTimeout(() => el.remove(), 700);
+        // --- PAGE NAVIGATION ---
+        function showPage(pageId, el) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            el.classList.add('active');
         }
 
-        // --- DAILY BONUS ---
-        function checkDailyBonus(lastLogin) {
-            const today = new Date().toDateString();
-            if (lastLogin !== today) {
-                document.getElementById('daily-modal').style.display = 'block';
-                db.ref('users/' + userId).update({ lastLogin: today });
+        // --- WITHDRAWAL REQUEST ---
+        function requestWithdraw() {
+            const addr = document.getElementById('wallet-addr').value;
+            if(balance < 1000000) {
+                alert("අවම කොයින් 1,000,000ක් තිබිය යුතුය!");
+                return;
             }
-        }
+            if(!addr) { alert("කරුණාකර Phone/Wallet අංකය ඇතුළත් කරන්න."); return; }
 
-        function closeModal() {
-            balance += 500;
-            saveToDB();
-            document.getElementById('daily-modal').style.display = 'none';
+            db.ref('withdrawals').push({
+                userId: userId,
+                amount: balance,
+                address: addr,
+                status: 'pending',
+                time: Date.now()
+            }).then(() => {
+                alert("Withdraw Request එක සාර්ථකව යොමු කළා!");
+            });
         }
 
         // Energy Recovery
-        setInterval(() => {
-            if (energy < 1000) {
-                energy += 1;
-                updateDisplay();
-            }
-        }, 1500);
-
+        setInterval(() => { if(energy < 1000) { energy += 1; updateUI(); } }, 2000);
     </script>
 </body>
 </html>
