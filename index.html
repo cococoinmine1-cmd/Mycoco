@@ -3,66 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>COCO PREMIUM V2</title>
+    <title>COCO NETWORK - PRO EDITION</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root { --gold: #f1c40f; --dark: #0a0a0a; --gray: #222; }
-        body { background: var(--dark); color: white; text-align: center; font-family: sans-serif; user-select: none; margin: 0; padding-bottom: 80px; }
+        :root { --gold: #f1c40f; --dark: #000; --card: #111; }
+        body { background: var(--dark); color: white; text-align: center; font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 80px; overflow-x: hidden; }
         
-        .page { display: none; padding: 20px; animation: fadeIn 0.3s; }
+        .page { display: none; padding: 20px; animation: slideUp 0.3s ease-out; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        #balance { font-size: 50px; font-weight: bold; color: white; text-shadow: 0 0 15px var(--gold); margin: 10px 0; }
-        .coin-btn { width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(#5d4037, #000); border: 8px solid var(--gray); margin: 30px auto; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 80px; transition: 0.1s; }
-        .coin-btn:active { transform: scale(0.9); border-color: var(--gold); }
+        /* Mining UI */
+        #balance { font-size: 60px; font-weight: 800; margin: 10px 0; background: linear-gradient(to bottom, #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; drop-shadow: 0 0 10px rgba(241,196,15,0.5); }
+        .coin-wrap { position: relative; width: 260px; height: 260px; margin: 30px auto; }
+        .coin-btn { width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle, #4a2c10 0%, #000 100%); border: 8px solid #222; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 110px; box-shadow: 0 0 40px rgba(0,0,0,1); transition: transform 0.05s; }
+        .coin-btn:active { transform: scale(0.93); border-color: var(--gold); }
 
-        .stat-card { background: #111; padding: 15px; border-radius: 15px; margin: 10px; border: 1px solid #333; }
-        .btn-action { background: var(--gold); color: black; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+        /* Stats & Cards */
+        .card { background: var(--card); border: 1px solid #222; padding: 15px; border-radius: 20px; margin-bottom: 15px; text-align: left; }
+        .card h3 { margin: 0 0 10px 0; color: var(--gold); font-size: 16px; }
+        .btn-gold { background: var(--gold); color: black; border: none; padding: 12px; border-radius: 12px; font-weight: bold; width: 100%; cursor: pointer; font-size: 14px; }
         
-        .nav { position: fixed; bottom: 0; width: 100%; display: flex; background: #0a0a0a; border-top: 1px solid #222; padding: 10px 0; }
-        .nav-item { flex: 1; font-size: 11px; color: #555; cursor: pointer; }
-        .nav-item.active { color: var(--gold); }
+        /* Navigation */
+        .nav { position: fixed; bottom: 0; width: 100%; display: flex; background: rgba(10,10,10,0.95); backdrop-filter: blur(10px); border-top: 1px solid #222; padding: 12px 0; z-index: 100; }
+        .nav-item { flex: 1; font-size: 10px; color: #666; cursor: pointer; transition: 0.2s; }
+        .nav-item.active { color: var(--gold); transform: translateY(-3px); }
+        .nav-item i { font-size: 20px; display: block; margin-bottom: 4px; }
 
-        .floating-text { position: absolute; color: var(--gold); font-weight: bold; animation: moveUp 0.6s forwards; pointer-events: none; }
-        @keyframes moveUp { to { opacity: 0; transform: translateY(-100px); } }
+        .floating-text { position: absolute; color: white; font-weight: bold; font-size: 28px; animation: floatUp 0.6s ease-out forwards; pointer-events: none; text-shadow: 0 0 10px var(--gold); }
+        @keyframes floatUp { to { opacity: 0; transform: translateY(-120px) scale(1.5); } }
     </style>
 </head>
 <body>
 
     <div id="mine" class="page active">
-        <div style="font-size: 12px; letter-spacing: 2px;">MINING STATUS</div>
+        <div style="font-size: 11px; letter-spacing: 3px; color: #888; margin-top: 20px;">COCO CONTEXT PROTOCOL</div>
         <div id="balance">0</div>
-        <div class="coin-btn" id="tap-btn">🥥</div>
-        <div class="stat-card">⚡ ENERGY: <span id="energy">1000</span> / 1000</div>
-    </div>
-
-    <div id="tasks" class="page">
-        <h2>EARN MORE</h2>
-        <div class="stat-card">
-            <p>Join Telegram Channel</p>
-            <button class="btn-action" onclick="doTask('tg', 5000)">+ 5,000 ¢</button>
+        <div class="coin-wrap">
+            <div class="coin-btn" id="tap-btn">🥥</div>
         </div>
-        <div class="stat-card">
-            <p>Follow on Twitter/X</p>
-            <button class="btn-action" onclick="doTask('tw', 3000)">+ 3,000 ¢</button>
+        <div class="card" style="text-align: center;">
+            <span style="color:#888">ENERGY: </span> <b id="energy">1000</b> <span style="color:#888">/ 1000</span>
         </div>
     </div>
 
-    <div id="withdraw" class="page">
-        <h2>WITHDRAWAL</h2>
-        <div class="stat-card">
-            <p>Minimum: 1,000,000 ¢</p>
-            <input type="text" id="wallet-addr" placeholder="Enter Wallet/Phone" style="width:90%; padding:10px; border-radius:5px; border:none; margin-bottom:10px;">
-            <button class="btn-action" onclick="requestWithdraw()">SEND REQUEST</button>
+    <div id="ref" class="page">
+        <h2>INVITE FRIENDS</h2>
+        <div class="card">
+            <h3>Your Referral Link</h3>
+            <p style="font-size: 12px; color: #888; word-break: break-all;" id="ref-link">Loading link...</p>
+            <button class="btn-gold" onclick="copyRef()">COPY & INVITE</button>
+        </div>
+        <div class="card">
+            <h3>Total Referrals: <span id="ref-count">0</span></h3>
+            <p style="font-size: 11px;">Get 5,000 ¢ for every friend who joins!</p>
         </div>
     </div>
 
-    <div class="nav">
-        <div class="nav-item active" onclick="showPage('mine', this)">⛏️ MINE</div>
-        <div class="nav-item" onclick="showPage('tasks', this)">📋 TASKS</div>
-        <div class="nav-item" onclick="showPage('withdraw', this)">💰 WITHDRAW</div>
+    <div id="with" class="page">
+        <h2>WALLET</h2>
+        <div class="card">
+            <h3>Balance: <span id="with-bal">0</span> ¢</h3>
+            <input type="text" id="wallet-input" placeholder="Enter TON Wallet Address" style="width:100%; padding:12px; background:#000; border:1px solid #333; color:white; border-radius:10px; box-sizing:border-box; margin:10px 0;">
+            <button class="btn-gold" onclick="withdraw()">WITHDRAW NOW</button>
+        </div>
+        <p style="font-size: 11px; color: #555;">Minimum withdrawal: 1,000,000 COCO</p>
     </div>
+
+    <nav class="nav">
+        <div class="nav-item active" onclick="showPage('mine', this)"><i>⛏️</i>MINE</div>
+        <div class="nav-item" onclick="showPage('ref', this)"><i>👥</i>FRIENDS</div>
+        <div class="nav-item" onclick="showPage('with', this)"><i>💰</i>WALLET</div>
+    </nav>
 
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
@@ -77,88 +89,73 @@
         const db = firebase.database();
         const tg = window.Telegram.WebApp;
 
-        let userId = tg.initDataUnsafe?.user?.id || localStorage.getItem('guest_id') || "GUEST_"+Math.floor(Math.random()*999);
-        if(!localStorage.getItem('guest_id')) localStorage.setItem('guest_id', userId);
+        // User Data
+        let user = tg.initDataUnsafe?.user || {id: localStorage.getItem('guest_id') || "GUEST"+Math.floor(Math.random()*9999), first_name: "Coco Miner"};
+        if(!localStorage.getItem('guest_id')) localStorage.setItem('guest_id', user.id);
+        
+        let balance = 0, energy = 1000, refs = 0;
+        const refUrl = "https://t.me/your_bot_username?start=" + user.id; 
+        document.getElementById('ref-link').innerText = refUrl;
 
-        let balance = 0;
-        let energy = 1000;
-        let isLoaded = false;
-
-        // --- පරණ දත්ත මුලින්ම ලෝඩ් කිරීම ---
-        db.ref('users/' + userId).on('value', (snap) => {
+        // Load Initial Data
+        db.ref('users/' + user.id).on('value', (snap) => {
             const data = snap.val();
             if(data) {
                 balance = data.balance || 0;
-                // මුල් වරට ලෝඩ් වෙද්දී පමණක් Display එක Update කරන්න
-                if(!isLoaded) {
-                    updateUI();
-                    isLoaded = true;
-                }
+                refs = data.refCount || 0;
+                updateUI();
             } else {
-                saveToDB(); // අලුත් යූසර් කෙනෙක් නම් සේව් කරන්න
+                db.ref('users/' + user.id).set({ balance: 0, name: user.first_name, refCount: 0 });
             }
         });
 
         function updateUI() {
             document.getElementById('balance').innerText = balance.toLocaleString();
+            document.getElementById('with-bal').innerText = balance.toLocaleString();
             document.getElementById('energy').innerText = energy;
+            document.getElementById('ref-count').innerText = refs;
         }
 
-        function saveToDB() {
-            db.ref('users/' + userId).update({
-                balance: balance,
-                lastUpdate: Date.now()
-            });
-        }
-
-        // --- TAPPING LOGIC ---
+        // Tapping
         document.getElementById('tap-btn').addEventListener('touchstart', (e) => {
             e.preventDefault();
             if(energy <= 0) return;
-
-            balance += 1;
-            energy -= 1;
+            balance++; energy--;
             updateUI();
             
-            // Animation
             const t = e.touches[0];
             const p = document.createElement('div');
             p.className = 'floating-text'; p.innerText = '+1';
             p.style.left = t.clientX+'px'; p.style.top = t.clientY+'px';
             document.body.appendChild(p);
-            setTimeout(() => { p.remove(); saveToDB(); }, 600);
+            setTimeout(() => { p.remove(); syncDB(); }, 600);
         });
 
-        // --- PAGE NAVIGATION ---
-        function showPage(pageId, el) {
+        function syncDB() {
+            db.ref('users/' + user.id).update({ balance: balance });
+        }
+
+        function showPage(id, el) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
+            document.getElementById(id).classList.add('active');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             el.classList.add('active');
         }
 
-        // --- WITHDRAWAL REQUEST ---
-        function requestWithdraw() {
-            const addr = document.getElementById('wallet-addr').value;
-            if(balance < 1000000) {
-                alert("අවම කොයින් 1,000,000ක් තිබිය යුතුය!");
-                return;
-            }
-            if(!addr) { alert("කරුණාකර Phone/Wallet අංකය ඇතුළත් කරන්න."); return; }
-
-            db.ref('withdrawals').push({
-                userId: userId,
-                amount: balance,
-                address: addr,
-                status: 'pending',
-                time: Date.now()
-            }).then(() => {
-                alert("Withdraw Request එක සාර්ථකව යොමු කළා!");
-            });
+        function copyRef() {
+            navigator.clipboard.writeText(refUrl);
+            alert("Invite link copied!");
         }
 
-        // Energy Recovery
-        setInterval(() => { if(energy < 1000) { energy += 1; updateUI(); } }, 2000);
+        function withdraw() {
+            const addr = document.getElementById('wallet-input').value;
+            if(balance < 1000000) return alert("Minimum 1,000,000 COCO required!");
+            if(!addr) return alert("Enter address!");
+            db.ref('withdrawals').push({ uid: user.id, amt: balance, addr: addr, time: Date.now() });
+            alert("Withdrawal request sent!");
+        }
+
+        setInterval(() => { if(energy < 1000) { energy += 2; updateUI(); } }, 1500);
     </script>
 </body>
 </html>
