@@ -1,9 +1,9 @@
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COCO SOVEREIGN | THE INDEPENDENT FUTURE</title>
+    <title>COCO SOVEREIGN | GLOBAL ASSET PROTOCOL</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #f1c40f; --dark: #000; --card: #0a0a0a; --border: #1a1a1a; }
@@ -13,43 +13,55 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .text-center { text-align: center; }
         
-        nav { background: rgba(0,0,0,0.95); padding: 15px 0; position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); }
+        /* Premium Nav */
+        nav { background: rgba(0,0,0,0.95); padding: 18px 0; position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); }
         .nav-content { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Orbitron'; font-weight: 900; color: var(--gold); font-size: 24px; letter-spacing: 5px; }
-        .nav-links a { color: #fff; text-decoration: none; margin: 0 15px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
-        .lang-btn { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .logo { font-family: 'Orbitron'; font-weight: 900; color: var(--gold); font-size: 26px; letter-spacing: 6px; }
+        .nav-links a { color: #fff; text-decoration: none; margin: 0 15px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
 
+        /* Hero */
         header { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: radial-gradient(circle at center, #111 0%, #000 100%); padding-top: 80px; }
-        header h1 { font-family: 'Orbitron'; font-size: clamp(40px, 8vw, 85px); color: var(--gold); margin-bottom: 20px; text-shadow: 0 0 30px rgba(241, 196, 15, 0.2); }
-        header p { max-width: 850px; color: #aaa; font-size: 20px; margin-bottom: 30px; }
-        .btn-main { background: var(--gold); color: #000; padding: 18px 45px; border-radius: 50px; font-weight: 900; text-decoration: none; font-family: 'Orbitron'; transition: 0.3s; display: inline-block; }
-        .btn-main:hover { box-shadow: 0 0 50px var(--gold); transform: translateY(-5px); }
+        header h1 { font-family: 'Orbitron'; font-size: clamp(45px, 8vw, 90px); color: var(--gold); margin-bottom: 20px; text-shadow: 0 0 40px rgba(241, 196, 15, 0.2); letter-spacing: 4px; }
+        header p { max-width: 800px; color: #888; font-size: 18px; margin-bottom: 35px; letter-spacing: 1px; }
+        .btn-main { background: var(--gold); color: #000; padding: 18px 50px; border-radius: 50px; font-weight: 900; text-decoration: none; font-family: 'Orbitron'; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+        .btn-main:hover { box-shadow: 0 0 50px var(--gold); transform: translateY(-3px); }
 
-        .stats-grid { background: #070707; padding: 60px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; border-bottom: 1px solid var(--border); }
-        .stat-item h2 { color: var(--gold); font-family: 'Orbitron'; font-size: 40px; margin-bottom: 5px; }
-        .stat-item p { font-size: 11px; color: #555; letter-spacing: 2px; text-transform: uppercase; }
+        /* Real-time Stats */
+        .stats-grid { background: #070707; padding: 70px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; border-bottom: 1px solid var(--border); border-top: 1px solid var(--border); }
+        .stat-item h2 { color: var(--gold); font-family: 'Orbitron'; font-size: 42px; margin-bottom: 5px; }
+        .stat-item p { font-size: 10px; color: #555; letter-spacing: 3px; text-transform: uppercase; }
 
-        .section-title { font-family: 'Orbitron'; font-size: 36px; color: var(--gold); margin-bottom: 60px; }
+        /* Projects */
+        .section-title { font-family: 'Orbitron'; font-size: 38px; color: var(--gold); margin-bottom: 60px; letter-spacing: 3px; }
         .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
-        .project-card { background: var(--card); border: 1px solid var(--border); padding: 40px; border-radius: 25px; transition: 0.4s; position: relative; }
-        .project-card h3 { font-family: 'Orbitron'; color: #fff; margin-bottom: 15px; }
-        .status-tag { position: absolute; top: 15px; right: 15px; font-size: 9px; background: rgba(241,196,15,0.1); color: var(--gold); padding: 4px 10px; border-radius: 5px; border: 1px solid var(--gold); }
+        .project-card { background: var(--card); border: 1px solid var(--border); padding: 45px; border-radius: 30px; transition: 0.4s; position: relative; }
+        .project-card:hover { border-color: var(--gold); background: #0d0d0d; }
+        .project-card h3 { font-family: 'Orbitron'; color: #fff; margin-bottom: 15px; font-size: 18px; }
+        .project-card p { color: #666; font-size: 14px; }
+        .status-tag { position: absolute; top: 20px; right: 20px; font-size: 9px; color: var(--gold); padding: 4px 10px; border-radius: 5px; border: 1px solid var(--gold); font-weight: bold; }
 
         /* Mystery Security Section */
-        .security-section { background: linear-gradient(135deg, #050505 0%, #000 100%); border: 1px solid #111; padding: 80px 40px; border-radius: 40px; text-align: center; margin: 50px 0; border-top: 4px solid var(--gold); }
-        .security-section h2 { font-family: 'Orbitron'; color: var(--gold); margin-bottom: 20px; letter-spacing: 5px; }
-        .mystery-text { font-size: 22px; font-weight: 900; color: #fff; margin-bottom: 25px; text-transform: uppercase; font-family: 'Orbitron'; }
+        .security-section { background: linear-gradient(135deg, #050505 0%, #000 100%); border: 1px solid #111; padding: 100px 40px; border-radius: 40px; text-align: center; margin: 80px 0; border-top: 4px solid var(--gold); }
+        .security-section h2 { font-family: 'Orbitron'; color: var(--gold); margin-bottom: 25px; letter-spacing: 6px; }
+        .mystery-text { font-size: 28px; font-weight: 900; color: #fff; margin-bottom: 30px; letter-spacing: 2px; text-transform: uppercase; font-family: 'Orbitron'; }
+        .security-section p { max-width: 750px; margin: 0 auto; color: #777; font-size: 16px; font-style: italic; }
 
-        .registration { background: #050505; border: 1px solid var(--border); padding: 60px; border-radius: 30px; max-width: 700px; margin: 100px auto; }
-        .registration input { width: 100%; padding: 18px; background: #000; border: 1px solid #222; color: #fff; border-radius: 12px; margin-bottom: 20px; }
-        .registration button { width: 100%; background: var(--gold); color: #000; padding: 18px; border-radius: 12px; font-weight: 900; font-family: 'Orbitron'; cursor: pointer; border: none; }
+        /* Registration */
+        .registration { background: #050505; border: 1px solid var(--border); padding: 70px; border-radius: 40px; max-width: 700px; margin: 100px auto; }
+        .registration input { width: 100%; padding: 18px; background: #000; border: 1px solid #222; color: #fff; border-radius: 12px; margin-bottom: 20px; outline: none; transition: 0.3s; }
+        .registration input:focus { border-color: var(--gold); }
+        .registration button { width: 100%; background: var(--gold); color: #000; padding: 18px; border-radius: 12px; font-weight: 900; font-family: 'Orbitron'; cursor: pointer; border: none; font-size: 16px; }
 
-        .rep-section { padding: 80px 0; text-align: center; }
-        .social-links a { display: inline-block; margin: 15px; color: #fff; text-decoration: none; font-weight: bold; border-bottom: 1px solid var(--gold); }
+        /* Appreciation */
+        .rep-section { padding: 100px 0; text-align: center; background: rgba(241,196,15,0.02); border-radius: 60px; }
+        .rep-section h2 { font-family: 'Orbitron'; color: var(--gold); margin-bottom: 25px; }
+        .social-links a { display: inline-block; margin: 20px; color: #fff; text-decoration: none; font-weight: bold; border-bottom: 1px solid var(--gold); padding-bottom: 5px; font-size: 13px; transition: 0.3s; }
+        .social-links a:hover { color: var(--gold); }
 
-        #chat-widget { position: fixed; bottom: 40px; right: 40px; background: var(--gold); color: #000; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 28px; z-index: 1001; }
+        /* Chat Widget */
+        #chat-widget { position: fixed; bottom: 40px; right: 40px; background: var(--gold); color: #000; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 30px; box-shadow: 0 15px 35px rgba(241, 196, 15, 0.4); z-index: 1001; }
 
-        footer { padding: 60px 0; border-top: 1px solid var(--border); color: #333; font-size: 11px; letter-spacing: 2px; }
+        footer { padding: 80px 0; border-top: 1px solid var(--border); color: #333; font-size: 11px; letter-spacing: 3px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -59,85 +71,85 @@
             <div class="logo">COCO</div>
             <div class="nav-links">
                 <a href="#home">Home</a>
-                <a href="#projects">Projects</a>
+                <a href="#projects">Ecosystem</a>
                 <a href="#security">Security</a>
                 <a href="#register">Register</a>
-                <button class="lang-btn" onclick="toggleLang()">EN | SI</button>
             </div>
         </div>
     </nav>
 
     <header id="home" class="container">
-        <h1 id="title">COCO PROTOCOL</h1>
-        <p id="desc">අනාගතයේ ලොව හොල්ලන අසමසම තාක්ෂණය. අප නිර්මාණය කරන්නේ කිසිවෙකුට යටත් කළ නොහැකි, පූර්ණ ස්වාධීන මූල්‍යමය ලෝකයකි.</p>
+        <div style="font-size: 11px; color: var(--gold); letter-spacing: 7px; margin-bottom: 25px; font-weight: bold;">THE SOVEREIGN ASSET REVOLUTION</div>
+        <h1>COCO PROTOCOL</h1>
+        <p>A global decentralized infrastructure designed for complete financial independence. Powered by unreachable security and high-velocity asset management.</p>
         <a href="https://t.me/YOUR_BOT_LINK" class="btn-main">LAUNCH CORE APP</a>
     </header>
 
     <div class="stats-grid container text-center">
-        <div class="stat-item"><h2>100B</h2><p>Total Supply</p></div>
-        <div class="stat-item"><h2>$0.005</h2><p>Asset Value</p></div>
-        <div class="stat-item"><h2>20K+</h2><p>Global Nodes</p></div>
-        <div class="stat-item"><h2>UNIFIED</h2><p>Integrity</p></div>
+        <div class="stat-item"><h2>100B</h2><p>Maximum Supply</p></div>
+        <div class="stat-item"><h2>$0.005</h2><p>Target Index Price</p></div>
+        <div class="stat-item"><h2>25K+</h2><p>Verified Nodes</p></div>
+        <div class="stat-item"><h2>24/7</h2><p>Native Uptime</p></div>
     </div>
 
     <section id="projects" class="container">
-        <h2 class="section-title text-center">CORE ECOSYSTEM</h2>
+        <h2 class="section-title text-center">GLOBAL ECOSYSTEM</h2>
         <div class="projects-grid">
             <div class="project-card">
                 <div class="status-tag">ACTIVE</div>
-                <h3>COCO Tapping App</h3>
-                <p>ව්‍යාපෘතියේ මූලික පියවර. වත්කම් ගොඩනැගීම අරඹන්න.</p>
+                <h3>Asset Tapping Engine</h3>
+                <p>The primary gate for community growth and asset generation. Start building your sovereign wealth today.</p>
             </div>
             <div class="project-card">
                 <div class="status-tag">DEVELOPING</div>
-                <h3>COCO Mining Core</h3>
-                <p>ස්වයංක්‍රීය මයිනින් පද්ධතිය. ඔබේ දෘඩාංග බලය වත්කම් බවට හරවයි.</p>
+                <h3>Native Mining Core</h3>
+                <p>Automated hardware-based mining protocol. Transforming computational power into liquid digital assets.</p>
             </div>
             <div class="project-card">
                 <div class="status-tag">UPCOMING</div>
                 <h3>Sovereign Vault</h3>
-                <p>ඔබේ වත්කම් සුරක්ෂිතව තබා ගන්නා අති නවීන ඩිජිටල් පසුම්බිය.</p>
+                <p>An ultra-secure, encrypted digital storage for your COCO assets. Security beyond standard protocols.</p>
             </div>
             <div class="project-card">
                 <div class="status-tag">PLANNING</div>
-                <h3>Global COCO Bank</h3>
-                <p>ලොව වේගවත්ම බැංකුකරණ පද්ධතිය. ලෝකයම එකම මුදලකින් යා කරයි.</p>
+                <h3>Global Banking Hub</h3>
+                <p>The world's fastest cross-border exchange system. Unifying global currencies through COCO.</p>
             </div>
         </div>
     </section>
 
     <section id="security" class="container">
         <div class="security-section">
-            <h2>BEYOND CODING</h2>
-            <div class="mystery-text">අභිරහස් ආරක්ෂක පද්ධතිය</div>
-            <p style="color: #666; max-width: 750px; margin: 0 auto; line-height: 1.8;">මෙය හුදු කේතනයක් (Coding) නොවේ. COCO පද්ධතියේ ආරක්ෂාව රඳා පවතින්නේ කිසිවෙකුට හිතාගත නොහැකි, බාහිර ලෝකයට අනාවරණය නොකළ <b>අභිරහස් ආරක්ෂක පද්ධතියක්</b> මතයි. ඔබගේ දත්ත සහ වත්කම්වල රහස්‍යභාවය පිළිබඳ පූර්ණ වගකීම අප සතුයි.</p>
+            <h2>BEYOND THE CODE</h2>
+            <div class="mystery-text">MYSTERY SECURITY SYSTEM</div>
+            <p>Our infrastructure is protected by a hidden architecture known only as the Mystery Security System. It transcends traditional coding boundaries, ensuring your assets remain unreachable by any external entity or compromise.</p>
         </div>
     </section>
 
-    <section id="register" class="container">
-        <div class="registration text-center">
-            <h2 style="font-family:'Orbitron'; color:var(--gold); margin-bottom:30px;">JOIN THE NETWORK</h2>
-            <input type="text" id="reg-name" placeholder="Full Name">
-            <input type="email" id="reg-email" placeholder="Email Address">
-            <button onclick="register()">REGISTER AS ASSET HOLDER</button>
+    <section id="register" class="container text-center">
+        <div class="registration">
+            <h2 style="font-family:'Orbitron'; color:var(--gold); margin-bottom:30px; letter-spacing: 2px;">JOIN THE NETWORK</h2>
+            <input type="text" id="reg-name" placeholder="Legal Full Name">
+            <input type="email" id="reg-email" placeholder="Official Email Address">
+            <button onclick="register()">REGISTER FOR ASSET ACCESS</button>
         </div>
     </section>
 
     <section class="container rep-section">
-        <h2 style="font-family:'Orbitron'; color:var(--gold); margin-bottom:20px;">SPECIAL APPRECIATION</h2>
-        <p>COCO ව්‍යාපෘතියේ සාර්ථකත්වය වෙනුවෙන් කැපවන අපගේ <b>ශ්‍රී ලාංකික නියෝජිතයාට</b> අපගේ විශේෂ ස්තූතිය. ඔබත් නියෝජිතයෙකු වීමට පහත චැට් එක හරහා සම්බන්ධ වන්න.</p>
-        <div class="social-links" style="margin-top: 30px;">
-            <a href="#">FACEBOOK</a>
-            <a href="#">YOUTUBE</a>
-            <a href="#">TIKTOK</a>
+        <h2>SPECIAL APPRECIATION</h2>
+        <p style="max-width: 800px; margin: 0 auto; color: #888;">We extend our profound gratitude to the <b>Official Sri Lankan Representative</b> for his relentless dedication to making the COCO Protocol a success within the region. His commitment is the backbone of our local growth.</p>
+        <div class="social-links" style="margin-top: 40px;">
+            <a href="#">FACEBOOK CORE</a>
+            <a href="#">YOUTUBE CHANNEL</a>
+            <a href="#">TIKTOK OFFICIAL</a>
         </div>
+        <p style="margin-top: 50px; font-weight: bold; color: var(--gold);">INTERESTED IN BECOMING A REPRESENTATIVE? CONTACT US VIA CHAT.</p>
     </section>
 
-    <div id="chat-widget" onclick="alert('COCO Support: Connecting...')">💬</div>
+    <div id="chat-widget" onclick="alert('COCO Protocol: Redirecting to a Regional Representative...')">💬</div>
 
     <footer class="text-center">
-        &copy; 2026 COCO SOVEREIGN PROTOCOL. ALL RIGHTS RESERVED. <br>
-        DESIGNED FOR GLOBAL FINANCIAL FREEDOM.
+        &copy; 2026 COCO SOVEREIGN PROTOCOL | SECURED BY MYSTERY SECURITY SYSTEM | ALL RIGHTS RESERVED.
     </footer>
 
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
@@ -155,18 +167,9 @@
         function register() {
             const name = document.getElementById('reg-name').value;
             const email = document.getElementById('reg-email').value;
-            if(!name || !email) return alert("Fill all fields.");
-            db.ref('web_registrations').push({ name, email, date: Date.now() });
-            alert("Registration Complete!");
-        }
-
-        let isEn = true;
-        function toggleLang() {
-            isEn = !isEn;
-            document.getElementById('title').innerText = isEn ? "COCO PROTOCOL" : "කෝකෝ ප්‍රොටොකෝලය";
-            document.getElementById('desc').innerText = isEn ? 
-                "Building a sovereign future, independent of old systems." :
-                "අනාගතයේ ලොව හොල්ලන අසමසම තාක්ෂණය. අප නිර්මාණය කරන්නේ කිසිවෙකුට යටත් කළ නොහැකි, පූර්ණ ස්වාධීන මූල්‍යමය ලෝකයකි.";
+            if(!name || !email) return alert("All fields are required for security verification.");
+            db.ref('web_registrations').push({ name, email, timestamp: Date.now() });
+            alert("Sovereign Network Access Granted. Registration Confirmed.");
         }
     </script>
 </body>
