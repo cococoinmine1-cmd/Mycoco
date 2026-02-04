@@ -39,6 +39,11 @@
         .nav { position: fixed; bottom: 0; width: 100%; max-width: 500px; left: 50%; transform: translateX(-50%); display: flex; background: #000; border-top: 1px solid var(--border); padding: 15px 0; z-index: 1000; }
         .nav-item { flex: 1; font-size: 9px; color: #444; text-align: center; cursor: pointer; font-weight: bold; }
         .nav-item.active { color: var(--gold); }
+
+        
+         /* පෙනුම තවත් professional කරන්න මේ ටිකත් ඇඩ් කරමු */
+        .core-btn img { width: 70%; height: 70%; filter: drop-shadow(0 0 15px var(--gold)); transition: transform 0.05s;}
+        .core-btn:active img {transform: scale(0.9);}
     </style>
 </head>
 <body>
@@ -54,9 +59,8 @@
             </div>
 
             <div class="core-btn" id="tap-btn">
-                <img src="https://img.freepik.com/premium-photo/gold-coin-with-c-letter-it_1102497-172151.jpg?w=360" alt="COCO">
-            </div>
-
+    <img src="https://www.svgrepo.com/show/433360/coin-gold.svg" alt="COCO" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2921/2921226.png'">
+</div>
             <div style="background:rgba(255,255,255,0.03); padding:12px; border-radius:15px; border:1px solid #111; display:inline-block; min-width:200px;">
                 <small style="color:#888">ENERGY RESERVE</small>
                 <div style="font-weight:bold; font-size:18px;"><span id="energy">1000</span> / <span id="max-energy">1000</span></div>
