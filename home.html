@@ -1,218 +1,173 @@
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coco Coin - Official Global Website</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <title>COCO SOVEREIGN | THE INDEPENDENT FUTURE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+        :root { --gold: #f1c40f; --dark: #000; --card: #0a0a0a; --border: #1a1a1a; }
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+        body { background: var(--dark); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.6; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .text-center { text-align: center; }
         
-        body { background-color: #000; color: #fff; font-family: 'Poppins', sans-serif; margin: 0; scroll-behavior: smooth; }
-        
-        /* Navigation */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: rgba(0,0,0,0.8); position: fixed; width: 90%; z-index: 1000; border-bottom: 1px solid #222; }
-        .logo { color: #f1c40f; font-weight: bold; font-size: 20px; letter-spacing: 2px; }
-        .nav-links a { color: #fff; text-decoration: none; margin-left: 20px; font-size: 14px; transition: 0.3s; }
-        .nav-links a:hover { color: #f1c40f; }
+        nav { background: rgba(0,0,0,0.95); padding: 15px 0; position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Orbitron'; font-weight: 900; color: var(--gold); font-size: 24px; letter-spacing: 5px; }
+        .nav-links a { color: #fff; text-decoration: none; margin: 0 15px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
+        .lang-btn { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
 
-        /* Fake Mining HUD */
-        .mining-status {
-            background: rgba(241, 196, 15, 0.1);
-            border: 1px solid #f1c40f;
-            padding: 15px 30px;
-            border-radius: 15px;
-            margin-top: 30px;
-            text-align: center;
-        }
-        .mining-status h3 { margin: 0; font-size: 28px; color: #f1c40f; text-shadow: 0 0 15px rgba(241, 196, 15, 0.5); }
-        .mining-status p { margin: 5px 0 0; font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        header { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: radial-gradient(circle at center, #111 0%, #000 100%); padding-top: 80px; }
+        header h1 { font-family: 'Orbitron'; font-size: clamp(40px, 8vw, 85px); color: var(--gold); margin-bottom: 20px; text-shadow: 0 0 30px rgba(241, 196, 15, 0.2); }
+        header p { max-width: 850px; color: #aaa; font-size: 20px; margin-bottom: 30px; }
+        .btn-main { background: var(--gold); color: #000; padding: 18px 45px; border-radius: 50px; font-weight: 900; text-decoration: none; font-family: 'Orbitron'; transition: 0.3s; display: inline-block; }
+        .btn-main:hover { box-shadow: 0 0 50px var(--gold); transform: translateY(-5px); }
 
-        /* User Quick Stats */
-        .user-mini-card {
-            position: absolute; top: 100px; right: 5%;
-            background: #111; border: 1px solid #222;
-            padding: 10px 20px; border-radius: 10px;
-            display: flex; align-items: center; gap: 15px;
-            z-index: 999;
-        }
-        .user-mini-card span { color: #f1c40f; font-weight: bold; }
+        .stats-grid { background: #070707; padding: 60px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; border-bottom: 1px solid var(--border); }
+        .stat-item h2 { color: var(--gold); font-family: 'Orbitron'; font-size: 40px; margin-bottom: 5px; }
+        .stat-item p { font-size: 11px; color: #555; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* Hero Section */
-        header { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: radial-gradient(circle, #1a1a1a 0%, #000 100%); }
-        h1 { font-size: 60px; margin: 0; color: #fff; letter-spacing: -2px; }
-        h1 span { color: #f1c40f; }
-        p.subtitle { font-size: 18px; color: #888; max-width: 600px; margin: 20px 0; }
-        .cta-btn { background: #f1c40f; color: #000; padding: 15px 40px; border-radius: 30px; font-weight: bold; text-decoration: none; font-size: 18px; transition: 0.3s; box-shadow: 0 0 20px rgba(241, 196, 15, 0.4); }
-        .cta-btn:hover { transform: scale(1.05); }
+        .section-title { font-family: 'Orbitron'; font-size: 36px; color: var(--gold); margin-bottom: 60px; }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+        .project-card { background: var(--card); border: 1px solid var(--border); padding: 40px; border-radius: 25px; transition: 0.4s; position: relative; }
+        .project-card h3 { font-family: 'Orbitron'; color: #fff; margin-bottom: 15px; }
+        .status-tag { position: absolute; top: 15px; right: 15px; font-size: 9px; background: rgba(241,196,15,0.1); color: var(--gold); padding: 4px 10px; border-radius: 5px; border: 1px solid var(--gold); }
 
-        /* About & Features */
-        .section { padding: 100px 10%; }
-        .grid { display: flex; gap: 50px; align-items: center; }
-        .content { flex: 1; }
-        .image-placeholder { flex: 1; background: #111; height: 300px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 100px; border: 1px solid #222; }
-        h2 { font-size: 35px; color: #f1c40f; margin-bottom: 20px; }
-        p { line-height: 1.8; color: #ccc; }
+        /* Mystery Security Section */
+        .security-section { background: linear-gradient(135deg, #050505 0%, #000 100%); border: 1px solid #111; padding: 80px 40px; border-radius: 40px; text-align: center; margin: 50px 0; border-top: 4px solid var(--gold); }
+        .security-section h2 { font-family: 'Orbitron'; color: var(--gold); margin-bottom: 20px; letter-spacing: 5px; }
+        .mystery-text { font-size: 22px; font-weight: 900; color: #fff; margin-bottom: 25px; text-transform: uppercase; font-family: 'Orbitron'; }
 
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 50px; }
-        .f-card { background: #0a0a0a; padding: 30px; border-radius: 20px; border: 1px solid #1a1a1a; transition: 0.3s; }
-        .f-card:hover { border-color: #f1c40f; }
-        .f-card h3 { color: #f1c40f; }
+        .registration { background: #050505; border: 1px solid var(--border); padding: 60px; border-radius: 30px; max-width: 700px; margin: 100px auto; }
+        .registration input { width: 100%; padding: 18px; background: #000; border: 1px solid #222; color: #fff; border-radius: 12px; margin-bottom: 20px; }
+        .registration button { width: 100%; background: var(--gold); color: #000; padding: 18px; border-radius: 12px; font-weight: 900; font-family: 'Orbitron'; cursor: pointer; border: none; }
 
-        /* Ranking Section */
-        .rank-table { width: 100%; border-collapse: collapse; margin-top: 30px; }
-        .rank-table th, .rank-table td { padding: 15px; text-align: left; border-bottom: 1px solid #111; }
-        .rank-table th { color: #f1c40f; font-size: 14px; }
+        .rep-section { padding: 80px 0; text-align: center; }
+        .social-links a { display: inline-block; margin: 15px; color: #fff; text-decoration: none; font-weight: bold; border-bottom: 1px solid var(--gold); }
 
-        footer { padding: 50px 10%; background: #050505; text-align: center; border-top: 1px solid #111; }
-        .social-links a { margin: 0 10px; color: #555; text-decoration: none; font-size: 20px; }
+        #chat-widget { position: fixed; bottom: 40px; right: 40px; background: var(--gold); color: #000; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 28px; z-index: 1001; }
+
+        footer { padding: 60px 0; border-top: 1px solid var(--border); color: #333; font-size: 11px; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">COCO COIN</div>
-        <div class="nav-links">
-            <a href="#about">Legacy</a>
-            <a href="#tech">Technology</a>
-            <a href="#rankings">Global Ranks</a>
-            <a href="index.html" style="color:#f1c40f">OPEN APP</a>
+        <div class="container nav-content">
+            <div class="logo">COCO</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#projects">Projects</a>
+                <a href="#security">Security</a>
+                <a href="#register">Register</a>
+                <button class="lang-btn" onclick="toggleLang()">EN | SI</button>
+            </div>
         </div>
     </nav>
 
-    <div class="user-mini-card">
-        <div style="font-size: 10px; color: #888;">YOUR BALANCE</div>
-        <div>🪙 <span id="user-coins">0</span></div>
-    </div>
-
-    <header>
-        <h1>Mining the <span>Future.</span></h1>
-        <p class="subtitle">Join the global movement. Switzerland's most trusted digital asset is now mining live.</p>
-        
-        <div class="mining-status">
-            <p>Total Global Coco Mined</p>
-            <h3 id="global-counter">269,536</h3>
-            <p id="today-stats" style="color: #2ecc71; margin-top: 10px;">Today: +1,000</p>
-        </div>
-
-        <br><br>
-        <a href="index.html" class="cta-btn">START MINING NOW</a>
+    <header id="home" class="container">
+        <h1 id="title">COCO PROTOCOL</h1>
+        <p id="desc">අනාගතයේ ලොව හොල්ලන අසමසම තාක්ෂණය. අප නිර්මාණය කරන්නේ කිසිවෙකුට යටත් කළ නොහැකි, පූර්ණ ස්වාධීන මූල්‍යමය ලෝකයකි.</p>
+        <a href="https://t.me/YOUR_BOT_LINK" class="btn-main">LAUNCH CORE APP</a>
     </header>
 
-    <div id="about" class="section">
-        <div class="grid">
-            <div class="content">
-                <h2>Our Legacy Since 1996</h2>
-                <p>Founded in a small humble garage in Switzerland, Coco International began as a local initiative. Decades later, we have transformed that vision into <b>Coco Coin</b>—a digital asset backed by transparency.</p>
-            </div>
-            <div class="image-placeholder">🥥</div>
-        </div>
+    <div class="stats-grid container text-center">
+        <div class="stat-item"><h2>100B</h2><p>Total Supply</p></div>
+        <div class="stat-item"><h2>$0.005</h2><p>Asset Value</p></div>
+        <div class="stat-item"><h2>20K+</h2><p>Global Nodes</p></div>
+        <div class="stat-item"><h2>UNIFIED</h2><p>Integrity</p></div>
     </div>
 
-    <div id="rankings" class="section" style="background: #080808;">
-        <h2 style="text-align: center;">Global Leaderboard</h2>
-        <div style="max-width: 600px; margin: 0 auto;">
-            <table class="rank-table">
-                <thead>
-                    <tr><th>RANK</th><th>COMMANDER</th><th>COINS</th></tr>
-                </thead>
-                <tbody id="rank-list">
-                    </tbody>
-            </table>
+    <section id="projects" class="container">
+        <h2 class="section-title text-center">CORE ECOSYSTEM</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="status-tag">ACTIVE</div>
+                <h3>COCO Tapping App</h3>
+                <p>ව්‍යාපෘතියේ මූලික පියවර. වත්කම් ගොඩනැගීම අරඹන්න.</p>
+            </div>
+            <div class="project-card">
+                <div class="status-tag">DEVELOPING</div>
+                <h3>COCO Mining Core</h3>
+                <p>ස්වයංක්‍රීය මයිනින් පද්ධතිය. ඔබේ දෘඩාංග බලය වත්කම් බවට හරවයි.</p>
+            </div>
+            <div class="project-card">
+                <div class="status-tag">UPCOMING</div>
+                <h3>Sovereign Vault</h3>
+                <p>ඔබේ වත්කම් සුරක්ෂිතව තබා ගන්නා අති නවීන ඩිජිටල් පසුම්බිය.</p>
+            </div>
+            <div class="project-card">
+                <div class="status-tag">PLANNING</div>
+                <h3>Global COCO Bank</h3>
+                <p>ලොව වේගවත්ම බැංකුකරණ පද්ධතිය. ලෝකයම එකම මුදලකින් යා කරයි.</p>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div id="tech" class="section" style="background:#050505;">
-        <h2 style="text-align:center;">The Coco Ecosystem</h2>
-        <div class="features">
-            <div class="f-card">
-                <h3>TON Integrated</h3>
-                <p>Our rewards are secured via the Telegram Open Network (TON).</p>
-            </div>
-            <div class="f-card">
-                <h3>Military-Grade</h3>
-                <p>Over 500 global servers ensuring unhackable security.</p>
-            </div>
-            <div class="f-card">
-                <h3>Fair Mining</h3>
-                <p>Empowering users through our proof-of-engagement system.</p>
-            </div>
+    <section id="security" class="container">
+        <div class="security-section">
+            <h2>BEYOND CODING</h2>
+            <div class="mystery-text">අභිරහස් ආරක්ෂක පද්ධතිය</div>
+            <p style="color: #666; max-width: 750px; margin: 0 auto; line-height: 1.8;">මෙය හුදු කේතනයක් (Coding) නොවේ. COCO පද්ධතියේ ආරක්ෂාව රඳා පවතින්නේ කිසිවෙකුට හිතාගත නොහැකි, බාහිර ලෝකයට අනාවරණය නොකළ <b>අභිරහස් ආරක්ෂක පද්ධතියක්</b> මතයි. ඔබගේ දත්ත සහ වත්කම්වල රහස්‍යභාවය පිළිබඳ පූර්ණ වගකීම අප සතුයි.</p>
         </div>
-    </div>
+    </section>
 
-    <footer>
-        <p>© 2026 Coco International Group. Switzerland.</p>
-        <div class="social-links">
-            <a href="#">YouTube</a>
-            <a href="#">Telegram</a>
-            <a href="#">TikTok</a>
+    <section id="register" class="container">
+        <div class="registration text-center">
+            <h2 style="font-family:'Orbitron'; color:var(--gold); margin-bottom:30px;">JOIN THE NETWORK</h2>
+            <input type="text" id="reg-name" placeholder="Full Name">
+            <input type="email" id="reg-email" placeholder="Email Address">
+            <button onclick="register()">REGISTER AS ASSET HOLDER</button>
         </div>
+    </section>
+
+    <section class="container rep-section">
+        <h2 style="font-family:'Orbitron'; color:var(--gold); margin-bottom:20px;">SPECIAL APPRECIATION</h2>
+        <p>COCO ව්‍යාපෘතියේ සාර්ථකත්වය වෙනුවෙන් කැපවන අපගේ <b>ශ්‍රී ලාංකික නියෝජිතයාට</b> අපගේ විශේෂ ස්තූතිය. ඔබත් නියෝජිතයෙකු වීමට පහත චැට් එක හරහා සම්බන්ධ වන්න.</p>
+        <div class="social-links" style="margin-top: 30px;">
+            <a href="#">FACEBOOK</a>
+            <a href="#">YOUTUBE</a>
+            <a href="#">TIKTOK</a>
+        </div>
+    </section>
+
+    <div id="chat-widget" onclick="alert('COCO Support: Connecting...')">💬</div>
+
+    <footer class="text-center">
+        &copy; 2026 COCO SOVEREIGN PROTOCOL. ALL RIGHTS RESERVED. <br>
+        DESIGNED FOR GLOBAL FINANCIAL FREEDOM.
     </footer>
 
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
 
     <script>
-        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyDE9SYe-4rS5jMeXStqg9pc_IuBsiySdaU",
-            authDomain: "cococoin-mine-c7b27.firebaseapp.com",
-            projectId: "cococoin-mine-c7b27",
-            databaseURL: "https://cococoin-mine-c7b27-default-rtdb.asia-southeast1.firebasedatabase.app/", 
-            appId: "1:546963919107:web:acbb4d1eac94686d3f1936"
+            databaseURL: "https://cococoin-mine-c7b27-default-rtdb.asia-southeast1.firebasedatabase.app/",
+            projectId: "cococoin-mine-c7b27"
         };
         firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const userId = "global_user";
+        const db = firebase.database();
 
-        // --- 1. Fake Mining Logic ---
-        let totalMined = 269536;
-        let todayMined = 1000;
-        
-        function updateMining() {
-            totalMined += 2;
-            todayMined += 2;
-            document.getElementById('global-counter').innerText = totalMined.toLocaleString();
-            document.getElementById('today-stats').innerText = "Today: +" + todayMined.toLocaleString();
-            if(todayMined > 50000) todayMined = 1000; 
-        }
-        setInterval(updateMining, 1000);
-
-        // --- 2. Live User Data from Firebase ---
-        function loadUserData() {
-            database.ref('users/' + userId).on('value', (snapshot) => {
-                const data = snapshot.val();
-                if(data && data.balance !== undefined) {
-                    document.getElementById('user-coins').innerText = data.balance.toLocaleString();
-                } else {
-                    document.getElementById('user-coins').innerText = "0";
-                }
-            });
+        function register() {
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            if(!name || !email) return alert("Fill all fields.");
+            db.ref('web_registrations').push({ name, email, date: Date.now() });
+            alert("Registration Complete!");
         }
 
-        // --- 3. Leaderboard Simulation ---
-        const players = [
-            { name: "Commander Alpha", coins: "1.5k" },
-            { name: "SwissMiner_96", coins: "9K" },
-            { name: "CocoMaster", coins: "4k" },
-            { name: "User_7721", coins: "900" }
-        ];
-
-        function loadRanks() {
-            const list = document.getElementById('rank-list');
-            list.innerHTML = players.map((p, i) => `
-                <tr>
-                    <td>#${i+1}</td>
-                    <td>${p.name}</td>
-                    <td style="color:#f1c40f">${p.coins}</td>
-                </tr>
-            `).join('');
+        let isEn = true;
+        function toggleLang() {
+            isEn = !isEn;
+            document.getElementById('title').innerText = isEn ? "COCO PROTOCOL" : "කෝකෝ ප්‍රොටොකෝලය";
+            document.getElementById('desc').innerText = isEn ? 
+                "Building a sovereign future, independent of old systems." :
+                "අනාගතයේ ලොව හොල්ලන අසමසම තාක්ෂණය. අප නිර්මාණය කරන්නේ කිසිවෙකුට යටත් කළ නොහැකි, පූර්ණ ස්වාධීන මූල්‍යමය ලෝකයකි.";
         }
-
-        window.onload = () => {
-            loadUserData();
-            loadRanks();
-        };
     </script>
 </body>
 </html>
