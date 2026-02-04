@@ -40,6 +40,55 @@
         .nav { position: fixed; bottom: 0; width: 100%; max-width: 500px; left: 50%; transform: translateX(-50%); display: flex; background: #000; border-top: 1px solid var(--border); padding: 15px 0; z-index: 1000; }
         .nav-item { flex: 1; font-size: 9px; color: #444; text-align: center; cursor: pointer; font-weight: bold; }
         .nav-item.active { color: var(--gold); }
+
+         /* Logo Animation & Style */
+    .core-btn {
+        width: 240px;
+        height: 240px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
+        border: 4px solid var(--border);
+        margin: 30px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        cursor: pointer;
+        z-index: 10;
+        transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .core-btn:active {
+        transform: scale(0.92);
+        border-color: var(--gold);
+    }
+
+    #coco-logo {
+        width: 85%;
+        z-index: 5;
+        pointer-events: none;
+        filter: drop-shadow(0 0 15px rgba(241, 196, 15, 0.4));
+    }
+
+    /* Pulse Ring Effect when Tapping */
+    .pulse-ring {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 2px solid var(--gold);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .animate-pulse {
+        animation: pulse-animation 0.5s ease-out;
+    }
+
+    @keyframes pulse-animation {
+        0% { transform: scale(1); opacity: 0.5; }
+        100% { transform: scale(1.4); opacity: 0; }
+    }
     </style>
 </head>
 <body>
@@ -54,7 +103,8 @@
                 <div class="bal-val" id="balance">0.00</div>
                 <small id="user-id-display" style="color:var(--gold); font-size:9px;"></small>
             </div>
-            <div class="core-btn" id="tap-btn"><img src="https://cdn-icons-png.flaticon.com/512/2921/2921226.png"></div>
+            <div class="core-btn" id="tap-btn">
+    <div class="pulse-ring"></div><img src="logo.png" id="coco-logo" alt="COCO LOGO"></div>
             <div style="font-size:12px;">⚡ ENERGY: <span id="energy">1000</span>/<span id="max-energy">1000</span></div>
         </div>
 
@@ -158,6 +208,17 @@
             alert("Invite Link Copied!");
         }
 
+          // Tap Animation Script
+    document.getElementById('tap-btn').addEventListener('touchstart', (e) => {
+        // Create pulse effect
+        const ring = document.querySelector('.pulse-ring');
+        ring.classList.remove('animate-pulse');
+        void ring.offsetWidth; // Reset animation
+        ring.classList.add('animate-pulse');
+        
+        // Vibrate for feedback
+        if(navigator.vibrate) navigator.vibrate(25);
+    });
         // Energy Regen
         setInterval(() => { if(energy < maxEnergy) { energy += 2; updateUI(); } }, 2000);
 
