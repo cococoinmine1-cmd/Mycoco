@@ -61,10 +61,9 @@
                 <span class="coco-emoji">🥥</span> 
             </div>
             <div class="card">
-    <div><b>Full Tank</b><br><small>Refill Energy</small></div>
-    <button class="btn-action" onclick="refillEnergy()">REFILL</button>
-</div>
-
+                <div><b>Full Tank</b><br><small>Refill Energy</small></div>
+                <button class="btn-action" onclick="refillEnergy()">REFILL</button>
+            </div>
             <div style="font-size:14px; margin-top:10px;">⚡ <span id="energy">1000</span> / <span id="max-energy">1000</span></div>
         </div>
 
@@ -122,7 +121,6 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // Wallet එකේ පාවිච්චි කරන 'c_user' key එකම මෙතනටත් ලින්ක් කළා
         let currentId = localStorage.getItem('c_user');
         let balance = 0, energy = 1000, maxEnergy = 1000, multi = 1;
 
@@ -148,7 +146,7 @@
                 const data = snap.val();
                 if(data) {
                     balance = Number(data.points) || 0;
-                    multi = data.multi || 1;
+                    multi = Number(data.multi) || 1;
                     updateUI(id);
                 }
             });
@@ -161,23 +159,43 @@
             document.getElementById('ref-link').innerText = "https://t.me/COCO_COIN_BOT?start=" + id;
         }
 
+        // Tap Logic - Optimized
         document.getElementById('tap-btn').addEventListener('touchstart', (e) => {
             e.preventDefault();
-            if(!currentId || energy < multi) return;
-            balance += multi; 
-            energy -= multi;
-            
-            // කෙලින්ම Wallet එකේ පේන 'points' field එකට කොටනවා
-            db.ref('users/' + currentId).update({ points: balance });
+            if(!currentId) return;
+
+            let earn = 0;
+            if (energy >= multi) {
+                earn = multi;
+                energy -= multi;
+            } else {
+                earn = 1; // Energy ඉවර වුණාම 1 බැගින්
+            }
+
+            balance += earn;
+            updateUI(currentId); // ක්ෂණිකව UI එක අප්ඩේට් කරනවා
 
             const t = e.touches[0];
             const f = document.createElement('div');
-            f.className = 'float-text'; f.innerText = '+' + multi;
+            f.className = 'float-text'; f.innerText = '+' + earn;
             f.style.left = t.clientX + 'px'; f.style.top = t.clientY + 'px';
             document.body.appendChild(f);
             setTimeout(() => f.remove(), 600);
             if(navigator.vibrate) navigator.vibrate(25);
         });
+
+        // ඩේටාබේස් එකට යවන එක (Auto-Sync every 3 seconds)
+        setInterval(() => {
+            if(currentId) {
+                db.ref('users/' + currentId).update({ points: balance });
+            }
+        }, 3000);
+
+        function refillEnergy() {
+            energy = maxEnergy;
+            alert("Energy Refilled!");
+            updateUI(currentId);
+        }
 
         function showPage(id, el) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -198,39 +216,6 @@
             multi++;
             db.ref('users/' + currentId).update({ points: balance, multi: multi });
         }
-// 1. ටැප් කරන ලොජික් එක - එනර්ජි ඉවරනම් +1ක් දෙනවා
-document.getElementById('tap-btn').addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    if(!currentId) return;
-
-    let earn = 0;
-    if (energy >= multi) {
-        earn = multi;    // එනර්ජි තියෙනව නම් multi-tap අගය ලැබෙනවා
-        energy -= multi; // එනර්ජි අඩුවෙනවා
-    } else {
-        earn = 1;        // එනර්ජි ඉවර නම් 1 බැගින් එකතු වෙනවා
-    }
-
-    balance += earn;
-    db.ref('users/' + currentId).update({ points: balance });
-
-    // Floating text එක පේන විදිහ
-    const t = e.touches[0];
-    const f = document.createElement('div');
-    f.className = 'float-text'; f.innerText = '+' + earn;
-    f.style.left = t.clientX + 'px'; f.style.top = t.clientY + 'px';
-    document.body.appendChild(f);
-    setTimeout(() => f.remove(), 600);
-    if(navigator.vibrate) navigator.vibrate(25);
-    updateUI(currentId);
-});
-
-// 2. එනර්ජි රීෆිල් කරන ෆන්ක්ෂන් එක
-function refillEnergy() {
-    energy = maxEnergy;
-    alert("Energy Refilled!");
-    updateUI(currentId);
-}
 
         setInterval(() => { if(energy < maxEnergy) { energy += 1.5; updateUI(currentId); } }, 1000);
     </script>
