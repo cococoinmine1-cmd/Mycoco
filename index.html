@@ -194,42 +194,60 @@
             multi++;
             db.ref('users/' + currentId).update({ points: balance, multi: multi });
         }
-function completeTask(taskName, reward) {
+          function startTask(taskID, reward, url) {
     if(!currentId) return;
 
-    // 1. කලින් මේ ටස්ක් එක කරලද කියලා බලනවා (Optional)
+    // ලින්ක් එක ඕපන් කරනවා
+    window.open(url);
+
+    const btn = document.getElementById('btn-' + taskID);
+    btn.disabled = true;
+    btn.style.opacity = "0.7";
     
+    let seconds = 10; // තත්පර 10ක් ඉන්න ඕනේ
+    btn.innerText = "Wait " + seconds + "s...";
 
-// මේකෙන් කරන්නේ ටස්ක් ලිස්ට් එක බලලා බටන් වල ටෙක්ස්ට් එක වෙනස් කරන එක
+    // ටයිමර් එක පටන් ගන්නවා
+    const timer = setInterval(() => {
+        seconds--;
+        btn.innerText = "Wait " + seconds + "s...";
 
-
-    // 2. බැලන්ස් එකට රිවෝඩ් එක එකතු කරනවා
-    balance += reward;
-    
-    // 3. ඩේටාබේස් එක අප්ඩේට් කරනවා
-    db.ref('users/' + currentId).update({
-        points: balance
-    }).then(() => {
-        updateUI(currentId);
-        alert("Mission Success! +" + reward + " COCO Coins");
-    }).catch((e) => {
-        alert("Sync Error!");
-    });
-}
-function checkTasksStatus() {
-    if(!currentId) return;
-    db.ref('users/' + currentId + '/tasks').once('value').then((snap) => {
-        const completedTasks = snap.val() || {};
-        for (const taskID in completedTasks) {
-            const btn = document.getElementById('btn-' + taskID);
-            if(btn) {
-                btn.innerText = "DONE ✅";
-                btn.disabled = true;
-                btn.style.opacity = "0.5";
-            }
+        if (seconds <= 0) {
+            clearInterval(timer);
+            btn.innerText = "Claim " + (reward/1000) + "k";
+            btn.disabled = false;
+            btn.style.opacity = "1";
+            btn.style.background = "var(--green)"; // බටන් එක කොළ පාට වෙනවා
+            
+            // දැන් බටන් එක එබුවම කොයින් එකතු වෙන්න ෆන්ක්ෂන් එක වෙනස් කරනවා
+            btn.onclick = () => {
+                completeTask(taskID, reward);
+            };
         }
+    }, 1000);
+}
+
+function completeTask(taskID, reward) {
+    // මේකෙන් තමයි කොයින් ටික ඩේටාබේස් එකට යවන්නේ (කලින් දුන්න කෝඩ් එකමයි)
+    db.ref('users/' + currentId + '/tasks/' + taskID).once('value').then((snap) => {
+        if(snap.val() === true) return;
+
+        balance += reward;
+        let updates = {};
+        updates['users/' + currentId + '/points'] = balance;
+        updates['users/' + currentId + '/tasks/' + taskID] = true;
+
+        db.ref().update(updates).then(() => {
+            updateUI(currentId);
+            const btn = document.getElementById('btn-' + taskID);
+            btn.innerText = "DONE ✅";
+            btn.disabled = true;
+            btn.style.background = "var(--border)";
+            alert("Reward Claimed!");
+        });
     });
 }
+
         setInterval(() => { if(energy < maxEnergy) { energy += 1.5; updateUI(currentId); } }, 1000);
     </script>
 </body>
