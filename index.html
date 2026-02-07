@@ -141,17 +141,18 @@
             });
         }
 
-        // වීඩියෝ එකේ ලෙඩේ හැදුවා - ON වෙනුවට ONCE දාලා ස්ථාවර කළා
         function loadData(id) {
-            db.ref('users/' + id).once('value').then((snap) => {
-                const data = snap.val();
-                if(data) {
-                    balance = Number(data.points) || 0;
-                    multi = Number(data.multi) || 1;
-                    updateUI(id);
-                }
-            });
+    // '.on' වෙනුවට '.once' පාවිච්චි කරන්න. එතකොට පස්සට බහින්නේ නෑ.
+    db.ref('users/' + id).once('value').then((snap) => {
+        const data = snap.val();
+        if(data) {
+            balance = Number(data.points) || 0;
+            multi = Number(data.multi) || 1;
+            updateUI(id);
         }
+    });
+}
+
 
         function updateUI(id) {
             document.getElementById('balance').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 3});
