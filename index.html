@@ -198,31 +198,7 @@ function completeTask(taskName, reward) {
     if(!currentId) return;
 
     // 1. කලින් මේ ටස්ක් එක කරලද කියලා බලනවා (Optional)
-    function completeTask(taskID, reward) {
-    if(!currentId) return;
-
-    // 1. ඩේටාබේස් එකේ මේ ටස්ක් එක කරලද කියලා චෙක් කරනවා
-    db.ref('users/' + currentId + '/tasks/' + taskID).once('value').then((snap) => {
-        if(snap.val() === true) {
-            alert("Mission already completed!");
-            return;
-        }
-
-        // 2. කරලා නැත්නම් විතරක් කොයින් දෙනවා
-        balance += reward;
-        
-        // 3. ඩේටාබේස් එකේ බැලන්ස් එකයි ටස්ක් එකයි දෙකම සේව් කරනවා
-        let updates = {};
-        updates['users/' + currentId + '/points'] = balance;
-        updates['users/' + currentId + '/tasks/' + taskID] = true;
-
-        db.ref().update(updates).then(() => {
-            updateUI(currentId);
-            checkTasksStatus(); // UI එක අප්ඩේට් කරන්න
-            alert("Mission Success! +" + reward);
-        });
-    });
-}
+    
 
 // මේකෙන් කරන්නේ ටස්ක් ලිස්ට් එක බලලා බටන් වල ටෙක්ස්ට් එක වෙනස් කරන එක
 
