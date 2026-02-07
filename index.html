@@ -66,12 +66,12 @@
 
         <div id="tasks" class="page">
             <h3 style="margin-bottom:20px; font-family:'Orbitron'; color:var(--gold);">MISSIONS</h3>
-            <div class="card"><div><b>YouTube Mission</b><br><small>Subscribe & Watch</small></div><button class="btn-action" onclick="window.open('https://youtube.com/@cococoin-i9m?si=LQ-WTjpo1SCsgpQn')">+3k</button></div>
-            <div class="card"><div><b>TikTok Mission</b><br><small>Follow & Like</small></div><button class="btn-action" onclick="window.open('https://www.tiktok.com/@coco.coin0?_r=1&_t=ZS-93N9riatjyD')">+3k</button></div>
-            <div class="card"><div><b>Facebook Mission</b><br><small>Like & Share</small></div><button class="btn-action" onclick="window.open('https://www.facebook.com/share/1D3h6b2HQU/')">+3k</button></div>
-            <div class="card"><div><b>Telegram News</b><br><small>Join Channel</small></div><button class="btn-action" onclick="window.open('https://t.me/+5yPR6-ct7VYyMGVl')">+1.5k</button></div>
-            <div class="card"><div><b>Telegram chat</b><br><small>Join Channel</small></div><button class="btn-action" onclick="window.open('https://t.me/+jXHAmoMmUVc3MjU1')">+1.5k</button></div>
-            <div class="card"><div><b>coco miner</b><br><small>register account</small></div><button class="btn-action" onclick="window.open('https://cococoinmine1-cmd.github.io/Mycoco/mining.html')">+1.5k</button></div>
+            <div class="card"><div><b>YouTube Mission</b><br><small>Subscribe & Watch</small></div><button class="btn-action" onclick="window.open('https://youtube.com/@cococoin-i9m?si=LQ-WTjpo1SCsgpQn')completeTask('youtube', 3000)">+3k</button></div>
+            <div class="card"><div><b>TikTok Mission</b><br><small>Follow & Like</small></div><button class="btn-action" onclick="window.open('https://www.tiktok.com/@coco.coin0?_r=1&_t=ZS-93N9riatjyD')completeTask('youtube', 3000)">+3k</button></div>
+            <div class="card"><div><b>Facebook Mission</b><br><small>Like & Share</small></div><button class="btn-action" onclick="window.open('https://www.facebook.com/share/1D3h6b2HQU/')completeTask('youtube', 3000)">+3k</button></div>
+            <div class="card"><div><b>Telegram News</b><br><small>Join Channel</small></div><button class="btn-action" onclick="window.open('https://t.me/+5yPR6-ct7VYyMGVl')completeTask('youtube', 1500)">+1.5k</button></div>
+            <div class="card"><div><b>Telegram chat</b><br><small>Join Channel</small></div><button class="btn-action" onclick="window.open('https://t.me/+jXHAmoMmUVc3MjU1')completeTask('youtube', 1500)">+1.5k</button></div>
+            <div class="card"><div><b>coco miner</b><br><small>register account</small></div><button class="btn-action" onclick="window.open('https://cococoinmine1-cmd.github.io/Mycoco/mining.html')completeTask('youtube', 1500)">+1.5k</button></div>
             
             <div class="account-alert" style="background: linear-gradient(90deg, #ffcc00, #ff9900); padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center; color: #000; margin-top: 20px;">
                 <p style="margin: 0; font-weight: bold; font-size: 14px;">🚀 Don't delay! Start your COCO account now.</p>
@@ -194,6 +194,23 @@
             multi++;
             db.ref('users/' + currentId).update({ points: balance, multi: multi });
         }
+function completeTask(taskName, reward) {
+    if(!currentId) return;
+
+    // 1. කලින් මේ ටස්ක් එක කරලද කියලා බලනවා (Optional)
+    // 2. බැලන්ස් එකට රිවෝඩ් එක එකතු කරනවා
+    balance += reward;
+    
+    // 3. ඩේටාබේස් එක අප්ඩේට් කරනවා
+    db.ref('users/' + currentId).update({
+        points: balance
+    }).then(() => {
+        updateUI(currentId);
+        alert("Mission Success! +" + reward + " COCO Coins");
+    }).catch((e) => {
+        alert("Sync Error!");
+    });
+}
 
         setInterval(() => { if(energy < maxEnergy) { energy += 1.5; updateUI(currentId); } }, 1000);
     </script>
