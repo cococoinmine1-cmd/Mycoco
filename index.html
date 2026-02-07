@@ -65,97 +65,96 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
 
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDE9SYe-4rS5jMeXStqg9pc_IuBsiySdaU",
-            databaseURL: "https://cococoin-mine-c7b27-default-rtdb.asia-southeast1.firebasedatabase.app/",
-            projectId: "cococoin-mine-c7b27"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+  <script>
+    // 1. Firebase Config (මේක උඹේ එකම තියාගනින්)
+    const firebaseConfig = {
+        apiKey: "AIzaSyDE9SYe-4rS5jMeXStqg9pc_IuBsiySdaU",
+        databaseURL: "https://cococoin-mine-c7b27-default-rtdb.asia-southeast1.firebasedatabase.app/",
+        projectId: "cococoin-mine-c7b27"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-        let currentId = localStorage.getItem('c_user');
-        let balance = 0, energy = 1000, maxEnergy = 1000, multi = 1;
-        let isSyncing = false; 
+    let currentId = localStorage.getItem('c_user');
+    let balance = 0, energy = 1000, maxEnergy = 1000, multi = 1;
+    let lastSyncBalance = 0; // පරණ අගය track කරන්න
 
-        if(currentId) {
-            document.getElementById('auth-screen').style.display = 'none';
-            loadData(currentId);
-        }
+    if(currentId) {
+        document.getElementById('auth-screen').style.display = 'none';
+        loadData(currentId);
+    }
 
-        function unifyLogin() {
-            const id = document.getElementById('auth-id').value.trim();
-            const pw = document.getElementById('auth-pass').value.trim();
-            db.ref('users/' + id).once('value').then(s => {
-                const u = s.val();
-                if(u && u.password === pw) {
-                    localStorage.setItem('c_user', id);
-                    location.reload();
-                } else alert("Invalid Login!");
-            });
-        }
-
-        function loadData(id) {
-            // පළවෙනි පාරට data ටික ඇදලා ගන්නවා
-            db.ref('users/' + id).once('value').then((snap) => {
-                const data = snap.val();
-                if(data) {
-                    balance = Number(data.points) || 0;
-                    multi = Number(data.multi) || 1;
-                    updateUI(id);
-                }
-            });
-        }
-
-        function updateUI(id) {
-            document.getElementById('balance').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 3});
-            document.getElementById('energy').innerText = Math.floor(energy);
-            document.getElementById('display-id').innerText = "SECURE ID: " + id;
-        }
-
-        // --- වැදගත්ම කොටස: Tap Logic ---
-        document.getElementById('tap-btn').addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if(!currentId) return;
-
-            let earn = (energy >= multi) ? multi : 1;
-            if(energy >= multi) energy -= multi;
-
-            balance += earn; 
-            
-            // ක්ෂණිකව UI update කරනවා - පස්සට බහින්නේ නෑ
-            document.getElementById('balance').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 3});
-            document.getElementById('energy').innerText = Math.floor(energy);
-
-            // Floating Effect
-            const t = e.touches[0];
-            const f = document.createElement('div');
-            f.className = 'float-text'; f.innerText = '+' + earn;
-            f.style.left = t.clientX + 'px'; f.style.top = t.clientY + 'px';
-            document.body.appendChild(f);
-            setTimeout(() => f.remove(), 600);
-            if(navigator.vibrate) navigator.vibrate(25);
-        });
-
-        // --- Database Sync (සෑම තත්පර 3කට වරක්) ---
-        setInterval(() => {
-            if(currentId) {
-                db.ref('users/' + currentId).update({ points: balance });
+    // 2. Load Data - වීඩියෝ එකේ තිබ්බ ලෙඩේ Fix කළා
+    function loadData(id) {
+        db.ref('users/' + id).once('value').then((snap) => {
+            const data = snap.val();
+            if(data) {
+                balance = Number(data.points) || 0;
+                lastSyncBalance = balance; 
+                multi = Number(data.multi) || 1;
+                updateUI(id);
             }
-        }, 3000);
+        });
+    }
 
-        function refillEnergy() {
-            energy = maxEnergy;
-            updateUI(currentId);
-            alert("Energy Refilled!");
+    function updateUI(id) {
+        document.getElementById('balance').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 3});
+        document.getElementById('energy').innerText = Math.floor(energy);
+        document.getElementById('display-id').innerText = "SECURE ID: " + id;
+    }
+
+    // 3. Tap Logic - ක්ෂණික UI අප්ඩේට් (පස්සට යන්නේ නෑ)
+    document.getElementById('tap-btn').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if(!currentId) return;
+
+        let earn = (energy >= multi) ? multi : 1;
+        if(energy >= multi) energy -= multi;
+
+        balance += earn;
+        
+        // UI එක විතරක් දැනට අප්ඩේට් කරනවා
+        document.getElementById('balance').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 3});
+        document.getElementById('energy').innerText = Math.floor(energy);
+
+        const t = e.touches[0];
+        const f = document.createElement('div');
+        f.className = 'float-text'; f.innerText = '+' + earn;
+        f.style.left = t.clientX + 'px'; f.style.top = t.clientY + 'px';
+        document.body.appendChild(f);
+        setTimeout(() => f.remove(), 600);
+        if(navigator.vibrate) navigator.vibrate(25);
+    });
+
+    // 4. Auto-Sync - හැම තත්පර 3කට සැරයක් ඩේටාබේස් එකට යවනවා
+    setInterval(() => {
+        if(currentId && balance !== lastSyncBalance) {
+            db.ref('users/' + currentId).update({ points: balance })
+            .then(() => { lastSyncBalance = balance; })
+            .catch(e => console.error("Sync Error"));
         }
+    }, 3000);
 
-        setInterval(() => { if(energy < maxEnergy) { energy += 1.5; updateUI(currentId); } }, 1000);
+    // 5. Energy Refill & Regen
+    function refillEnergy() {
+        energy = maxEnergy;
+        updateUI(currentId);
+        alert("Energy Refilled!");
+    }
+    setInterval(() => { 
+        if(energy < maxEnergy) { 
+            energy += 1.5; 
+            document.getElementById('energy').innerText = Math.floor(energy);
+        } 
+    }, 1000);
 
-        function showPage(id, el) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
-    </script>
+    // Page navigation functions...
+    function showPage(id, el) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        el.classList.add('active');
+    }
+</script>
 </body>
 </html>
