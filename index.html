@@ -225,20 +225,7 @@ function completeTask(taskName, reward) {
 }
 
 // මේකෙන් කරන්නේ ටස්ක් ලිස්ට් එක බලලා බටන් වල ටෙක්ස්ට් එක වෙනස් කරන එක
-function checkTasksStatus() {
-    if(!currentId) return;
-    db.ref('users/' + currentId + '/tasks').once('value').then((snap) => {
-        const completedTasks = snap.val() || {};
-        for (const taskID in completedTasks) {
-            const btn = document.getElementById('btn-' + taskID);
-            if(btn) {
-                btn.innerText = "DONE ✅";
-                btn.disabled = true;
-                btn.style.opacity = "0.5";
-            }
-        }
-    });
-}
+
 
     // 2. බැලන්ස් එකට රිවෝඩ් එක එකතු කරනවා
     balance += reward;
@@ -253,7 +240,20 @@ function checkTasksStatus() {
         alert("Sync Error!");
     });
 }
-
+function checkTasksStatus() {
+    if(!currentId) return;
+    db.ref('users/' + currentId + '/tasks').once('value').then((snap) => {
+        const completedTasks = snap.val() || {};
+        for (const taskID in completedTasks) {
+            const btn = document.getElementById('btn-' + taskID);
+            if(btn) {
+                btn.innerText = "DONE ✅";
+                btn.disabled = true;
+                btn.style.opacity = "0.5";
+            }
+        }
+    });
+}
         setInterval(() => { if(energy < maxEnergy) { energy += 1.5; updateUI(currentId); } }, 1000);
     </script>
 </body>
