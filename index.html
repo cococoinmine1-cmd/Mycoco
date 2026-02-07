@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>COCO SOVEREIGN CORE V6 - FINAL STABLE</title>
+    <title>COCO SOVEREIGN CORE V5 - UNIFIED</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -42,6 +42,7 @@
 
     <div id="auth-screen">
         <h2 style="font-family:'Orbitron'; color:var(--gold); margin-bottom:10px;">UNIFIED ACCESS</h2>
+        <p style="font-size:10px; color:#444; margin-bottom:20px;">LINK YOUR SOVEREIGN ID</p>
         <input type="text" id="auth-id" class="auth-input" placeholder="COCO-ID (e.g. COCO-1234)">
         <input type="password" id="auth-pass" class="auth-input" placeholder="ACCESS KEY">
         <button class="btn-action" style="width:100%; padding:18px;" onclick="unifyLogin()">UNIFY & SYNC</button>
@@ -59,10 +60,6 @@
             <div class="core-btn" id="tap-btn">
                 <span class="coco-emoji">🥥</span> 
             </div>
-            <div class="card">
-                <div><b>Full Tank</b><br><small>Refill Energy</small></div>
-                <button class="btn-action" onclick="refillEnergy()">REFILL</button>
-            </div>
             <div style="font-size:14px; margin-top:10px;">⚡ <span id="energy">1000</span> / <span id="max-energy">1000</span></div>
         </div>
 
@@ -71,6 +68,33 @@
             <div class="card"><div><b>YouTube Mission</b><br><small>Subscribe & Watch</small></div><button class="btn-action" onclick="window.open('https://youtube.com/@cococoin-i9m?si=LQ-WTjpo1SCsgpQn')">+3k</button></div>
             <div class="card"><div><b>TikTok Mission</b><br><small>Follow & Like</small></div><button class="btn-action" onclick="window.open('https://www.tiktok.com/@coco.coin0?_r=1&_t=ZS-93N9riatjyD')">+3k</button></div>
             <div class="card"><div><b>Facebook Mission</b><br><small>Like & Share</small></div><button class="btn-action" onclick="window.open('https://www.facebook.com/share/1D3h6b2HQU/')">+3k</button></div>
+            <div class="card"><div><b>Telegram News</b><br><small>Join Channel</small></div><button class="btn-action" onclick="window.open('https://t.me/+5yPR6-ct7VYyMGVl')">+1.5k</button></div>
+            <div class="card"><div><b>Telegram chat</b><br><small>Join Channel</small></div><button class="btn-action" onclick="window.open('https://t.me/+jXHAmoMmUVc3MjU1')">+1.5k</button></div>
+            <div class="card"><div><b>coco miner</b><br><small>register account</small></div><button class="btn-action" onclick="window.open('https://cococoinmine1-cmd.github.io/Mycoco/mining.html')">+1.5k</button></div>
+            
+            <div class="account-alert" style="background: linear-gradient(90deg, #ffcc00, #ff9900); padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center; color: #000; margin-top: 20px;">
+                <p style="margin: 0; font-weight: bold; font-size: 14px;">🚀 Don't delay! Start your COCO account now.</p>
+                <button onclick="window.location.href='https://cococoinmine1-cmd.github.io/Mycoco/vault.html'" style="margin-top: 10px; background: #000; color: #fff; border: none; padding: 8px 20px; border-radius: 20px; font-weight: 900; cursor: pointer; font-size: 12px;">START ACCOUNT</button>
+            </div>
+        </div>
+
+        <div id="friends" class="page">
+            <h3 style="margin-bottom:20px; font-family:'Orbitron';">NETWORK</h3>
+            <div class="card" style="display:block; text-align:center;">
+                <p style="font-size:10px; margin-bottom:10px;">YOUR INVITE LINK</p>
+                <div id="ref-link" style="background:#000; padding:15px; border:1px dashed #333; font-size:10px; color:var(--gold); margin-bottom:10px; word-break:break-all;"></div>
+                <button class="btn-action" style="width:100%" onclick="copyRef()">COPY LINK</button>
+            </div>
+        </div>
+
+        <div id="vault" class="page">
+            <h3 style="margin-bottom:20px; font-family:'Orbitron';">SECURE VAULT</h3>
+            <div class="card"><div><b>Multitap Upgrade</b><br><small>Level Up</small></div><button class="btn-action" onclick="buyBoost()">UPGRADE</button></div>
+            <div class="card" style="display:block; margin-top:20px;">
+                <p style="font-size:10px; color:#888; margin-bottom:10px;">WITHDRAW ASSETS</p>
+                <input type="text" id="wallet-addr" placeholder="ENTER COCO ADDRESS" style="width:100%; background:#000; border:1px solid #222; padding:15px; color:white; border-radius:10px; margin-bottom:15px;">
+                <button class="btn-action" style="width:100%" onclick="alert('Audit in Progress. Use 6-Digit PIN in Phase 2.')">INITIATE WITHDRAWAL</button>
+            </div>
         </div>
     </div>
 
@@ -78,7 +102,7 @@
         <div class="nav-item active" onclick="showPage('mine', this)">MINER</div>
         <div class="nav-item" onclick="showPage('tasks', this)">TASKS</div>
         <div class="nav-item" onclick="showPage('friends', this)">FRIENDS</div>
-        <div class="nav-item" onclick="showPage('vault', this)">wallet</div>
+        <div class="nav-item" onclick="showPage('vault', this)">VAULT</div>
     </nav>
 
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
@@ -93,9 +117,9 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
+        // Wallet එකේ පාවිච්චි කරන 'c_user' key එකම මෙතනටත් ලින්ක් කළා
         let currentId = localStorage.getItem('c_user');
         let balance = 0, energy = 1000, maxEnergy = 1000, multi = 1;
-        let lastSyncedBalance = 0;
 
         if(currentId) {
             document.getElementById('auth-screen').style.display = 'none';
@@ -110,64 +134,45 @@
                 if(u && u.password === pw) {
                     localStorage.setItem('c_user', id);
                     location.reload();
-                } else alert("Invalid Login!");
+                } else alert("Invalid COCO-ID or Access Key!");
             });
         }
 
         function loadData(id) {
-            // වැදගත්: .on වෙනුවට .once පාවිච්චි කළා පස්සට බහින ලෙඩේ නවත්වන්න
-            db.ref('users/' + id).once('value').then((snap) => {
+            db.ref('users/' + id).on('value', (snap) => {
                 const data = snap.val();
                 if(data) {
                     balance = Number(data.points) || 0;
-                    lastSyncedBalance = balance;
-                    multi = Number(data.multi) || 1;
+                    multi = data.multi || 1;
                     updateUI(id);
                 }
             });
         }
 
         function updateUI(id) {
-            document.getElementById('balance').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 3});
+            document.getElementById('balance').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 2});
             document.getElementById('energy').innerText = Math.floor(energy);
             document.getElementById('display-id').innerText = "SECURE ID: " + id;
+            document.getElementById('ref-link').innerText = "https://t.me/COCO_COIN_BOT?start=" + id;
         }
 
-        // Tap Logic - ක්ෂණික UI update එකක් පමණයි කරන්නේ
         document.getElementById('tap-btn').addEventListener('touchstart', (e) => {
             e.preventDefault();
-            if(!currentId) return;
-
-            let earn = (energy >= multi) ? multi : 1;
-            if(energy >= multi) energy -= multi;
-
-            balance += earn;
+            if(!currentId || energy < multi) return;
+            balance += multi; 
+            energy -= multi;
             
-            // UI එක update කිරීම (Rollback එකක් වෙන්නේ නැත)
-            document.getElementById('balance').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 3});
-            document.getElementById('energy').innerText = Math.floor(energy);
+            // කෙලින්ම Wallet එකේ පේන 'points' field එකට කොටනවා
+            db.ref('users/' + currentId).update({ points: balance });
 
             const t = e.touches[0];
             const f = document.createElement('div');
-            f.className = 'float-text'; f.innerText = '+' + earn;
+            f.className = 'float-text'; f.innerText = '+' + multi;
             f.style.left = t.clientX + 'px'; f.style.top = t.clientY + 'px';
             document.body.appendChild(f);
             setTimeout(() => f.remove(), 600);
             if(navigator.vibrate) navigator.vibrate(25);
         });
-
-        // තත්පර 3කට වරක් පමණක් Database එක Sync කිරීම
-        setInterval(() => {
-            if(currentId && balance !== lastSyncedBalance) {
-                db.ref('users/' + currentId).update({ points: balance })
-                .then(() => { lastSyncedBalance = balance; });
-            }
-        }, 3000);
-
-        function refillEnergy() {
-            energy = maxEnergy;
-            updateUI(currentId);
-        }
 
         function showPage(id, el) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -176,7 +181,20 @@
             el.classList.add('active');
         }
 
-        setInterval(() => { if(energy < maxEnergy) { energy += 1.5; document.getElementById('energy').innerText = Math.floor(energy); } }, 1000);
+        function copyRef() {
+            navigator.clipboard.writeText(document.getElementById('ref-link').innerText);
+            alert("Invite Link Copied!");
+        }
+
+        function buyBoost() {
+            let cost = multi * 2000;
+            if(balance < cost) return alert("Not enough assets!");
+            balance -= cost; 
+            multi++;
+            db.ref('users/' + currentId).update({ points: balance, multi: multi });
+        }
+
+        setInterval(() => { if(energy < maxEnergy) { energy += 1.5; updateUI(currentId); } }, 1000);
     </script>
 </body>
 </html>
