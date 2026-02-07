@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>COCO SOVEREIGN CORE V5 - UNIFIED</title>
+    <title>COCO SOVEREIGN CORE V6 - FIXED</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -59,6 +59,10 @@
             </div>
             <div class="core-btn" id="tap-btn">
                 <span class="coco-emoji">🥥</span> 
+            </div>
+            <div class="card">
+                <div><b>Full Tank</b><br><small>Refill Energy</small></div>
+                <button class="btn-action" onclick="refillEnergy()">REFILL</button>
             </div>
             <div style="font-size:14px; margin-top:10px;">⚡ <span id="energy">1000</span> / <span id="max-energy">1000</span></div>
         </div>
@@ -117,9 +121,9 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // Wallet එකේ පාවිච්චි කරන 'c_user' key එකම මෙතනටත් ලින්ක් කළා
         let currentId = localStorage.getItem('c_user');
         let balance = 0, energy = 1000, maxEnergy = 1000, multi = 1;
+        let isSyncing = false;
 
         if(currentId) {
             document.getElementById('auth-screen').style.display = 'none';
@@ -139,40 +143,61 @@
         }
 
         function loadData(id) {
-            db.ref('users/' + id).on('value', (snap) => {
+            // පළමු වතාවට balance එක ලබා ගැනීම (Rollback එක නැති කිරීමට)
+            db.ref('users/' + id).once('value').then((snap) => {
                 const data = snap.val();
                 if(data) {
                     balance = Number(data.points) || 0;
-                    multi = data.multi || 1;
+                    multi = Number(data.multi) || 1;
                     updateUI(id);
                 }
             });
         }
 
         function updateUI(id) {
-            document.getElementById('balance').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 2});
+            document.getElementById('balance').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 3});
             document.getElementById('energy').innerText = Math.floor(energy);
             document.getElementById('display-id').innerText = "SECURE ID: " + id;
             document.getElementById('ref-link').innerText = "https://t.me/COCO_COIN_BOT?start=" + id;
         }
 
+        // Tap Logic - ස්ථාවර UI updates සඳහා වෙනස් කරන ලදි
         document.getElementById('tap-btn').addEventListener('touchstart', (e) => {
             e.preventDefault();
-            if(!currentId || energy < multi) return;
-            balance += multi; 
-            energy -= multi;
+            if(!currentId) return;
+
+            let earn = (energy >= multi) ? multi : 1;
+            if(energy >= multi) energy -= multi;
+
+            balance += earn;
             
-            // කෙලින්ම Wallet එකේ පේන 'points' field එකට කොටනවා
-            db.ref('users/' + currentId).update({ points: balance });
+            // ක්ෂණික UI update කිරීම (පස්සට බහින්නේ නැත)
+            document.getElementById('balance').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 3});
+            document.getElementById('energy').innerText = Math.floor(energy);
 
             const t = e.touches[0];
             const f = document.createElement('div');
-            f.className = 'float-text'; f.innerText = '+' + multi;
+            f.className = 'float-text'; f.innerText = '+' + earn;
             f.style.left = t.clientX + 'px'; f.style.top = t.clientY + 'px';
             document.body.appendChild(f);
             setTimeout(() => f.remove(), 600);
             if(navigator.vibrate) navigator.vibrate(25);
         });
+
+        // සෑම තත්පර 3කට වරක් Database එක Sync කිරීම
+        setInterval(() => {
+            if(currentId && !isSyncing) {
+                isSyncing = true;
+                db.ref('users/' + currentId).update({ points: balance })
+                .then(() => { isSyncing = false; });
+            }
+        }, 3000);
+
+        function refillEnergy() {
+            energy = maxEnergy;
+            updateUI(currentId);
+            alert("Energy Refilled!");
+        }
 
         function showPage(id, el) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -192,9 +217,11 @@
             balance -= cost; 
             multi++;
             db.ref('users/' + currentId).update({ points: balance, multi: multi });
+            updateUI(currentId);
         }
 
-        setInterval(() => { if(energy < maxEnergy) { energy += 1.5; updateUI(currentId); } }, 1000);
+        setInterval(() => { if(energy < maxEnergy) { energy += 1.5; document.getElementById('energy').innerText = Math.floor(energy); } }, 1000);
     </script>
 </body>
 </html>
+
