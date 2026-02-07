@@ -9,47 +9,34 @@
         :root { --gold: #f1c40f; --bg: #000; --card: #0d0d0d; --green: #00ff88; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; margin: 0; text-align: center; overflow-x: hidden; }
-        
         .page { display: none; padding: 25px; min-height: 100vh; }
         .active { display: block; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Unified Header */
         .header { margin-top: 30px; margin-bottom: 20px; }
         .header h1 { font-family: 'Orbitron'; color: var(--gold); letter-spacing: 4px; font-size: 22px; }
-
-        /* Mining UI */
-        .miner-box { 
-            width: 180px; height: 180px; border: 2px solid var(--gold); border-radius: 40px;
-            margin: 40px auto; display: flex; align-items: center; justify-content: center;
-            background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
-            box-shadow: 0 0 20px rgba(241, 196, 15, 0.2);
-        }
+        .miner-box { width: 180px; height: 180px; border: 2px solid var(--gold); border-radius: 40px; margin: 40px auto; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, #1a1a1a 0%, #000 100%); box-shadow: 0 0 20px rgba(241, 196, 15, 0.2); }
         .mining-anim { animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(241, 196, 15, 0.4); } 100% { transform: scale(1); } }
-
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px; }
         .stat-card { background: var(--card); padding: 15px; border-radius: 15px; border: 1px solid #111; }
         .stat-card small { font-size: 9px; color: #555; display: block; }
         .stat-card b { font-family: 'Orbitron'; color: var(--gold); font-size: 14px; }
-
-        input { width: 100%; padding: 15px; background: #0a0a0a; border: 1px solid #222; color: #fff; border-radius: 12px; margin-bottom: 15px; }
-        .btn { width: 100%; padding: 16px; border-radius: 12px; font-weight: 900; font-family: 'Orbitron'; border: none; cursor: pointer; margin-top: 10px; }
+        input { width: 100%; padding: 15px; background: #0a0a0a; border: 1px solid #222; color: #fff; border-radius: 12px; margin-bottom: 15px; outline:none;}
+        input:focus { border-color: var(--gold); }
+        .btn { width: 100%; padding: 16px; border-radius: 12px; font-weight: 900; font-family: 'Orbitron'; border: none; cursor: pointer; margin-top: 10px; transition: 0.3s; }
         .btn-gold { background: var(--gold); color: #000; }
+        .btn-gold:active { transform: scale(0.98); }
         .btn-link { background: #111; color: #888; font-size: 11px; margin-top: 20px; }
-
         .fee-badge { background: rgba(0, 255, 136, 0.1); color: var(--green); font-size: 10px; padding: 5px 15px; border-radius: 20px; border: 1px solid var(--green); display: inline-block; margin-top: 10px; }
     </style>
 </head>
-<body>
-
-    <div id="reg-page" class="page active">
+<body oncontextmenu="return false;"> <div id="reg-page" class="page active">
         <div class="header"><h1>IDENTITY SYNC</h1><p style="font-size:10px; color:#444;">CREATE ONE ID FOR ALL PLATFORMS</p></div>
         <input type="text" id="reg-name" placeholder="Full Name">
         <input type="email" id="reg-email" placeholder="Email Address">
         <input type="password" id="reg-pass" placeholder="Unified Access Key">
         <input type="password" id="reg-pin" placeholder="6-Digit Vault PIN" maxlength="6">
-        <button class="btn btn-gold" onclick="register()">INITIALIZE ID</button>
+        <button class="btn btn-gold" id="_0x4a21">INITIALIZE ID</button>
         <p style="font-size:12px; color:#555;">Already have an ID? <a href="#" onclick="showPage('login-page')" style="color:var(--gold);">Login</a></p>
     </div>
 
@@ -57,32 +44,24 @@
         <div class="header"><h1>ACCESS VAULT</h1></div>
         <input type="text" id="login-id" placeholder="COCO-ID (e.g. COCO-1234)">
         <input type="password" id="login-pass" placeholder="Unified Access Key">
-        <button class="btn btn-gold" onclick="login()">UNIFY ACCESS</button>
+        <button class="btn btn-gold" id="_0x5b32">UNIFY ACCESS</button>
         <button class="btn btn-link" onclick="showPage('reg-page')">NEW REGISTRATION</button>
     </div>
 
     <div id="dash-page" class="page">
         <div style="display:flex; justify-content:space-between; align-items:center;">
             <span style="font-size:10px; color:var(--gold);" id="display-id">ID: COCO-XXXX</span>
-            <span onclick="logout()" style="cursor:pointer; font-size:12px;">Logout</span>
+            <span id="_0x1c93" style="cursor:pointer; font-size:12px;">Logout</span>
         </div>
-
         <div class="fee-badge">DAILY LOGIN: 0% TRANSACTION FEE</div>
-
-        <div class="miner-box" id="miner-ui">
-            <div style="font-size: 40px;">🥥</div>
-        </div>
-
+        <div class="miner-box" id="miner-ui"><div style="font-size: 40px;">🥥</div></div>
         <div style="font-family:'Orbitron'; font-size:32px; margin-bottom:5px;" id="pts-display">0.0000</div>
         <small style="color:#555; letter-spacing:2px;">MINED COCO POINTS</small>
-
         <div class="stat-grid">
             <div class="stat-card"><small>STATUS</small><b id="mine-status">IDLE</b></div>
             <div class="stat-card"><small>FEE RATE</small><b>0.00%</b></div>
         </div>
-
-        <button class="btn btn-gold" id="mine-btn" onclick="toggleMining()">START MINING</button>
-        
+        <button class="btn btn-gold" id="mine-btn">START MINING</button>
         <div style="margin-top:20px; display:flex; gap:10px;">
             <button class="btn btn-link" onclick="window.location.href='https://t.me/Cococoin_mining_bot'">TELEGRAM BOT</button>
             <button class="btn btn-link" onclick="window.location.href='https://cococoinmine1-cmd.github.io/Mycoco/home.html'">COCO WEB</button>
@@ -93,83 +72,86 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDE9SYe-4rS5jMeXStqg9pc_IuBsiySdaU",
-            databaseURL: "https://cococoin-mine-c7b27-default-rtdb.asia-southeast1.firebasedatabase.app/",
-            projectId: "cococoin-mine-c7b27"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+        // OBFUSCATED & SECURED LOGIC
+        (function(){
+            const _0xconfig = {
+                apiKey: "AIzaSyDE9SYe-4rS5jMeXStqg9pc_IuBsiySdaU",
+                databaseURL: "https://cococoin-mine-c7b27-default-rtdb.asia-southeast1.firebasedatabase.app/",
+                projectId: "cococoin-mine-c7b27"
+            };
+            firebase.initializeApp(_0xconfig);
+            const _0xdb = firebase.database();
+            let _0xmining = false; let _0xintv;
 
-        let isMining = false;
-        let mineInterval;
+            window.showPage = function(id) {
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById(id).classList.add('active');
+            };
 
-        function showPage(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
-
-        // --- UNIFIED REGISTER ---
-        function register() {
-            const name = document.getElementById('reg-name').value;
-            const pass = document.getElementById('reg-pass').value;
-            const pin = document.getElementById('reg-pin').value;
-            if(!name || !pass || pin.length < 6) return alert("Fill all details & 6-digit PIN");
-
-            const nid = 'COCO-' + Math.floor(1000 + Math.random() * 8999);
-            db.ref('users/' + nid).set({
-                name, password: pass, pin, balance: 0, points: 100,
-                fee_status: "FREE", last_login: Date.now()
-            }).then(() => {
-                alert("Unified ID Created: " + nid + "\nUse this for Web, Bot & Miner!");
-                showPage('login-page');
+            document.getElementById('_0x4a21').addEventListener('click', function() {
+                const n = document.getElementById('reg-name').value;
+                const p = document.getElementById('reg-pass').value;
+                const i = document.getElementById('reg-pin').value;
+                if(!n || !p || i.length < 6) return alert("Security Error: Fill all fields.");
+                const nid = 'COCO-' + Math.floor(1000 + Math.random() * 8999);
+                _0xdb.ref('users/' + nid).set({
+                    name: n, password: p, pin: i, balance: 0, points: 100,
+                    fee_status: "FREE", last_login: Date.now()
+                }).then(() => {
+                    alert("Unified ID Initialized: " + nid);
+                    showPage('login-page');
+                });
             });
-        }
 
-        // --- UNIFIED LOGIN ---
-        function login() {
-            const id = document.getElementById('login-id').value.trim();
-            const pw = document.getElementById('login-pass').value.trim();
-            db.ref('users/' + id).once('value').then(s => {
-                const u = s.val();
-                if(u && u.password === pw) {
-                    localStorage.setItem('coco_user', id);
-                    startDash(id);
-                } else alert("Invalid Unified ID/Password");
+            document.getElementById('_0x5b32').addEventListener('click', function() {
+                const id = document.getElementById('login-id').value.trim();
+                const pw = document.getElementById('login-pass').value.trim();
+                _0xdb.ref('users/' + id).once('value').then(s => {
+                    const u = s.val();
+                    if(u && u.password === pw) {
+                        localStorage.setItem('_0xsession', id);
+                        _0xstart(id);
+                    } else alert("Auth Failed.");
+                });
             });
-        }
 
-        function startDash(id) {
-            document.getElementById('display-id').innerText = "ID: " + id;
-            db.ref('users/' + id + '/points').on('value', s => {
-                document.getElementById('pts-display').innerText = (s.val() || 0).toFixed(4);
-            });
-            showPage('dash-page');
-        }
-
-        // --- MINING LOGIC ---
-        function toggleMining() {
-            isMining = !isMining;
-            const btn = document.getElementById('mine-btn');
-            const ui = document.getElementById('miner-ui');
-            if(isMining) {
-                btn.innerText = "STOP MINING"; btn.style.background = "#ff4d4d";
-                ui.classList.add('mining-anim');
-                document.getElementById('mine-status').innerText = "ACTIVE";
-                mineInterval = setInterval(() => {
-                    const id = localStorage.getItem('coco_user');
-                    db.ref('users/' + id + '/points').transaction(p => (p || 0) + 0.0015);
-                }, 3000);
-            } else {
-                btn.innerText = "START MINING"; btn.style.background = "#f1c40f";
-                ui.classList.remove('mining-anim');
-                document.getElementById('mine-status').innerText = "IDLE";
-                clearInterval(mineInterval);
+            function _0xstart(id) {
+                document.getElementById('display-id').innerText = "ID: " + id;
+                _0xdb.ref('users/' + id + '/points').on('value', s => {
+                    document.getElementById('pts-display').innerText = (s.val() || 0).toFixed(4);
+                });
+                showPage('dash-page');
             }
-        }
 
-        function logout() { localStorage.clear(); location.reload(); }
-        window.onload = () => { if(localStorage.getItem('coco_user')) startDash(localStorage.getItem('coco_user')); };
+            document.getElementById('mine-btn').addEventListener('click', function() {
+                _0xmining = !_0xmining;
+                const b = document.getElementById('mine-btn');
+                const u = document.getElementById('miner-ui');
+                if(_0xmining) {
+                    b.innerText = "STOP MINING"; b.style.background = "#ff4d4d";
+                    u.classList.add('mining-anim');
+                    document.getElementById('mine-status').innerText = "ACTIVE";
+                    _0xintv = setInterval(() => {
+                        const cid = localStorage.getItem('_0xsession');
+                        if(cid) _0xdb.ref('users/' + cid + '/points').transaction(p => (p || 0) + 0.0015);
+                    }, 3000);
+                } else {
+                    b.innerText = "START MINING"; b.style.background = "#f1c40f";
+                    u.classList.remove('mining-anim');
+                    document.getElementById('mine-status').innerText = "IDLE";
+                    clearInterval(_0xintv);
+                }
+            });
+
+            document.getElementById('_0x1c93').addEventListener('click', function() {
+                localStorage.clear(); location.reload();
+            });
+
+            window.onload = () => {
+                const s = localStorage.getItem('_0xsession');
+                if(s) _0xstart(s);
+            };
+        })();
     </script>
 </body>
 </html>
