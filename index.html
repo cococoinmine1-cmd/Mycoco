@@ -141,8 +141,9 @@
             });
         }
 
+        // වීඩියෝ එකේ ලෙඩේ හැදුවා - ON වෙනුවට ONCE දාලා ස්ථාවර කළා
         function loadData(id) {
-            db.ref('users/' + id).on('value', (snap) => {
+            db.ref('users/' + id).once('value').then((snap) => {
                 const data = snap.val();
                 if(data) {
                     balance = Number(data.points) || 0;
@@ -153,27 +154,25 @@
         }
 
         function updateUI(id) {
-            document.getElementById('balance').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 2});
+            document.getElementById('balance').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 3});
             document.getElementById('energy').innerText = Math.floor(energy);
             document.getElementById('display-id').innerText = "SECURE ID: " + id;
             document.getElementById('ref-link').innerText = "https://t.me/COCO_COIN_BOT?start=" + id;
         }
 
-        // Tap Logic - Optimized
+        // Tap Logic - Optimized for UI and Database Sync
         document.getElementById('tap-btn').addEventListener('touchstart', (e) => {
             e.preventDefault();
             if(!currentId) return;
 
-            let earn = 0;
-            if (energy >= multi) {
-                earn = multi;
-                energy -= multi;
-            } else {
-                earn = 1; // Energy ඉවර වුණාම 1 බැගින්
-            }
+            let earn = (energy >= multi) ? multi : 1;
+            if(energy >= multi) energy -= multi;
 
             balance += earn;
-            updateUI(currentId); // ක්ෂණිකව UI එක අප්ඩේට් කරනවා
+            
+            // ක්ෂණික UI අප්ඩේට් - පස්සට බහින්නේ නෑ දැන්
+            document.getElementById('balance').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 3});
+            document.getElementById('energy').innerText = Math.floor(energy);
 
             const t = e.touches[0];
             const f = document.createElement('div');
@@ -184,7 +183,7 @@
             if(navigator.vibrate) navigator.vibrate(25);
         });
 
-        // ඩේටාබේස් එකට යවන එක (Auto-Sync every 3 seconds)
+        // Auto-Sync: තත්පර 3කට සැරයක් ඩේටාබේස් එකට කොටනවා
         setInterval(() => {
             if(currentId) {
                 db.ref('users/' + currentId).update({ points: balance });
@@ -215,9 +214,16 @@
             balance -= cost; 
             multi++;
             db.ref('users/' + currentId).update({ points: balance, multi: multi });
+            updateUI(currentId);
         }
 
-        setInterval(() => { if(energy < maxEnergy) { energy += 1.5; updateUI(currentId); } }, 1000);
+        // Energy Regeneration
+        setInterval(() => { 
+            if(energy < maxEnergy) { 
+                energy += 1.5; 
+                document.getElementById('energy').innerText = Math.floor(energy);
+            } 
+        }, 1000);
     </script>
 </body>
 </html>
